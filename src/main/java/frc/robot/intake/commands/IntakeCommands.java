@@ -1,11 +1,11 @@
-package frc.robot.intakeLauncher.commands;
+package frc.robot.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.fourbar.commands.FourBarCommands;
-import frc.robot.intakeLauncher.Intake;
+import frc.robot.intake.Intake;
 
 public class IntakeCommands {
 

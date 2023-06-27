@@ -1,4 +1,4 @@
-package frc.robot.intakeLauncher;
+package frc.robot.intake;
 
 public class IntakeConfig {
 

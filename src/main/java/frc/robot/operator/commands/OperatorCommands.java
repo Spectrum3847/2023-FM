@@ -11,9 +11,9 @@ import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.fourbar.FourBar;
 import frc.robot.fourbar.commands.FourBarCommands;
 import frc.robot.fourbar.commands.FourBarDelay;
-import frc.robot.intakeLauncher.commands.ConeIntake;
-import frc.robot.intakeLauncher.commands.CubeIntake;
-import frc.robot.intakeLauncher.commands.IntakeCommands;
+import frc.robot.intake.commands.ConeIntake;
+import frc.robot.intake.commands.CubeIntake;
+import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.operator.OperatorConfig;
 
 public class OperatorCommands {

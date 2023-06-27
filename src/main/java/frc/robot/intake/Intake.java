@@ -1,4 +1,4 @@
-package frc.robot.intakeLauncher;
+package frc.robot.intake;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import edu.wpi.first.wpilibj.DigitalInput;

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
-import frc.robot.intakeLauncher.commands.IntakeCommands;
+import frc.robot.intake.commands.IntakeCommands;
 
 public class EjectCone extends CommandBase {
     Command ejectConeCommand;
