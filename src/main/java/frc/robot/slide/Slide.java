@@ -1,4 +1,4 @@
-package frc.robot.elevator;
+package frc.robot.slide;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -8,12 +8,12 @@ import frc.SpectrumLib.subsystems.linearMech.LinearMechSubsystem;
 import frc.SpectrumLib.util.Conversions;
 import frc.robot.RobotConfig;
 
-public class Elevator extends LinearMechSubsystem {
-    public static ElevatorConfig config = new ElevatorConfig();
+public class Slide extends LinearMechSubsystem {
+    public static SlideConfig config = new SlideConfig();
 
-    public Elevator() {
+    public Slide() {
         super(config);
-        motorLeader = new WPI_TalonFX(RobotConfig.Motors.elevatorMotor, "3847");
+        motorLeader = new WPI_TalonFX(RobotConfig.Motors.slideMotor, "3847");
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.configForwardSoftLimitThreshold(inchesToFalcon(config.maxUpPos));
@@ -37,7 +37,7 @@ public class Elevator extends LinearMechSubsystem {
         }
     }
 
-    public void zeroElevator() {
+    public void zeroSlide() {
         motorLeader.setSelectedSensorPosition(0);
     }
 
@@ -99,7 +99,7 @@ public class Elevator extends LinearMechSubsystem {
         return Units.metersToInches(
                 Conversions.FalconToMeters(
                         falcon,
-                        Units.inchesToMeters(Elevator.config.diameterInches) * Math.PI,
-                        Elevator.config.gearRatio));
+                        Units.inchesToMeters(Slide.config.diameterInches) * Math.PI,
+                        Slide.config.gearRatio));
     }
 }

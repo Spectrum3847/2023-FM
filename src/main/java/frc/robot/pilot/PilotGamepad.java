@@ -71,10 +71,10 @@ public class PilotGamepad extends Gamepad {
 
         /* Aiming */
         gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI));
-        gamepad.bButton.whileTrue(IntakeCommands.launch());
+        // gamepad.bButton.whileTrue();
 
         /* Dpad */
-        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.launch());
+        // gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue();
         gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.eject());
         gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));

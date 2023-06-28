@@ -1,4 +1,4 @@
-package frc.robot.fourbar;
+package frc.robot.elbow;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -6,22 +6,22 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.SpectrumLib.subsystems.angleMech.AngleMechSubsystem;
 import frc.robot.RobotConfig;
 
-public class FourBar extends AngleMechSubsystem {
-    public static FourBarConfig config = new FourBarConfig();
+public class Elbow extends AngleMechSubsystem {
+    public static ElbowConfig config = new ElbowConfig();
 
-    public FourBar() {
+    public Elbow() {
         super(config);
-        motorLeader = new WPI_TalonFX(RobotConfig.Motors.fourBarMotor);
+        motorLeader = new WPI_TalonFX(RobotConfig.Motors.elbowMotor);
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise); // Should be done in config
-        motorLeader.configReverseSoftLimitThreshold(200);
+        motorLeader.configReverseSoftLimitThreshold(200); // TODO: change?
         motorLeader.configReverseSoftLimitEnable(true);
-        motorLeader.configForwardSoftLimitThreshold(config.fourbarMaxFalcon);
+        motorLeader.configForwardSoftLimitThreshold(config.elbowMaxFalcon);
         motorLeader.configForwardSoftLimitEnable(true);
     }
 
-    public void zeroFourBar() {
+    public void zeroElbow() {
         motorLeader.setSelectedSensorPosition(0);
     }
 
@@ -38,11 +38,11 @@ public class FourBar extends AngleMechSubsystem {
     }
 
     public double percentToFalcon(double percent) {
-        return config.fourbarMaxFalcon * (percent / 100);
+        return config.elbowMaxFalcon * (percent / 100);
     }
 
     public double getPercentAngle() {
-        return motorLeader.getSelectedSensorPosition() / config.fourbarMaxFalcon * 100;
+        return motorLeader.getSelectedSensorPosition() / config.elbowMaxFalcon * 100;
     }
 
     public void setMMPercent(double percent) {

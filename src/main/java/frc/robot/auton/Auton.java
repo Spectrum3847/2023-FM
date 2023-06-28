@@ -12,12 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
-import frc.robot.auton.commands.CubeHybridSpinUp;
-import frc.robot.auton.commands.EjectCone;
-import frc.robot.auton.commands.LeftCubeTaxiCommand;
-import frc.robot.auton.commands.MiddleCubeTaxiCommand;
-import frc.robot.auton.commands.RightCubeTaxiCommand;
-import frc.robot.auton.commands.SetConeSpitPosition;
+import frc.robot.auton.commands.Eject;
 import frc.robot.auton.commands.TaxiCommand;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
@@ -74,19 +69,11 @@ public class Auton {
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
         autonChooser.setDefaultOption("Clean Side (3 piece)", AutoPaths.CleanSide());
-        autonChooser.addOption("Bump Side (3 piece)", AutoPaths.BumpSide());
-        autonChooser.addOption("Over Charge (2 piece)", AutoPaths.OverCharge());
-        autonChooser.addOption(
-                "Clean Side w/ Balance (2 piece and grab)", AutoPaths.CleanSideWBalance());
-
         score3rd.setDefaultOption("True", true);
         score3rd.addOption("False", false);
 
         // Simple comp autos
         autonChooser.addOption("Taxi Simple", new TaxiCommand());
-        autonChooser.addOption("Left Cube Taxi", new LeftCubeTaxiCommand());
-        autonChooser.addOption("Right Cube Taxi", new RightCubeTaxiCommand());
-        autonChooser.addOption("Middle Cube Taxi", new MiddleCubeTaxiCommand());
         autonChooser.addOption(
                 "Nothing",
                 new PrintCommand("Doing Nothing in Auton")
@@ -120,23 +107,11 @@ public class Auton {
 
     // Adds event mapping to autonomous commands
     public static void setupEventMap() {
-        // Cube Shooting Commmands
-        eventMap.put("FirstShot", AutonCommands.firstShot()); // Tuned correctly
-        eventMap.put("CoolShot", AutonCommands.coolShot()); // Tuned correctly
-        eventMap.put("SecondShot", AutonCommands.secondShot()); // Tuned Correctly
-        eventMap.put("AngleThirdShot", AutonCommands.angleThirdShot()); // Need to be tuned to run
-        eventMap.put("SimpleLaunchCube", AutonCommands.simpleLaunchCube());
-        eventMap.put("CleanShot", AutonCommands.cleanShot());
-        eventMap.put("CubeMidSpinUp", AutonCommands.cubeMidSpinUp());
-        eventMap.put("CubeHybridSpinUp", new CubeHybridSpinUp());
-        eventMap.put("CubeMidEject", AutonCommands.cubeMidEject());
-        eventMap.put("AlignToGridMid", AutonCommands.alignToGridMid());
         // Cone placing Commands
         eventMap.put("ConeMid", AutonCommands.coneMid());
         eventMap.put("ConeMidFull", AutonCommands.coneMidFull());
         eventMap.put("ConeTop", AutonCommands.coneTop());
-        eventMap.put("ConeHybridPlacement", new SetConeSpitPosition());
-        eventMap.put("ConeHybrid", new EjectCone());
+        eventMap.put("ConeHybrid", new Eject());
         // Intake Commands
         eventMap.put("IntakeCube", AutonCommands.intakeCube());
         eventMap.put("IntakeCone", AutonCommands.intakeCone());

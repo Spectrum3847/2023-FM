@@ -6,33 +6,34 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
+import frc.robot.intake.commands.IntakeCommands;
 
-public class EjectCube extends CommandBase {
-    Command launchCube;
+public class Eject extends CommandBase {
+    Command ejectCommand;
 
-    public EjectCube() {
+    public Eject() {
         addRequirements(Robot.intake);
     }
 
     @Override
     public void initialize() {
         if (Auton.score3rd.getSelected() == true) {
-            launchCube = AutonCommands.secondShotLaunch();
+            ejectCommand = IntakeCommands.eject();
         } else {
-            launchCube = new WaitCommand(0);
+            ejectCommand = new WaitCommand(0);
         }
 
-        launchCube.initialize();
+        ejectCommand.initialize();
     }
 
     @Override
     public void execute() {
-        launchCube.execute();
+        ejectCommand.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
-        launchCube.end(interrupted);
+        ejectCommand.end(interrupted);
         AutonCommands.retractIntake().execute();
     }
 

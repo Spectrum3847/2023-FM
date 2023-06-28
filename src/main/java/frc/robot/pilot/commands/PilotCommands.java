@@ -3,8 +3,8 @@ package frc.robot.pilot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
-import frc.robot.elevator.Elevator;
 import frc.robot.pose.commands.PoseCommands;
+import frc.robot.slide.Slide;
 import frc.robot.swerve.commands.HeadingLock;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.swerve.commands.SwerveCommands;
@@ -95,8 +95,8 @@ public class PilotCommands {
             double elevatorPosition, double intensity, double durationSeconds) {
         return new RunCommand(
                         () -> {
-                            if (Elevator.falconToInches(Robot.elevator.getPosition())
-                                    >= Elevator.config.cubeTop - 0.5) {
+                            if (Slide.falconToInches(Robot.slide.getPosition())
+                                    >= Slide.config.cubeTop - 0.5) {
                                 Robot.pilotGamepad.rumble(intensity);
                             }
                         },

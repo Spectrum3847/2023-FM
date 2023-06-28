@@ -1,37 +1,39 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
-package frc.robot.fourbar.commands;
+package frc.robot.elbow.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.elbow.Elbow;
 
-public class FourBarHoldPosition extends CommandBase {
-    double position = 0;
-
-    /** Creates a new FourBarHoldPosition. */
-    public FourBarHoldPosition() {
+public class ZeroElbowRoutine extends CommandBase {
+    /** Creates a new ZeroElbow. */
+    public ZeroElbowRoutine() {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(Robot.fourBar);
+        addRequirements(Robot.elbow);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        position = Robot.fourBar.getPosition();
+        // Turn off soft limits
+        Robot.elbow.softLimitsFalse();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.fourBar.setMMPosition(position);
+        // Set Elbow to slowly lower
+        Robot.elbow.setManualOutput(Elbow.config.zeroSpeed);
+        Robot.elbow.zeroElbow();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.fourBar.stop();
+        // Set Elbow position to zero
+        // enable soft limits
+        Robot.elbow.resetSensorPosition(-1100);
+        Robot.elbow.softLimitsTrue();
+        Robot.elbow.setMMPosition(0);
     }
 
     // Returns true when the command should end.

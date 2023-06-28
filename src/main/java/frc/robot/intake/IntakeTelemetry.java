@@ -16,10 +16,8 @@ public class IntakeTelemetry {
         this.intake = intake;
 
         tab = Shuffleboard.getTab("Intake");
-        tab.addNumber("Launcher Velocity", () -> intake.launcherMotor.getVelocity())
-                .withPosition(0, 0);
-        tab.addNumber("Front Velocity", () -> intake.frontMotor.getVelocity()).withPosition(0, 1);
-        tab.addNumber("Lower Velocity", () -> intake.lowerMotor.getVelocity()).withPosition(0, 2);
+        tab.addNumber("Intake Motor Velocity", () -> intake.intakeMotor.getVelocity())
+                .withPosition(0, 1);
     }
 
     public void testMode() {

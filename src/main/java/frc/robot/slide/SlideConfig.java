@@ -1,17 +1,17 @@
-package frc.robot.elevator;
+package frc.robot.slide;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.SpectrumLib.subsystems.linearMech.LinearMechConfig;
 import frc.robot.RobotConfig.Motors;
 
-public class ElevatorConfig extends LinearMechConfig {
-    public static final String name = "Elevator";
+public class SlideConfig extends LinearMechConfig {
+    public static final String name = "Slide";
 
     // All these are in inches
     public final double hopHeight = 1;
     public final double hopTime = 0.5;
 
-    public final double coneIntake = 0;
+    public final double coneIntake = 0; // TODO: change
     public final double coneStandingIntake = 0;
     public final double coneShelf = 43.13;
 
@@ -40,15 +40,15 @@ public class ElevatorConfig extends LinearMechConfig {
     public final double homeTimeout = 0.5; // seconds
     public final double maxHomeTimeout = 4; // seconds, no home command can take longer than this
     public final double holdConeHeight =
-            2; // inches, hold cone will not run if the elevator is above this position
+            2; // inches, hold cone will not run if the slide is above this position
 
     public final double zeroSpeed = -0.2;
 
     public final double LEDheight = 24;
 
-    public static final int elevatorMotorID = Motors.elevatorMotor;
+    public static final int slideMotorID = Motors.slideMotor;
 
-    public ElevatorConfig() {
+    public SlideConfig() {
         super(name);
         this.kP = 0.43;
         this.kI = 0; // could be 0

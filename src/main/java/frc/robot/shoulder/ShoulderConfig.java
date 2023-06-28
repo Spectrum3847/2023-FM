@@ -1,19 +1,24 @@
-package frc.robot.fourbar;
+package frc.robot.shoulder;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.SpectrumLib.subsystems.angleMech.AngleMechConfig;
 
-public class FourBarConfig extends AngleMechConfig {
+public class ShoulderConfig extends AngleMechConfig {
 
     public boolean kInverted = true;
 
-    public final int fourbarMaxFalcon = 44000;
+    public final int shoulderMaxFalcon = 44000; // TODO: change
 
-    // Positions set as percentage of fourbar
+    // Positions set as percentage of shoulder
 
     public final int coneIntake = 94;
     public final int coneStandingIntake = 46;
     public final int coneShelf = 0;
+
+    public final int airConeIntake = 50;
+    public final int airCubeIntake = 50;
+    public final int topConeIntake = 90;
+    public final int topCubeIntake = 90;
 
     public final int coneHybrid = 30;
     public final int coneMid = 62; // converted from 1800 angle //24700
@@ -31,8 +36,8 @@ public class FourBarConfig extends AngleMechConfig {
     // Physical Constants
     public final double gearRatio = 1;
 
-    public FourBarConfig() {
-        super("FourBar");
+    public ShoulderConfig() {
+        super("Shoulder");
         this.kP = 0.4; // not accurate value, just testing
         this.kI = 0; // could be 0
         this.kD = 0; // could be 0

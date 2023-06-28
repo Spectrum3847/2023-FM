@@ -6,21 +6,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
-import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.fourbar.commands.FourBarCommands;
+import frc.robot.shoulder.commands.ShoulderCommands;
+import frc.robot.slide.commands.SlideCommands;
 
 public class SetConeSpitPosition extends CommandBase {
     Command setConeSpitPosition;
 
     public SetConeSpitPosition() {
-        addRequirements(Robot.elevator, Robot.fourBar);
+        addRequirements(Robot.slide, Robot.shoulder);
     }
 
     @Override
     public void initialize() {
         if (Auton.score3rd.getSelected() == true) {
-            setConeSpitPosition =
-                    ElevatorCommands.coneFloorGoal().alongWith(FourBarCommands.coneFloorGoal());
+            setConeSpitPosition = SlideCommands.home().alongWith(ShoulderCommands.coneFloorGoal());
         } else {
             setConeSpitPosition = new WaitCommand(0);
         }
