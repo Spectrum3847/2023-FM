@@ -10,4 +10,14 @@ public class AutoPaths {
         return Auton.getAutoBuilder()
                 .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 3)));
     }
+
+    public static Command BumpSide() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("BumpSide1", new PathConstraints(4, 3)));
+    }
+
+    public static Command OverCharge() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("OverCharge1", new PathConstraints(4, 3)));
+    }
 }
