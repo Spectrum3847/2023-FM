@@ -24,7 +24,7 @@ public class OperatorCommands {
     // TODO: change elevator commands
     /* Intaking Commands */
 
-// 
+    //
 
     public static Command coneStandingIntake() {
         return IntakeCommands.coneIntake()
@@ -116,8 +116,40 @@ public class OperatorCommands {
 
     public static Command coneMid() {
         return IntakeCommands.slowIntake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.coneMid(), ElbowCommands.coneMid())
+                .alongWith(
+                        SlideCommands.home(),
+                        ShoulderCommands.coneMid(),
+                        ElbowCommands.coneMid(),
+                        new WaitCommand(0.2)
+                                .andThen(IntakeCommands.eject())
+                                .finallyDo((b) -> homeSystems().withTimeout(1).schedule()))
                 .withName("OperatorConeMid");
+    }
+
+    public static Command cubeMid() {
+        return SlideCommands.home()
+                .alongWith(
+                        ShoulderCommands.cubeMid(),
+                        ElbowCommands.cubeMid(),
+                        new WaitCommand(0.2)
+                                .andThen(IntakeCommands.eject())
+                                .finallyDo((b) -> homeSystems().withTimeout(1).schedule()))
+                .withName("OperatorCubeMid");
+    }
+
+    public static Command floorScore() {
+        return SlideCommands.home()
+                .alongWith(
+                        ShoulderCommands.floorScore(),
+                        ElbowCommands.floorGoal(),
+                        new WaitCommand(0.2)
+                                .andThen(IntakeCommands.eject())
+                                .finallyDo((b) -> homeSystems().withTimeout(1).schedule()))
+                .withName("OperatorFloorScore");
+    }
+
+    public static Command slideUp() {
+        return SlideCommands.fullExtend();
     }
 
     public static Command coneTop() {

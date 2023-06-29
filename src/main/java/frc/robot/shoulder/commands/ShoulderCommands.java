@@ -66,6 +66,10 @@ public class ShoulderCommands {
         return setMMPercent(Shoulder.config.coneHybrid);
     }
 
+    public static Command floorScore() {
+        return setMMPercent(Shoulder.config.floorScore);
+    }
+
     public static Command coneMid() {
         return setMMPercent(Shoulder.config.coneMid);
     }

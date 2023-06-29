@@ -19,6 +19,8 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int airCubeIntake = 50;
     public final int topConeIntake = 90;
     public final int topCubeIntake = 90;
+    public final int coneFloorScore = 15;
+    public final int cubeFloorScore = 30;
 
     public final int coneHybrid = 30;
     public final int coneMid = 62; // converted from 1800 angle //24700

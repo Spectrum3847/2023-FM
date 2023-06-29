@@ -64,6 +64,10 @@ public class ElbowCommands {
         return setMMPercent(Elbow.config.coneHybrid);
     }
 
+    public static Command floorGoal() {
+        return setMMPercent(Elbow.config.coneFloorScore);
+    }
+
     public static Command coneMid() {
         return setMMPercent(Elbow.config.coneMid);
     }

@@ -56,27 +56,40 @@ public class OperatorGamepad extends Gamepad {
 
         /* Intake */
         // Floor Cone
-        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorIntake());
+        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorIntake());
+        // gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorIntake());
         // Floor Cube
-        gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeFloorIntake());
+        gamepad.leftTriggerButton
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.cubeFloorIntake());
+        // gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeFloorIntake());
         // Single Sub Intake Cone
         gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneAirIntake());
         // Single Sub Intake Cube
-        gamepad.Dpad.Up.and(noRightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
+        gamepad.yButton.and(rightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
+        // gamepad.Dpad.Up.and(noRightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
         // Double Sub Intake Cone
-        gamepad.Dpad.Down.and(noRightBumper()).whileTrue(OperatorCommands.coneShelfIntake());
+        gamepad.rightTriggerButton
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.coneShelfIntake());
+        // gamepad.Dpad.Down.and(noRightBumper()).whileTrue(OperatorCommands.coneShelfIntake());
         // Double Sub Intake Cube
-        gamepad.Dpad.Left.and(noRightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
+        gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
+        // gamepad.Dpad.Left.and(noRightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
 
         /* Scoring */
         // Mid Cone
-        gamepad.Dpad.Right.and(noRightBumper()).whileTrue();
+        gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
+        // gamepad.Dpad.Right.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
         // Slide up
-        gamepad.rightTriggerButton.and(rightBumper()).whileTrue();
+        gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.cubeMid());
+        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.slideUp());
         // Mid Cube
-        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue();
+        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
+        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
         // Floor Score
-        gamepad.leftTriggerButton.and(rightBumper()).whileTrue();
+        gamepad.bButton.and(noRightBumper()).whileTrue(OperatorCommands.floorScore());
+        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
 
         /* Cone Scoring */
         gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorGoal());
