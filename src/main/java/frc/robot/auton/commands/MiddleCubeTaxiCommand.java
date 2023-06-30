@@ -9,9 +9,7 @@ import frc.robot.swerve.commands.SwerveDrive;
 public class MiddleCubeTaxiCommand extends SequentialCommandGroup {
     /** Creates a new TestPathFollowing. */
     public MiddleCubeTaxiCommand() {
-        addCommands(
-                AutonCommands.simpleLaunchCube(),
-                new SwerveDrive(() -> -1.0, () -> 0.0, () -> 0.0).withTimeout(3.65));
+        addCommands(new SwerveDrive(() -> -1.0, () -> 0.0, () -> 0.0).withTimeout(3.65));
     }
 
     Rotation2d finalRotation() {

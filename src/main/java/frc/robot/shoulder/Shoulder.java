@@ -42,7 +42,8 @@ public class Shoulder extends AngleMechSubsystem {
     }
 
     public double getPercentAngle() {
-        return motorLeader.getSelectedSensorPosition() / config.shoulderMaxFalcon * 100;
+        // return motorLeader.getSelectedSensorPosition() / config.shoulderMaxFalcon * 100;
+        return motorLeader.getSelectedSensorPosition();
     }
 
     public void setMMPercent(double percent) {

@@ -7,29 +7,25 @@ public class ShoulderConfig extends AngleMechConfig {
 
     public boolean kInverted = true;
 
-    public final int shoulderMaxFalcon = 44000; // TODO: change
+    public final int shoulderMaxFalcon = 135181;
 
     // Positions set as percentage of shoulder
 
-    public final int coneIntake = 94;
+    public final int coneIntake = 0;
     public final int coneStandingIntake = 46;
-    public final int coneShelf = 0;
+    public final int coneShelf = 77; // 104127 //done
 
-    public final int airConeIntake = 50;
-    public final int airCubeIntake = 50;
-    public final int topConeIntake = 90;
-    public final int topCubeIntake = 90;
-    public final int coneFloorScore = 15;
-    public final int cubeFloorScore = 30;
+    public final int airConeIntake = 17; // 23071 //done
+    public final int airCubeIntake = 17; // same //done
 
-    public final int coneHybrid = 30;
-    public final int coneMid = 62; // converted from 1800 angle //24700
-    public final int coneTop = 100; // converted from 54900 angle
+    public final int coneFloor = 30;
+    public final int coneMid = 98; // 132550 //done
+    public final int coneTop = 98; // same //done
 
-    public final int cubeIntake = 70; // 73;
-    public final int cubeMid = 0;
-    public final int cubeTop = 0;
-    public final int cubeHybrid = 0;
+    public final int cubeIntake = 0;
+    public final int cubeMid = 98; // 132550 //done
+    public final int cubeTop = 98;
+    public final int cubeFloor = 0;
 
     public final int safePositionForElevator = 55;
 

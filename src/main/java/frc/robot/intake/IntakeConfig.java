@@ -16,7 +16,7 @@ public class IntakeConfig {
 
     public double intakeConeSpeed = 3000;
     public double intakeCubeSpeed = 3000;
-    public double ejectSpeed = 3000;
+    public double ejectSpeed = -3000;
 
     public double currentLimit = 40; // TODO: review
     public double threshold = 40;

@@ -11,7 +11,7 @@ public class SlideConfig extends LinearMechConfig {
     public final double hopHeight = 1;
     public final double hopTime = 0.5;
 
-    public final double coneIntake = 0; // TODO: change
+    public final double coneIntake = 3; // TODO: change
     public final double coneStandingIntake = 0;
     public final double coneShelf = 43.13;
 
@@ -28,7 +28,7 @@ public class SlideConfig extends LinearMechConfig {
     public final double diameterInches = 2.0051;
     public final double gearRatio = 9 / 1;
     public final double maxUpPos = 59.3;
-    public final double maxCarriageHeight = 29.732;
+    public final double maxCarriageHeight = 70000; // 80172 max
 
     public final double safePositionForFourBar = 42;
     public final double startingHeight = 0;

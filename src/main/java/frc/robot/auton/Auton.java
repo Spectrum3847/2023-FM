@@ -108,7 +108,7 @@ public class Auton {
     // Adds event mapping to autonomous commands
     public static void setupEventMap() {
         // Cone placing Commands
-        eventMap.put("ConeMid", AutonCommands.coneMid());
+        // eventMap.put("ConeMid", AutonCommands.coneMid());
         eventMap.put("ConeMidFull", AutonCommands.coneMidFull());
         eventMap.put("ConeTop", AutonCommands.coneTop());
         eventMap.put("ConeHybrid", new Eject());

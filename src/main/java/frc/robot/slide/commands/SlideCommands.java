@@ -50,18 +50,23 @@ public class SlideCommands {
 
     public static Command setPositionFromInches(double inches) {
         return new RunCommand(
-                        () -> Robot.slide.setMMPosition(Slide.inchesToFalcon(inches)), Robot.intake)
+                        () -> Robot.slide.setMMPosition(Slide.inchesToFalcon(inches)), Robot.slide)
                 .withName("SlideSetPosition");
+    }
+
+    public static Command setPositionFromFalcon(double falcon) {
+        return new RunCommand(() -> Robot.slide.setMMPosition(falcon), Robot.slide);
     }
 
     // full out
     public static Command fullExtend() {
-        return setPositionFromInches(Slide.config.coneIntake).withName("SlideFullExtend");
+        return setPositionFromFalcon(Slide.config.maxCarriageHeight)
+                .withName("SlideFullExtend"); // TODO: change back to inches
     }
 
     // full in
     public static Command home() {
-        return setPositionFromInches(0.34).withName("SlideHome");
+        return setPositionFromFalcon(300).withName("SlideHome");
     }
 
     public static Command zeroSlideRoutine() {

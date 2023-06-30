@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
 import frc.robot.intake.Intake;
-import frc.robot.shoulder.commands.ShoulderCommands;
-import frc.robot.slide.commands.SlideCommands;
 
 public class IntakeCommands {
 
@@ -31,14 +29,14 @@ public class IntakeCommands {
 
     public static Command eject() {
         return setVelocities(Intake.config.ejectSpeed)
-                .alongWith(ShoulderCommands.home().alongWith(SlideCommands.home()))
-                .withName("Eject")
-                .finallyDo(
-                        (b) ->
-                                SlideCommands.home()
-                                        .alongWith(ShoulderCommands.home())
-                                        .withTimeout(1.5)
-                                        .schedule());
+                // .alongWith(ShoulderCommands.home(), SlideCommands.home())
+                .withName("Eject");
+        // .finallyDo(
+        //         (b) ->
+        //                 SlideCommands.home()
+        //                         .alongWith(ShoulderCommands.home())
+        //                         .withTimeout(1.5)
+        //                         .schedule());
     } // TODO: review
 
     public static Command setVelocities(double velocity) {

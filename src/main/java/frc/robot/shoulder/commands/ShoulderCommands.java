@@ -46,28 +46,26 @@ public class ShoulderCommands {
         return setMMPercent(Shoulder.config.coneStandingIntake);
     }
 
+    public static Command coneShelf() {
+        return setMMPercent(Shoulder.config.coneShelf);
+    }
+
     public static Command airConeIntake() {
         return setMMPercent(Shoulder.config.airConeIntake);
+    }
+
+    public static Command cubeIntake() {
+        return setMMPercent(Shoulder.config.cubeIntake);
     }
 
     public static Command airCubeIntake() {
         return setMMPercent(Shoulder.config.airCubeIntake);
     }
 
-    public static Command topConeIntake() {
-        return setMMPercent(Shoulder.config.topConeIntake);
-    }
+    /* Scoring Positions */
 
-    public static Command topCubeIntake() {
-        return setMMPercent(Shoulder.config.topCubeIntake);
-    }
-
-    public static Command coneFloorGoal() {
-        return setMMPercent(Shoulder.config.coneHybrid);
-    }
-
-    public static Command floorScore() {
-        return setMMPercent(Shoulder.config.floorScore);
+    public static Command coneFloor() {
+        return setMMPercent(Shoulder.config.coneFloor);
     }
 
     public static Command coneMid() {
@@ -78,16 +76,8 @@ public class ShoulderCommands {
         return setMMPercent(Shoulder.config.coneTop);
     }
 
-    public static Command coneShelf() {
-        return setMMPercent(Shoulder.config.coneShelf);
-    }
-
-    public static Command cubeIntake() {
-        return setMMPercent(Shoulder.config.cubeIntake);
-    }
-
-    public static Command cubeFloorGoal() {
-        return setMMPercent(Shoulder.config.cubeHybrid);
+    public static Command cubeFloor() {
+        return setMMPercent(Shoulder.config.cubeFloor);
     }
 
     public static Command cubeMid() {

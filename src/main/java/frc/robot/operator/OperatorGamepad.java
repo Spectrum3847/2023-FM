@@ -8,7 +8,6 @@ import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.commands.OperatorCommands;
-import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 
@@ -29,21 +28,21 @@ public class OperatorGamepad extends Gamepad {
     public void setupTeleopButtons() {
 
         /* Intaking */
-        gamepad.leftBumper.whileTrue(OperatorCommands.homeAndSlowIntake());
-        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
-        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
-        gamepad.leftTriggerButton
-                .and(rightBumper())
-                .whileTrue(OperatorCommands.coneStandingIntake());
+        // gamepad.leftBumper.whileTrue(OperatorCommands.homeAndSlowIntake());
+        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
+        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
+        // gamepad.leftTriggerButton
+        // .and(rightBumper())
+        // .whileTrue(OperatorCommands.coneStandingIntake());
         // gamepad.rightTriggerButton
         //         .and(noRightBumper())
         //         .whileTrue(OperatorCommands.coneShelfIntake());
         // gamepad.yButton.and(rightBumper()).whileTrue();
 
         /* Cube Scoring */
-        gamepad.aButton
-                .and(rightBumper())
-                .whileTrue(OperatorCommands.cubeFloorGoal().alongWith(PilotCommands.rumble(1, 99)));
+        // gamepad.aButton
+        // .and(rightBumper())
+        // .whileTrue(OperatorCommands.cubeFloor().alongWith(PilotCommands.rumble(1, 99)));
         // gamepad.bButton
         //         .and(rightBumper())
         //         .whileTrue();
@@ -56,45 +55,48 @@ public class OperatorGamepad extends Gamepad {
 
         /* Intake */
         // Floor Cone
-        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorIntake());
-        // gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorIntake());
+        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
+        gamepad.leftBumper.whileTrue(OperatorCommands.homeSystems());
+        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
+        // gamepad.xButton.and(rightBumper()).whileTrue();
         // Floor Cube
-        gamepad.leftTriggerButton
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.cubeFloorIntake());
-        // gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeFloorIntake());
-        // Single Sub Intake Cone
-        gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneAirIntake());
+        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
+        // gamepad.xButton.and(noRightBumper()).whileTrue();
+        //
+        gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.airConeIntake());
         // Single Sub Intake Cube
         gamepad.yButton.and(rightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
-        // gamepad.Dpad.Up.and(noRightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
+        // gamepad.Dpad.Up.and(noRightBumper()).whileTrue();
         // Double Sub Intake Cone
         gamepad.rightTriggerButton
                 .and(noRightBumper())
                 .whileTrue(OperatorCommands.coneShelfIntake());
-        // gamepad.Dpad.Down.and(noRightBumper()).whileTrue(OperatorCommands.coneShelfIntake());
+        // gamepad.Dpad.Down.and(noRightBumper()).whileTrue();
         // Double Sub Intake Cube
-        gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
-        // gamepad.Dpad.Left.and(noRightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
+        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
+        // gamepad.Dpad.Left.and(noRightBumper()).whileTrue();
 
         /* Scoring */
         // Mid Cone
         gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
-        // gamepad.Dpad.Right.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
+        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneTop());
+        // gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneTop());
+        // gamepad.Dpad.Right.and(noRightBumper()).whileTrue();
         // Slide up
         gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.cubeMid());
-        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.slideUp());
+        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue();
         // Mid Cube
-        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
-        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
-        // Floor Score
-        gamepad.bButton.and(noRightBumper()).whileTrue(OperatorCommands.floorScore());
-        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        // gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
+        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue();
+        // Cone Floor Score
+        // gamepad.bButton.and(noRightBumper()).whileTrue(OperatorCommands.coneFloor());
+        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue();
+        // Cube Floor Score
+        gamepad.bButton.and(rightBumper()).whileTrue(OperatorCommands.cubeFloor());
 
         /* Cone Scoring */
-        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorGoal());
-        gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
-        gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneTop());
+        // gamepad.xButton.and(rightBumper()).whileTrue();
+        // gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
 
         /* Miscellaneous */
         gamepad.Dpad.Up.and(noRightBumper()).whileTrue(IntakeCommands.coneIntake());

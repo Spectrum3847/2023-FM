@@ -40,32 +40,28 @@ public class ElbowCommands {
         return setMMPercent(Elbow.config.coneIntake);
     }
 
+    public static Command coneStandingIntake() {
+        return setMMPercent(Elbow.config.coneStandingIntake);
+    }
+
+    public static Command coneShelf() {
+        return setMMPercent(Elbow.config.coneShelf);
+    }
+
     public static Command airConeIntake() {
         return setMMPercent(Elbow.config.airConeIntake);
+    }
+
+    public static Command cubeIntake() {
+        return setMMPercent(Elbow.config.cubeIntake);
     }
 
     public static Command airCubeIntake() {
         return setMMPercent(Elbow.config.airCubeIntake);
     }
 
-    public static Command topConeIntake() {
-        return setMMPercent(Elbow.config.topConeIntake);
-    }
-
-    public static Command topCubeIntake() {
-        return setMMPercent(Elbow.config.topCubeIntake);
-    }
-
-    public static Command coneStandingIntake() {
-        return setMMPercent(Elbow.config.coneStandingIntake);
-    }
-
-    public static Command coneFloorGoal() {
-        return setMMPercent(Elbow.config.coneHybrid);
-    }
-
-    public static Command floorGoal() {
-        return setMMPercent(Elbow.config.coneFloorScore);
+    public static Command coneFloor() {
+        return setMMPercent(Elbow.config.coneFloor);
     }
 
     public static Command coneMid() {
@@ -76,16 +72,8 @@ public class ElbowCommands {
         return setMMPercent(Elbow.config.coneTop);
     }
 
-    public static Command coneShelf() {
-        return setMMPercent(Elbow.config.coneShelf);
-    }
-
-    public static Command cubeIntake() {
-        return setMMPercent(Elbow.config.cubeIntake);
-    }
-
-    public static Command cubeFloorGoal() {
-        return setMMPercent(Elbow.config.cubeHybrid);
+    public static Command cubeFloor() {
+        return setMMPercent(Elbow.config.cubeFloor);
     }
 
     public static Command cubeMid() {

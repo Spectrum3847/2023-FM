@@ -58,13 +58,13 @@ public class AutonCommands {
         return new RunCommand(() -> Robot.slide.stop(), Robot.slide).withTimeout(0.1);
     }
 
-    public static Command coneMid() {
-        return OperatorCommands.coneMid()
-                .withTimeout(1.1)
-                .andThen(
-                        IntakeCommands.eject()
-                                .withTimeout(.1)); // TODO: done after slide + op refactor
-    }
+    // public static Command coneMid() {
+    //     return OperatorCommands.coneMid()
+    //             .withTimeout(1.1)
+    //             .andThen(
+    //                     IntakeCommands.eject()
+    //                             .withTimeout(.1)); // TODO: done after slide + op refactor
+    // }
 
     public static Command coneMidFull() {
         return OperatorCommands.coneMid()
@@ -80,7 +80,7 @@ public class AutonCommands {
     }
 
     public static Command autonConeFloorGoalPostion() {
-        return SlideCommands.home().alongWith(ShoulderCommands.coneFloorGoal());
+        return SlideCommands.home().alongWith(ShoulderCommands.coneFloor());
     }
 
     public static Command aimPilotDrive(double goalAngleRadians) {

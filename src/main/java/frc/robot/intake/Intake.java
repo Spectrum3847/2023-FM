@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
         super();
         intakeMotor =
                 new IntakeMotor(
-                        config, RobotConfig.Motors.intakeMotor, TalonFXInvertType.Clockwise);
+                        config, RobotConfig.Motors.intakeMotor, TalonFXInvertType.CounterClockwise);
 
         // cubeSensor = new DigitalInput(0);
         telemetry = new IntakeTelemetry(this);

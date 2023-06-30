@@ -2,6 +2,7 @@ package frc.robot.slide;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.util.Units;
 import frc.SpectrumLib.subsystems.linearMech.LinearMechSubsystem;
@@ -13,9 +14,11 @@ public class Slide extends LinearMechSubsystem {
 
     public Slide() {
         super(config);
-        motorLeader = new WPI_TalonFX(RobotConfig.Motors.slideMotor, "3847");
+        motorLeader = new WPI_TalonFX(RobotConfig.Motors.slideMotor);
         config.updateTalonFXConfig();
         setupFalconLeader();
+        motorLeader.setInverted(TalonFXInvertType.Clockwise);
+        // motorLeader.setNeutralMode(NeutralMode.Coast);
         motorLeader.configForwardSoftLimitThreshold(inchesToFalcon(config.maxUpPos));
         motorLeader.configForwardSoftLimitEnable(true);
         motorLeader.configReverseSoftLimitThreshold(600);

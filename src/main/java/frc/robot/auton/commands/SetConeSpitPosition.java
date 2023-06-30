@@ -19,7 +19,7 @@ public class SetConeSpitPosition extends CommandBase {
     @Override
     public void initialize() {
         if (Auton.score3rd.getSelected() == true) {
-            setConeSpitPosition = SlideCommands.home().alongWith(ShoulderCommands.coneFloorGoal());
+            setConeSpitPosition = SlideCommands.home().alongWith(ShoulderCommands.coneFloor());
         } else {
             setConeSpitPosition = new WaitCommand(0);
         }

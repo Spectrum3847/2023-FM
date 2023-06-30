@@ -10,7 +10,6 @@ public class RightCubeTaxiCommand extends SequentialCommandGroup {
     /** Creates a new TestPathFollowing. */
     public RightCubeTaxiCommand() {
         addCommands(
-                AutonCommands.simpleLaunchCube(),
                 new SwerveDrive(() -> -0.25, () -> 1, () -> 0.0).withTimeout(0.5),
                 new SwerveDrive(() -> -2.0, () -> 0.0, () -> 0.0).withTimeout(3.25));
     }
