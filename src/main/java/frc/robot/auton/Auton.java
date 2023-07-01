@@ -69,6 +69,8 @@ public class Auton {
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
         autonChooser.setDefaultOption("Clean Side (3 piece)", AutoPaths.CleanSide());
+        autonChooser.addOption("AutoBalance", AutoPaths.Charge());
+
         score3rd.setDefaultOption("True", true);
         score3rd.addOption("False", false);
 

@@ -8,8 +8,6 @@ import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.commands.OperatorCommands;
-import frc.robot.shoulder.commands.ShoulderCommands;
-import frc.robot.slide.commands.SlideCommands;
 
 /** Used to add buttons to the operator gamepad and configure the joysticks */
 public class OperatorGamepad extends Gamepad {
@@ -27,7 +25,7 @@ public class OperatorGamepad extends Gamepad {
 
     public void setupTeleopButtons() {
 
-        gamepad.leftBumper.whileTrue(OperatorCommands.airConeIntake()); //TODO: change to home
+        gamepad.leftBumper.whileTrue(OperatorCommands.airConeIntake()); // TODO: change to home
         gamepad.leftTriggerButton.whileTrue(OperatorCommands.airConeIntake());
         gamepad.rightTriggerButton.whileTrue(OperatorCommands.coneShelfIntake());
         gamepad.yButton.whileTrue(OperatorCommands.coneTop());
@@ -36,8 +34,6 @@ public class OperatorGamepad extends Gamepad {
         gamepad.aButton.whileTrue(OperatorCommands.cubeMid());
 
         gamepad.Dpad.Up.whileTrue(IntakeCommands.coneIntake());
-        
-
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(noRightBumper())

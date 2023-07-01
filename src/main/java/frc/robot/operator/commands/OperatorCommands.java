@@ -185,7 +185,9 @@ public class OperatorCommands {
 
     public static Command manualShoulder() {
         return new RunCommand(
-                        () -> Robot.shoulder.setManualOutput(Robot.operatorGamepad.shoulderManual()),
+                        () ->
+                                Robot.shoulder.setManualOutput(
+                                        Robot.operatorGamepad.shoulderManual()),
                         Robot.shoulder)
                 .withName("OperatorManualShoulder");
     }
