@@ -137,6 +137,12 @@ public class OperatorCommands {
         //         .withName("OperatorCubeMid");
     }
 
+    public static Command cubeTop() {
+        return SlideCommands.fullExtend()
+                .alongWith(ShoulderCommands.cubeTop(), ElbowCommands.cubeTop())
+                .withName("OperatorCubeTop");
+    }
+
     /** Sets Slide, Shoulder, and Elbow to coast mode */
     public static Command coastMode() {
         return SlideCommands.coastMode()
@@ -160,38 +166,38 @@ public class OperatorCommands {
         //         .withName("OperatorHomeSystems");
     }
 
-    public static Command manualElevator() {
+    public static Command manualSlide() {
         return new RunCommand(
-                        () -> Robot.slide.setManualOutput(Robot.operatorGamepad.elevatorManual()),
+                        () -> Robot.slide.setManualOutput(Robot.operatorGamepad.slideManual()),
                         Robot.slide)
-                .withName("OperatorManualElevator");
+                .withName("OperatorManualSlide");
     }
 
-    public static Command slowManualElevator() {
+    public static Command slowManualSlide() {
         return new RunCommand(
                         () ->
                                 Robot.slide.setManualOutput(
-                                        Robot.operatorGamepad.elevatorManual()
+                                        Robot.operatorGamepad.slideManual()
                                                 * OperatorConfig.slowModeScalar),
                         Robot.slide)
-                .withName("OperatorManualSlowElevator");
+                .withName("OperatorManualSlowSlide");
     }
 
-    public static Command manualFourBar() {
+    public static Command manualShoulder() {
         return new RunCommand(
-                        () -> Robot.shoulder.setManualOutput(Robot.operatorGamepad.fourBarManual()),
+                        () -> Robot.shoulder.setManualOutput(Robot.operatorGamepad.shoulderManual()),
                         Robot.shoulder)
-                .withName("OperatorManualFourBar");
+                .withName("OperatorManualShoulder");
     }
 
-    public static Command slowManualFourBar() {
+    public static Command slowManualShoulder() {
         return new RunCommand(
                         () ->
                                 Robot.shoulder.setManualOutput(
-                                        Robot.operatorGamepad.fourBarManual()
+                                        Robot.operatorGamepad.shoulderManual()
                                                 * OperatorConfig.slowModeScalar),
                         Robot.shoulder)
-                .withName("OperatorManualSlowFourBar");
+                .withName("OperatorManualSlowShoulder");
     }
 
     /** Command that can be used to rumble the pilot controller */

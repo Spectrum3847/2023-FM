@@ -27,99 +27,31 @@ public class OperatorGamepad extends Gamepad {
 
     public void setupTeleopButtons() {
 
-        /* Intaking */
-        // gamepad.leftBumper.whileTrue(OperatorCommands.homeAndSlowIntake());
-        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
-        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
-        // gamepad.leftTriggerButton
-        // .and(rightBumper())
-        // .whileTrue(OperatorCommands.coneStandingIntake());
-        // gamepad.rightTriggerButton
-        //         .and(noRightBumper())
-        //         .whileTrue(OperatorCommands.coneShelfIntake());
-        // gamepad.yButton.and(rightBumper()).whileTrue();
+        gamepad.leftBumper.whileTrue(OperatorCommands.airConeIntake()); //TODO: change to home
+        gamepad.leftTriggerButton.whileTrue(OperatorCommands.airConeIntake());
+        gamepad.rightTriggerButton.whileTrue(OperatorCommands.coneShelfIntake());
+        gamepad.yButton.whileTrue(OperatorCommands.coneTop());
+        gamepad.xButton.whileTrue(OperatorCommands.coneMid());
+        gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
+        gamepad.aButton.whileTrue(OperatorCommands.cubeMid());
 
-        /* Cube Scoring */
-        // gamepad.aButton
-        // .and(rightBumper())
-        // .whileTrue(OperatorCommands.cubeFloor().alongWith(PilotCommands.rumble(1, 99)));
-        // gamepad.bButton
-        //         .and(rightBumper())
-        //         .whileTrue();
-        // gamepad.aButton
-        //         .and(noRightBumper())
-        //         .whileTrue();
-        // gamepad.bButton
-        //         .and(noRightBumper())
-        //         .whileTrue();
+        gamepad.Dpad.Up.whileTrue(IntakeCommands.coneIntake());
+        
 
-        /* Intake */
-        // Floor Cone
-        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
-        gamepad.leftBumper.whileTrue(OperatorCommands.homeSystems());
-        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
-        // gamepad.xButton.and(rightBumper()).whileTrue();
-        // Floor Cube
-        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
-        // gamepad.xButton.and(noRightBumper()).whileTrue();
-        //
-        gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.airConeIntake());
-        // Single Sub Intake Cube
-        gamepad.yButton.and(rightBumper()).whileTrue(OperatorCommands.cubeAirIntake());
-        // gamepad.Dpad.Up.and(noRightBumper()).whileTrue();
-        // Double Sub Intake Cone
-        gamepad.rightTriggerButton
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.coneShelfIntake());
-        // gamepad.Dpad.Down.and(noRightBumper()).whileTrue();
-        // Double Sub Intake Cube
-        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.cubeShelfIntake());
-        // gamepad.Dpad.Left.and(noRightBumper()).whileTrue();
-
-        /* Scoring */
-        // Mid Cone
-        gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
-        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneTop());
-        // gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneTop());
-        // gamepad.Dpad.Right.and(noRightBumper()).whileTrue();
-        // Slide up
-        gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.cubeMid());
-        // gamepad.rightTriggerButton.and(rightBumper()).whileTrue();
-        // Mid Cube
-        // gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
-        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue();
-        // Cone Floor Score
-        // gamepad.bButton.and(noRightBumper()).whileTrue(OperatorCommands.coneFloor());
-        // gamepad.leftTriggerButton.and(rightBumper()).whileTrue();
-        // Cube Floor Score
-        gamepad.bButton.and(rightBumper()).whileTrue(OperatorCommands.cubeFloor());
-
-        /* Cone Scoring */
-        // gamepad.xButton.and(rightBumper()).whileTrue();
-        // gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
-
-        /* Miscellaneous */
-        gamepad.Dpad.Up.and(noRightBumper()).whileTrue(IntakeCommands.coneIntake());
-        gamepad.Dpad.Down.and(noRightBumper()).whileTrue(IntakeCommands.eject());
-        gamepad.Dpad.Left.and(noRightBumper()).whileTrue(LEDCommands.coneFloorLED());
-        gamepad.Dpad.Right.and(noRightBumper()).whileTrue(LEDCommands.cubeLED());
-        gamepad.selectButton.whileTrue(SlideCommands.zeroSlideRoutine());
-        gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
-        gamepad.selectButton.and(gamepad.startButton).onTrue(OperatorCommands.cancelCommands());
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(noRightBumper())
-                .whileTrue(OperatorCommands.manualFourBar());
+                .whileTrue(OperatorCommands.manualShoulder());
         AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
                 .and(noRightBumper())
-                .whileTrue(OperatorCommands.manualElevator());
+                .whileTrue(OperatorCommands.manualSlide());
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(rightBumper())
-                .whileTrue(OperatorCommands.slowManualFourBar());
+                .whileTrue(OperatorCommands.slowManualShoulder());
         AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
                 .and(rightBumper())
-                .whileTrue(OperatorCommands.slowManualElevator());
+                .whileTrue(OperatorCommands.slowManualSlide());
     }
 
     public void setupDisabledButtons() {
@@ -154,11 +86,11 @@ public class OperatorGamepad extends Gamepad {
         this.gamepad.setRumble(intensity, intensity);
     }
 
-    public double elevatorManual() {
-        return gamepad.leftStick.getY() * OperatorConfig.elevatorModifer;
+    public double slideManual() {
+        return gamepad.leftStick.getY() * OperatorConfig.slideModifer;
     }
 
-    public double fourBarManual() {
-        return gamepad.rightStick.getY() * OperatorConfig.fourBarModifer;
+    public double shoulderManual() {
+        return gamepad.rightStick.getY() * OperatorConfig.shoulderModifer;
     }
 }
