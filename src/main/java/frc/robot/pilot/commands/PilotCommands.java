@@ -44,10 +44,18 @@ public class PilotCommands {
                 .withName("PilotHeadingLock");
     }
 
+    // public static Command scoreRoutine() {
+    //     return ElbowCommands.score()
+    //             .withTimeout(0.1)
+    //             .andThen(IntakeCommands.drop().alongWith(ElbowCommands.raiseBy(17)))
+    //             .withTimeout(0.3)
+    //             .andThen(OperatorCommands.homeSystems());
+    // }
+
     public static Command scoreRoutine() {
         return ElbowCommands.score()
                 .withTimeout(0.1)
-                .andThen(IntakeCommands.drop().alongWith(ElbowCommands.raiseBy(17)))
+                .andThen(IntakeCommands.drop())
                 .withTimeout(0.3)
                 .andThen(OperatorCommands.homeSystems());
     }

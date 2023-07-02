@@ -73,9 +73,8 @@ public class PilotGamepad extends Gamepad {
         gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
 
         /* Scoring */
-        gamepad.aButton
-                .and(noBumpers())
-                .whileTrue(PilotCommands.scoreRoutine()); // TODO: change position to more in maybe
+        gamepad.aButton.and(noBumpers()).onTrue((PilotCommands.scoreRoutine()));
+        // gamepad.aButton.and(noBumpers()).whileTrue(ElbowCommands.raiseBy(20));
 
         /* Dpad */
         // gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue();

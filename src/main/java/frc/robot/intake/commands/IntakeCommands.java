@@ -8,11 +8,16 @@ import frc.robot.intake.Intake;
 public class IntakeCommands {
 
     public static void setupDefaultCommand() {
+
         Robot.intake.setDefaultCommand(
-                stopAllMotors()
-                        .withTimeout(1)
-                        .andThen(new HoldCone()) // TODO: review
+                slowIntake() // TODO: review
                         .withName("IntakeDefaultCommand"));
+
+        // Robot.intake.setDefaultCommand(
+        //         stopAllMotors()
+        //                 .withTimeout(1)
+        //                 .andThen(new HoldCone()) // TODO: review
+        //                 .withName("IntakeDefaultCommand"));
     }
 
     public static Command slowIntake() {

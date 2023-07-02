@@ -37,6 +37,18 @@ public class ElbowCommands {
         return new RunCommand(() -> Robot.elbow.setMMPercent(percent), Robot.elbow);
     }
 
+    public static Command raiseByPercent(double percent) {
+        return new RunCommand(
+                () -> {
+                    double test = Robot.elbow.falconToPercent(Robot.elbow.getPosition()) + percent;
+                    System.out.print(
+                            "at " + Robot.elbow.falconToPercent(Robot.elbow.getPosition()));
+                    System.out.println(" || go to " + test);
+                    Robot.elbow.setMMPercent(test);
+                },
+                Robot.elbow);
+    }
+
     /* Intaking Positions */
 
     public static Command intake() {
@@ -74,7 +86,7 @@ public class ElbowCommands {
     }
 
     public static Command raiseBy(double percent) {
-        return setMMPercent(Robot.elbow.getPosition() + Robot.elbow.percentToFalcon(percent));
+        return raiseByPercent(percent); // +percent lowers elbow
     }
 
     public static Command setMMPosition(double position) {

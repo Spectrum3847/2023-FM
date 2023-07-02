@@ -41,9 +41,12 @@ public class Elbow extends AngleMechSubsystem {
         return config.elbowMaxFalcon * (percent / 100);
     }
 
+    public double falconToPercent(double falcon) {
+        return (falcon / config.elbowMaxFalcon) * 100;
+    }
+
     public double getPercentAngle() {
-        // return motorLeader.getSelectedSensorPosition() / config.elbowMaxFalcon * 100;
-        return motorLeader.getSelectedSensorPosition();
+        return motorLeader.getSelectedSensorPosition() / config.elbowMaxFalcon * 100;
     }
 
     public void setMMPercent(double percent) {

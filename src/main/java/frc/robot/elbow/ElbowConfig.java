@@ -12,10 +12,10 @@ public class ElbowConfig extends AngleMechConfig {
     // Positions set as percentage of elbow
 
     public final int intake = 0;
-    public final int airIntake = 52; // 33194 //done
-    public final int shelfIntake = 5; // 3191 between 1000 and 3000 //done
+    public final int airIntake = 65; // 33194 //done 38000
+    public final int shelfIntake = 0; // 3191 between 1000 and 3000 //done
 
-    public final int home = 52;
+    public final int home = 70;
 
     public final int floor = 20;
     public final int coneUp = 19; // 12263 //done

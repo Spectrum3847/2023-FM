@@ -23,7 +23,7 @@ public class OperatorCommands {
     public static Command intake() {
         return IntakeCommands.intake()
                 .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake())
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .finallyDo((b) -> homeAndSlowIntake().withTimeout(1).schedule())
                 .withName("OperatorIntake");
     }
 

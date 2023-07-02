@@ -11,14 +11,14 @@ public class ShoulderConfig extends AngleMechConfig {
 
     // Positions set as percentage of shoulder
     public final int intake = 0;
-    public final int airIntake = 17; // 23071 //done
-    public final int shelfIntake = 77; // 104127 //done
+    public final int airIntake = 15; // 23071 //done 21000
+    public final int shelfIntake = 82; // 104127 //done
 
-    public final int home = 17;
+    public final int home = 22;
 
     public final int floor = 20;
     public final int coneUp = 98; // 132550 //done
-    public final int cubeUp = 100; // 132550 //done
+    public final int cubeUp = 93; // 132550 //done
 
     public final int safePositionForElbow = 55;
 
