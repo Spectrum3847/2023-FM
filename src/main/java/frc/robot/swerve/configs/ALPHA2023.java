@@ -43,10 +43,10 @@ public class ALPHA2023 {
 
     /* Swerve Profiling Values */
     static final double maxVelocity =
-            ((6380 / 60) / angleGearRatio) * wheelDiameter * Math.PI * 0.95; // meters per //
+            ((6380 / 60) / angleGearRatio) * wheelDiameter * Math.PI; // meters per //
     // second
     public static final double maxAutoVelocity =
-            ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI * 0.95; // meters per //
+            ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI; // meters per //
     // second
     static final double maxAccel = maxVelocity * 1.5; // take 1/2 sec to get to max speed.
     static final double maxAngularVelocity =
@@ -86,9 +86,9 @@ public class ALPHA2023 {
                             maxAccel,
                             maxAngularVelocity,
                             maxAngularAcceleration)
-                    .configNeutralModes(NeutralMode.Coast, NeutralMode.Coast)
+                    .configNeutralModes(NeutralMode.Brake, NeutralMode.Brake)
                     .configRotationController(
-                            kPRotationController, kIRotationController, kDRotationController);;
+                            kPRotationController, kIRotationController, kDRotationController);
 
     /* Module Configs */
     static final ModuleConfig Mod0 =

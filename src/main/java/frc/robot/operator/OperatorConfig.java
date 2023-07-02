@@ -8,6 +8,7 @@ public class OperatorConfig {
 
     public static final double slideModifer = 1.0;
     public static final double shoulderModifer = 0.3;
+    public static final double elbowModifier = 0.3;
 
     public static final double slowModeScalar = 0.3;
 }

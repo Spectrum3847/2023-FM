@@ -66,7 +66,7 @@ public class SlideCommands {
 
     // full in
     public static Command home() {
-        return setPositionFromFalcon(300).withName("SlideHome");
+        return setPositionFromFalcon(0).withName("SlideHome");
     }
 
     public static Command zeroSlideRoutine() {

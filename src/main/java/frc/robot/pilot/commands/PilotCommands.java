@@ -3,8 +3,10 @@ package frc.robot.pilot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
+import frc.robot.elbow.commands.ElbowCommands;
+import frc.robot.intake.commands.IntakeCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
-import frc.robot.slide.Slide;
 import frc.robot.swerve.commands.HeadingLock;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.swerve.commands.SwerveCommands;
@@ -40,19 +42,13 @@ public class PilotCommands {
                 .withName("PilotHeadingLock");
     }
 
-    /*public static Command snakeDrive() {
-        return TrajectoriesCommands.resetThetaController()
-                .andThen(
-                        new SwerveDrive(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                () -> Robot.pilotGamepad.getDriveLeftPositive(),
-                                Robot.trajectories.calculateThetaSupplier(
-                                        () -> Robot.pilotGamepad.getDriveAngle()),
-                                true,
-                                false,
-                                PilotConfig.intakeCoRmeters))
-                .withName("SnakeDrive");
-    }*/
+    public static Command scoreRoutine() {
+        return ElbowCommands.score()
+                .withTimeout(0.1)
+                .andThen(IntakeCommands.drop().alongWith(ElbowCommands.raiseBy(17)))
+                .withTimeout(0.3)
+                .andThen(OperatorCommands.homeSystems());
+    }
 
     /**
      * Drive the robot and control orientation using the right stick
@@ -91,19 +87,19 @@ public class PilotCommands {
     }
 
     /** Command that can be used to rumble the pilot controller */
-    public static Command conditionalRumble(
-            double elevatorPosition, double intensity, double durationSeconds) {
-        return new RunCommand(
-                        () -> {
-                            if (Slide.falconToInches(Robot.slide.getPosition())
-                                    >= Slide.config.cubeTop - 0.5) {
-                                Robot.pilotGamepad.rumble(intensity);
-                            }
-                        },
-                        Robot.pilotGamepad)
-                .withTimeout(durationSeconds)
-                .withName("ConditionalRumblePilot");
-    }
+    // public static Command conditionalRumble(
+    //         double elevatorPosition, double intensity, double durationSeconds) {
+    //     return new RunCommand(
+    //                     () -> {
+    //                         if (Slide.falconToInches(Robot.slide.getPosition())
+    //                                 >= Slide.config.cubeUp - 0.5) {
+    //                             Robot.pilotGamepad.rumble(intensity);
+    //                         }
+    //                     },
+    //                     Robot.pilotGamepad)
+    //             .withTimeout(durationSeconds)
+    //             .withName("ConditionalRumblePilot");
+    // }
 
     /** Reorient the Robot */
     public static Command reorient(double angle) {

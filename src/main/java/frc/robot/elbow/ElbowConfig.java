@@ -11,23 +11,18 @@ public class ElbowConfig extends AngleMechConfig {
 
     // Positions set as percentage of elbow
 
-    public final int airConeIntake = 52; // 33194 //done
-    public final int airCubeIntake = 52; // same //done
-    public final int coneFloorScore = 15; // not used
-    public final int cubeFloorScore = 30; // not used
+    public final int intake = 0;
+    public final int airIntake = 52; // 33194 //done
+    public final int shelfIntake = 5; // 3191 between 1000 and 3000 //done
 
-    public final int coneIntake = 0;
-    public final int coneStandingIntake = 46;
-    public final int coneShelf = 5; // 3191 between 1000 and 3000 //done
+    public final int home = 52;
 
-    public final int coneFloor = 30;
-    public final int coneMid = 19; // 12263 //done
-    public final int coneTop = 19; // SAME
+    public final int floor = 20;
+    public final int coneUp = 19; // 12263 //done
+    public final int cubeUp = 0;
 
-    public final int cubeIntake = 70; // 73;
-    public final int cubeMid = 0; // 0
-    public final int cubeTop = 0;
-    public final int cubeFloor = 0;
+    public final int scorePos = coneUp - 17;
+    // public final int cubeScorePos = cubeUp - 2;
 
     public final double zeroSpeed = -0.2;
 

@@ -37,12 +37,8 @@ public class LEDCommands {
         return new OneColorLEDCommand(Color.kRed, "LED Fail", 99, 1.5);
     }
 
-    public static Command coneFloorLED() {
+    public static Command coneLED() {
         return new OneColorLEDCommand(Color.kYellow, "Yellow Floor Cone", 99);
-    }
-
-    public static Command coneShelfLED() {
-        return new BlinkLEDCommand(Color.kYellow, "Yellow Shelf Cone", 99);
     }
 
     public static Command cubeLED() {

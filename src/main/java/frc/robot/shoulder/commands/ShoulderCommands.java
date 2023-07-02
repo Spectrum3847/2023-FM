@@ -38,62 +38,36 @@ public class ShoulderCommands {
         return new RunCommand(() -> Robot.shoulder.setMMPercent(percent), Robot.shoulder);
     }
 
-    public static Command coneIntake() {
-        return setMMPercent(Shoulder.config.coneIntake);
+    /* Intake Positions */
+
+    public static Command intake() {
+        return setMMPercent(Shoulder.config.intake);
     }
 
-    public static Command coneStandingIntake() {
-        return setMMPercent(Shoulder.config.coneStandingIntake);
+    public static Command airIntake() {
+        return setMMPercent(Shoulder.config.airIntake);
     }
 
-    public static Command coneShelf() {
-        return setMMPercent(Shoulder.config.coneShelf);
-    }
-
-    public static Command airConeIntake() {
-        return setMMPercent(Shoulder.config.airConeIntake);
-    }
-
-    public static Command cubeIntake() {
-        return setMMPercent(Shoulder.config.cubeIntake);
-    }
-
-    public static Command airCubeIntake() {
-        return setMMPercent(Shoulder.config.airCubeIntake);
+    public static Command shelfIntake() {
+        return setMMPercent(Shoulder.config.shelfIntake);
     }
 
     /* Scoring Positions */
 
-    public static Command coneFloor() {
-        return setMMPercent(Shoulder.config.coneFloor);
-    }
-
-    public static Command coneMid() {
-        return setMMPercent(Shoulder.config.coneMid);
-    }
-
-    public static Command coneTop() {
-        return setMMPercent(Shoulder.config.coneTop);
-    }
-
-    public static Command cubeFloor() {
-        return setMMPercent(Shoulder.config.cubeFloor);
-    }
-
-    public static Command cubeMid() {
-        return setMMPercent(Shoulder.config.cubeMid);
-    }
-
-    public static Command cubeTop() {
-        return setMMPercent(Shoulder.config.cubeTop);
-    }
-
     public static Command home() {
-        return setMMPercent(0);
+        return setMMPercent(Shoulder.config.home);
     }
 
-    public static Command autonHome() {
-        return setMMPercent(1);
+    public static Command floor() {
+        return setMMPercent(Shoulder.config.floor);
+    }
+
+    public static Command coneUp() {
+        return setMMPercent(Shoulder.config.coneUp);
+    }
+
+    public static Command cubeUp() {
+        return setMMPercent(Shoulder.config.cubeUp);
     }
 
     public static Command setMMPosition(double position) {

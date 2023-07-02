@@ -19,7 +19,7 @@ public class Slide extends LinearMechSubsystem {
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise);
         // motorLeader.setNeutralMode(NeutralMode.Coast);
-        motorLeader.configForwardSoftLimitThreshold(inchesToFalcon(config.maxUpPos));
+        motorLeader.configForwardSoftLimitThreshold(config.maxCarriageHeight);
         motorLeader.configForwardSoftLimitEnable(true);
         motorLeader.configReverseSoftLimitThreshold(600);
         motorLeader.configReverseSoftLimitEnable(true);
