@@ -109,11 +109,21 @@ public class PilotGamepad extends Gamepad {
         /* Start and Select */
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
         gamepad.selectButton.whileTrue(PilotCommands.lockSwerve());
+
+        /* Misc */
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupDisabledButtons() {
         gamepad.aButton.whileTrue(new OneColorLEDCommand(Color.kWhite, "White", 5));
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupTestButtons() {}

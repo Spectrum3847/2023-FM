@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
+import frc.robot.exceptions.KillRobotException;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
@@ -139,5 +140,13 @@ public class OperatorCommands {
     public static Command cancelCommands() {
         return new InstantCommand(() -> CommandScheduler.getInstance().cancelAll())
                 .withName("OperatorCancelAll");
+    }
+
+    public static Command killTheRobot() {
+        return new InstantCommand(() -> operatorError()).ignoringDisable(true);
+    }
+
+    public static void operatorError() {
+        throw new KillRobotException("The robot was killed by operator");
     }
 }

@@ -1,9 +1,11 @@
 package frc.robot.pilot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
+import frc.robot.exceptions.KillRobotException;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
@@ -134,4 +136,12 @@ public class PilotCommands {
     //             .withName("ResetOdometryPose")
     //             .ignoringDisable(true);
     // }
+
+    public static Command killTheRobot() {
+        return new InstantCommand(() -> driverError()).ignoringDisable(true);
+    }
+
+    public static void driverError() {
+        throw new KillRobotException("The robot was killed by pilot");
+    }
 }

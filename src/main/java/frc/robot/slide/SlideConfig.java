@@ -8,7 +8,7 @@ public class SlideConfig extends LinearMechConfig {
     public static final String name = "Slide";
 
     // All these are in inches
-    public final double diameterInches = 2.0051;
+    public final double diameterInches = 1.5038;
     public final double gearRatio = 9 / 1;
     public final double maxUpPos = 59.3; // TODO: change important
     public final double maxCarriageHeight = 70000; // 80172 max

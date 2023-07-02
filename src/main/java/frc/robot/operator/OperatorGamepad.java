@@ -29,19 +29,25 @@ public class OperatorGamepad extends Gamepad {
     public void setupTeleopButtons() {
 
         /* Intaking */
-        gamepad.leftTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.intake());
+        gamepad.leftTriggerButton
+                .and(rightBumper())
+                .and(noRightTrigger())
+                .whileTrue(OperatorCommands.intake());
         gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
-        gamepad.rightTriggerButton.whileTrue(OperatorCommands.shelfIntake());
+        gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
 
         /* Scoring/Positions */
-        gamepad.leftBumper.whileTrue(OperatorCommands.homeAndSlowIntake());
-        gamepad.xButton.whileTrue(OperatorCommands.coneMid());
+        gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
+        gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
         gamepad.yButton.whileTrue(OperatorCommands.coneTop());
-        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid()); //TODO: cubeMid to cubeTop is a little risky
+        gamepad.aButton
+                .and(noRightBumper())
+                .whileTrue(
+                        OperatorCommands.cubeMid()); // TODO: cubeMid to cubeTop is a little risky
         gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
         // ground score is below, but different buttons for Daniel and training
 
-        /* Miscellaneous */
+        /* Misc */
         gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
         gamepad.Dpad.Down.whileTrue(IntakeCommands.eject());
         gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
@@ -49,6 +55,10 @@ public class OperatorGamepad extends Gamepad {
         gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
         gamepad.selectButton.and(noRightBumper()).whileTrue(SlideCommands.zeroSlideRoutine());
         gamepad.startButton.and(gamepad.selectButton).whileTrue(OperatorCommands.cancelCommands());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(OperatorCommands.killTheRobot());
 
         /* Daniel Only */
         gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
@@ -77,6 +87,10 @@ public class OperatorGamepad extends Gamepad {
                 .and(bothTriggers())
                 .and(bothBumpers())
                 .whileTrue(new CountdownLEDCommand("Manual Countdown", 120, 10, true));
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(OperatorCommands.killTheRobot());
         gamepad.bButton.toggleOnTrue(OperatorCommands.coastMode());
     }
 
@@ -96,6 +110,14 @@ public class OperatorGamepad extends Gamepad {
 
     private Trigger bothTriggers() {
         return gamepad.rightTriggerButton.and(gamepad.leftTriggerButton);
+    }
+
+    private Trigger noRightTrigger() {
+        return gamepad.rightTriggerButton.negate();
+    }
+
+    private Trigger noBumpers() {
+        return gamepad.rightBumper.negate().and(gamepad.leftBumper.negate());
     }
 
     public void rumble(double intensity) {
