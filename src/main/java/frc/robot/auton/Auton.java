@@ -69,6 +69,10 @@ public class Auton {
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
         autonChooser.setDefaultOption("Clean Side (3 piece)", AutoPaths.CleanSide());
+        autonChooser.addOption("TopConeFull", AutonCommands.coneTopFull());
+        autonChooser.addOption("MidConeFull", AutonCommands.cubeMidFull());
+        autonChooser.addOption("TopCubeFull", AutonCommands.cubeTopFull());
+        autonChooser.addOption("AutoAlignToGrid", AutonCommands.alignToGridMid());
         autonChooser.addOption("AutoBalance", AutoPaths.Charge());
 
         score3rd.setDefaultOption("True", true);
@@ -112,7 +116,7 @@ public class Auton {
         // Cone placing Commands
         // eventMap.put("ConeMid", AutonCommands.coneMid());
         eventMap.put("ConeMidFull", AutonCommands.coneMidFull());
-        eventMap.put("ConeTop", AutonCommands.coneTop());
+        eventMap.put("ConeTop", AutonCommands.cubeTopFull());
         eventMap.put("ConeHybrid", new Eject());
         // Intake Commands
         eventMap.put("Intake", AutonCommands.intake());
