@@ -115,8 +115,7 @@ public class Auton {
         eventMap.put("ConeTop", AutonCommands.coneTop());
         eventMap.put("ConeHybrid", new Eject());
         // Intake Commands
-        eventMap.put("IntakeCube", AutonCommands.intakeCube());
-        eventMap.put("IntakeCone", AutonCommands.intakeCone());
+        eventMap.put("Intake", AutonCommands.intake());
         eventMap.put("RetractIntake", AutonCommands.retractIntake());
         // Drivetrain Commands
         eventMap.put("LockSwerve", new LockSwerve());

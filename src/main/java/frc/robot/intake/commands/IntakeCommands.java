@@ -8,27 +8,28 @@ import frc.robot.intake.Intake;
 public class IntakeCommands {
 
     public static void setupDefaultCommand() {
+
         Robot.intake.setDefaultCommand(
-                stopAllMotors()
-                        .withTimeout(1)
-                        .andThen(new HoldCone()) // TODO: review
+                slowIntake() // TODO: review
                         .withName("IntakeDefaultCommand"));
+
+        // Robot.intake.setDefaultCommand(
+        //         stopAllMotors()
+        //                 .withTimeout(1)
+        //                 .andThen(new HoldCone()) // TODO: review
+        //                 .withName("IntakeDefaultCommand"));
     }
 
     public static Command slowIntake() {
         return setVelocities(Intake.config.slowIntake).withName("SlowIntake");
     }
 
-    public static Command coneIntake() {
-        return setVelocities(Intake.config.intakeConeSpeed).withName("IntakeCone");
-    }
-
-    public static Command cubeIntake() {
-        return setVelocities(Intake.config.intakeCubeSpeed).withName("IntakeCube");
+    public static Command intake() {
+        return setVelocities(Intake.config.intake).withName("Intake");
     }
 
     public static Command eject() {
-        return setVelocities(Intake.config.ejectSpeed)
+        return setVelocities(Intake.config.eject)
                 // .alongWith(ShoulderCommands.home(), SlideCommands.home())
                 .withName("Eject");
         // .finallyDo(
@@ -38,6 +39,10 @@ public class IntakeCommands {
         //                         .withTimeout(1.5)
         //                         .schedule());
     } // TODO: review
+
+    public static Command drop() {
+        return setVelocities(Intake.config.drop).withName("Drop");
+    }
 
     public static Command setVelocities(double velocity) {
         return new RunCommand(() -> Robot.intake.setVelocities(velocity), Robot.intake)

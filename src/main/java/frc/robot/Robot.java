@@ -67,11 +67,11 @@ public class Robot extends LoggedRobot {
         System.out.println("Started Trajectories");
 
         slide = new Slide();
-        System.out.println("Started Elevator");
+        System.out.println("Started Slide");
         intake = new Intake();
         System.out.println("Started Intake");
         shoulder = new Shoulder();
-        System.out.println("Started FourBar");
+        System.out.println("Started Shoulder");
         elbow = new Elbow();
         System.out.println("Started Elbow");
 

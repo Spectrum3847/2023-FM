@@ -10,7 +10,6 @@ import frc.SpectrumLib.gamepads.XboxGamepad.XboxAxis;
 import frc.robot.Robot;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.swerve.commands.AlignToAprilTag;
 import frc.robot.trajectories.commands.DistanceDrive;
@@ -68,11 +67,14 @@ public class PilotGamepad extends Gamepad {
         /* Drive */
         stickSteerTriggers();
         triggerSteering();
-        // driveTrigger();
 
         /* Aiming */
-        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI));
-        // gamepad.bButton.whileTrue();
+        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI)); // grid
+        gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
+
+        /* Scoring */
+        gamepad.aButton.and(noBumpers()).onTrue((PilotCommands.scoreRoutine()));
+        // gamepad.aButton.and(noBumpers()).whileTrue(ElbowCommands.raiseBy(20));
 
         /* Dpad */
         // gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue();
@@ -81,17 +83,17 @@ public class PilotGamepad extends Gamepad {
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
 
         /* Aligning */
-        rightBumperOnly()
+        gamepad.bButton
+                .and(noBumpers())
                 .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 0));
-        // rightBumperOnly().whileTrue(new DriveToCubeNode(0));
-        rightBumperOnly()
-                .and(rightTrigger)
+        gamepad.bButton
+                .and(leftBumperOnly())
                 .whileTrue(
                         new AlignToAprilTag(
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
                                 PilotConfig.alignmentOffset));
-        rightBumperOnly()
-                .and(leftTrigger)
+        gamepad.bButton
+                .and(rightBumperOnly())
                 .whileTrue(
                         new AlignToAprilTag(
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
@@ -107,32 +109,20 @@ public class PilotGamepad extends Gamepad {
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
         gamepad.selectButton.whileTrue(PilotCommands.lockSwerve());
 
-        gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0));
-        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI));
-        gamepad.aButton
-                .and(noBumpers())
-                .whileTrue(OperatorCommands.airConeIntake()); // TODO: change position to more in
-        gamepad.bButton
-                .and(noBumpers())
-                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 0));
-
-        gamepad.bButton
-                .and(leftBumperOnly())
-                .whileTrue(
-                        new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                PilotConfig.alignmentOffset));
-        gamepad.bButton
-                .and(rightBumperOnly())
-                .whileTrue(
-                        new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                -PilotConfig.alignmentOffset));
+        /* Misc */
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupDisabledButtons() {
         gamepad.aButton.whileTrue(new OneColorLEDCommand(Color.kWhite, "White", 5));
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupTestButtons() {}

@@ -17,7 +17,8 @@ public class ElbowCommands {
                         () -> Robot.elbow.setBrakeMode(false),
                         () -> Robot.elbow.setBrakeMode(true),
                         Robot.elbow)
-                .ignoringDisable(true);
+                .ignoringDisable(true)
+                .withName("ElbowCoastMode");
     }
 
     public static Command zeroElbowRoutine() {
@@ -36,60 +37,56 @@ public class ElbowCommands {
         return new RunCommand(() -> Robot.elbow.setMMPercent(percent), Robot.elbow);
     }
 
-    public static Command coneIntake() {
-        return setMMPercent(Elbow.config.coneIntake);
+    public static Command raiseByPercent(double percent) {
+        return new RunCommand(
+                () -> {
+                    double test = Robot.elbow.falconToPercent(Robot.elbow.getPosition()) + percent;
+                    System.out.print(
+                            "at " + Robot.elbow.falconToPercent(Robot.elbow.getPosition()));
+                    System.out.println(" || go to " + test);
+                    Robot.elbow.setMMPercent(test);
+                },
+                Robot.elbow);
     }
 
-    public static Command coneStandingIntake() {
-        return setMMPercent(Elbow.config.coneStandingIntake);
+    /* Intaking Positions */
+
+    public static Command intake() {
+        return setMMPercent(Elbow.config.intake);
     }
 
-    public static Command coneShelf() {
-        return setMMPercent(Elbow.config.coneShelf);
+    public static Command airIntake() {
+        return setMMPercent(Elbow.config.airIntake);
     }
 
-    public static Command airConeIntake() {
-        return setMMPercent(Elbow.config.airConeIntake);
+    public static Command shelfIntake() {
+        return setMMPercent(Elbow.config.shelfIntake);
     }
 
-    public static Command cubeIntake() {
-        return setMMPercent(Elbow.config.cubeIntake);
-    }
-
-    public static Command airCubeIntake() {
-        return setMMPercent(Elbow.config.airCubeIntake);
-    }
-
-    public static Command coneFloor() {
-        return setMMPercent(Elbow.config.coneFloor);
-    }
-
-    public static Command coneMid() {
-        return setMMPercent(Elbow.config.coneMid);
-    }
-
-    public static Command coneTop() {
-        return setMMPercent(Elbow.config.coneTop);
-    }
-
-    public static Command cubeFloor() {
-        return setMMPercent(Elbow.config.cubeFloor);
-    }
-
-    public static Command cubeMid() {
-        return setMMPercent(Elbow.config.cubeMid);
-    }
-
-    public static Command cubeTop() {
-        return setMMPercent(Elbow.config.cubeTop);
-    }
+    /* Scoring Positions */
 
     public static Command home() {
-        return setMMPercent(0);
+        return setMMPercent(Elbow.config.home);
     }
 
-    public static Command autonHome() {
-        return setMMPercent(1);
+    public static Command floor() {
+        return setMMPercent(Elbow.config.floor);
+    }
+
+    public static Command score() {
+        return setMMPercent(Elbow.config.scorePos);
+    }
+
+    public static Command coneUp() {
+        return setMMPercent(Elbow.config.coneUp);
+    }
+
+    public static Command cubeUp() {
+        return setMMPercent(Elbow.config.cubeUp);
+    }
+
+    public static Command raiseBy(double percent) {
+        return raiseByPercent(percent); // +percent lowers elbow
     }
 
     public static Command setMMPosition(double position) {
