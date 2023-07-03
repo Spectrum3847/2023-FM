@@ -8,18 +8,37 @@ import frc.robot.swerve.commands.LockSwerve;
 
 public class AutoPaths {
     public static Command CleanSide() {
-        return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 3)));
+        return AutonCommands.coneTopFull()
+                .andThen(
+                        Auton.getAutoBuilder()
+                                .fullAuto(
+                                        PathPlanner.loadPathGroup(
+                                                "CleanSide1", new PathConstraints(4, 1))))
+                .andThen(AutonCommands.cubeTopFull());
     }
 
     public static Command BumpSide() {
-        return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("BumpSide1", new PathConstraints(4, 3)));
+        return AutonCommands.coneTopFull()
+                .andThen(
+                        Auton.getAutoBuilder()
+                                .fullAuto(
+                                        PathPlanner.loadPathGroup(
+                                                "Bump1", new PathConstraints(1, 1))))
+                .andThen(AutonCommands.cubeTopFull());
     }
 
-    public static Command Charge() {
-        return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("Balance", new PathConstraints(1, 1)))
+    public static Command OverCharge() {
+        return AutonCommands.coneTopFull()
+                .andThen(
+                        Auton.getAutoBuilder()
+                                .fullAuto(
+                                        PathPlanner.loadPathGroup(
+                                                "Balance1", new PathConstraints(4, 2.5))))
+                .andThen(
+                        Auton.getAutoBuilder()
+                                .fullAuto(
+                                        PathPlanner.loadPathGroup(
+                                                "Balance2", new PathConstraints(4, 2.5))))
                 .andThen(new AutoBalance())
                 .andThen(new LockSwerve().withTimeout(0.1));
     }

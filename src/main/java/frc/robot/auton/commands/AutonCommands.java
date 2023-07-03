@@ -34,11 +34,12 @@ public class AutonCommands {
 
     // intaking is the same for cone and cube
     public static Command intake() {
-        return IntakeCommands.intake();
+        return IntakeCommands.intake()
+                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake());
     }
 
     public static Command eject() {
-        return IntakeCommands.eject();
+        return IntakeCommands.drop();
     }
 
     public static Command stopElevator() {
@@ -79,7 +80,7 @@ public class AutonCommands {
     }
 
     public static Command cubeMidFull() {
-        return cubeMidPreScore().withTimeout(2).andThen(IntakeCommands.eject());
+        return cubeMidPreScore().withTimeout(2).andThen(eject().withTimeout(1));
     }
 
     public static Command cubeTopPreScore() {
@@ -88,15 +89,16 @@ public class AutonCommands {
     }
 
     public static Command cubeTopFull() {
-        return cubeTopPreScore().withTimeout(2).andThen(IntakeCommands.eject());
+        return cubeTopPreScore().withTimeout(2).andThen(eject().withTimeout(1));
     }
 
     public static Command coneMidPreScore() {
-        return SlideCommands.home().alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp());
+        return IntakeCommands.slowIntake()
+                .alongWith(SlideCommands.home(), ShoulderCommands.coneUp(), ElbowCommands.coneUp());
     }
 
     public static Command coneMidFull() {
-        return coneMidPreScore().withTimeout(2).andThen(eject());
+        return coneMidPreScore().withTimeout(2).andThen(eject().withTimeout(.1));
     }
 
     public static Command coneTopPreScore() {
@@ -108,7 +110,7 @@ public class AutonCommands {
     }
 
     public static Command coneTopFull() {
-        return coneTopPreScore().withTimeout(2).andThen(eject());
+        return coneTopPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
     }
 
     public static Command alignToGridMid() {

@@ -68,12 +68,13 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Clean Side (3 piece)", AutoPaths.CleanSide());
+        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
+        autonChooser.addOption("Clean Side (2 Piece; sort of works)", AutoPaths.CleanSide());
+        autonChooser.addOption("Bump Side (2 Piece); untested, may work", AutoPaths.BumpSide());
         autonChooser.addOption("TopConeFull", AutonCommands.coneTopFull());
         autonChooser.addOption("MidConeFull", AutonCommands.cubeMidFull());
         autonChooser.addOption("TopCubeFull", AutonCommands.cubeTopFull());
         autonChooser.addOption("AutoAlignToGrid", AutonCommands.alignToGridMid());
-        autonChooser.addOption("AutoBalance", AutoPaths.Charge());
 
         score3rd.setDefaultOption("True", true);
         score3rd.addOption("False", false);
