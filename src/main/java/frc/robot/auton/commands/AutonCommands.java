@@ -98,7 +98,7 @@ public class AutonCommands {
     }
 
     public static Command coneMidFull() {
-        return coneMidPreScore().withTimeout(2).andThen(eject().withTimeout(.1));
+        return coneMidPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
     }
 
     public static Command coneTopPreScore() {
