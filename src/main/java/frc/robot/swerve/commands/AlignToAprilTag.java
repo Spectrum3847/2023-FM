@@ -24,9 +24,11 @@ public class AlignToAprilTag extends PIDCommand {
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
     private static double out;
+    private boolean aprilTagMode;
 
     /** Creates a new AlignToAprilTag. */
-    public AlignToAprilTag(DoubleSupplier fwdPositiveSupplier, double offset) {
+    public AlignToAprilTag(
+            DoubleSupplier fwdPositiveSupplier, double offset, boolean aprilTagMode) {
         super(
                 // The controller that the command will use
                 new PIDController(lowKP, 0, 0),
@@ -48,6 +50,7 @@ public class AlignToAprilTag extends PIDCommand {
                         () -> true); // Field relative is true
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
+        this.aprilTagMode = aprilTagMode;
         this.setName("AlignToAprilTag");
     }
 
@@ -80,18 +83,30 @@ public class AlignToAprilTag extends PIDCommand {
         } else {
             this.getController().setP(lowKP);
         }
+
+        if (aprilTagMode) {
+            Robot.vision.setAprilTagPipeline();
+        } else {
+            Robot.vision.setRetroPipeline();
+        }
     }
 
     @Override
     public void execute() {
         super.execute();
-        driveCommand.execute();
+        // if on retro mode, dont move if dont see a target
+        if (!aprilTagMode && Robot.vision.verticalOffset != 0) {
+            driveCommand.execute();
+        }
         // getLedCommand(tagID).execute();
     }
 
     @Override
     public void end(boolean interrupted) {
         // getLedCommand(tagID).end(interrupted);
+        if (!aprilTagMode) {
+            Robot.vision.setAprilTagPipeline();
+        }
     }
 
     // Returns true when the command should end.

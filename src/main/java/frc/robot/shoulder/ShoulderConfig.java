@@ -10,11 +10,14 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int shoulderMaxFalcon = 135181;
 
     // Positions set as percentage of shoulder
+    public final int initializedPosition = 20;
+
     public final int intake = 0;
     public final int airIntake = 15; // 23071 //done 21000
     public final int shelfIntake = 82; // 104127 //done
 
     public final int home = 22;
+    public final int unblockCameraPos = 22;
 
     public final int floor = 20;
     public final int coneUp = 98; // 132550 //done

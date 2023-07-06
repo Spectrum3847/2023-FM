@@ -47,7 +47,10 @@ public class Vision extends SubsystemBase {
         horizontalOffset = 0;
         verticalOffset = 0;
 
-        LimelightHelpers.setLEDMode_ForceOff(null);
+        // LimelightHelpers.setLEDMode_ForceOff(null);
+        // LimelightHelpers.setLEDMode_ForceOn(null);
+        LimelightHelpers.setLEDMode_PipelineControl(null);
+        LimelightHelpers.setPipelineIndex(null, 0);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -383,5 +386,13 @@ public class Vision extends SubsystemBase {
             theta -= 360;
             System.out.println(" needed new theta: " + df.format(theta));
         }
+    }
+
+    public void setAprilTagPipeline() {
+        LimelightHelpers.setPipelineIndex(null, 0);
+    }
+
+    public void setRetroPipeline() {
+        LimelightHelpers.setPipelineIndex(null, 1);
     }
 }

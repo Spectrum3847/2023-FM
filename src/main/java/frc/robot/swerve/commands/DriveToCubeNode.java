@@ -28,7 +28,7 @@ public class DriveToCubeNode extends PIDCommand {
      * @param horizontalOffset adjustable offset in the Y axis in case robot isn't completely
      *     aligned. Default value should be 0
      */
-    public DriveToCubeNode(double horizontalOffset) {
+    public DriveToCubeNode(double horizontalOffset, boolean aprilTagMode) {
         super(
                 // The controller that the command will use
                 new PIDController(kP, 0, 0),
@@ -40,7 +40,7 @@ public class DriveToCubeNode extends PIDCommand {
                 output -> {
                     setOutput(output);
                 });
-        alignToTag = new AlignToAprilTag(() -> getOutput(), horizontalOffset);
+        alignToTag = new AlignToAprilTag(() -> getOutput(), horizontalOffset, aprilTagMode);
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.swerve);
         // Configure additional PID options by calling `getController` here.

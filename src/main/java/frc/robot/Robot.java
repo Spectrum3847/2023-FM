@@ -112,6 +112,8 @@ public class Robot extends LoggedRobot {
         operatorGamepad.resetConfig();
         LEDCommands.setupLEDTriggers();
         SlideCommands.setupSlideTriggers();
+        ShoulderCommands.setupShoulderTriggers();
+        ElbowCommands.setupElbowTriggers();
     }
 
     /**

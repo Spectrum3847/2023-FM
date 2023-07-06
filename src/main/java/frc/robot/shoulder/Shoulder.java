@@ -8,6 +8,7 @@ import frc.robot.RobotConfig;
 
 public class Shoulder extends AngleMechSubsystem {
     public static ShoulderConfig config = new ShoulderConfig();
+    public static boolean isInitialized = false;
 
     public Shoulder() {
         super(config);
@@ -15,6 +16,7 @@ public class Shoulder extends AngleMechSubsystem {
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise); // Should be done in config
+        motorLeader.setNeutralMode(NeutralMode.Coast);
         motorLeader.configReverseSoftLimitThreshold(200);
         motorLeader.configReverseSoftLimitEnable(true);
         motorLeader.configForwardSoftLimitThreshold(config.shoulderMaxFalcon);

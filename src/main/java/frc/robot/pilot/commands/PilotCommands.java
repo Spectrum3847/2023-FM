@@ -57,7 +57,7 @@ public class PilotCommands {
                 .withTimeout(0.1)
                 .andThen(IntakeCommands.drop())
                 .withTimeout(0.3)
-                .andThen(OperatorCommands.homeSystems());
+                .andThen(OperatorCommands.homeSystems().withTimeout(2.5));
     }
 
     /**

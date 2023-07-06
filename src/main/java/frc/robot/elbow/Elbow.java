@@ -8,6 +8,7 @@ import frc.robot.RobotConfig;
 
 public class Elbow extends AngleMechSubsystem {
     public static ElbowConfig config = new ElbowConfig();
+    public static boolean isInitialized = false;
 
     public Elbow() {
         super(config);
@@ -15,6 +16,7 @@ public class Elbow extends AngleMechSubsystem {
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise); // Should be done in config
+        motorLeader.setNeutralMode(NeutralMode.Coast);
         motorLeader.configReverseSoftLimitThreshold(200); // TODO: change?
         motorLeader.configReverseSoftLimitEnable(true);
         motorLeader.configForwardSoftLimitThreshold(config.elbowMaxFalcon);
@@ -25,7 +27,7 @@ public class Elbow extends AngleMechSubsystem {
         motorLeader.setSelectedSensorPosition(0);
     }
 
-    public void setBrakeMode(Boolean brake) {
+    public void setBrakeMode(boolean brake) {
         if (brake) {
             motorLeader.setNeutralMode(NeutralMode.Brake);
         } else {

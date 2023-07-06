@@ -85,19 +85,20 @@ public class PilotGamepad extends Gamepad {
         /* Aligning */
         gamepad.bButton
                 .and(noBumpers())
-                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 0));
+                .whileTrue(
+                        new AlignToAprilTag(
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, true));
         gamepad.bButton
                 .and(leftBumperOnly())
                 .whileTrue(
                         new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                PilotConfig.alignmentOffset));
-        gamepad.bButton
-                .and(rightBumperOnly())
-                .whileTrue(
-                        new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                -PilotConfig.alignmentOffset));
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, false));
+        // gamepad.bButton
+        //         .and(rightBumperOnly())
+        //         .whileTrue(
+        //                 new AlignToAprilTag(
+        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
+        //                         -PilotConfig.alignmentOffset, true));
 
         /* Reorient */
         gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));
