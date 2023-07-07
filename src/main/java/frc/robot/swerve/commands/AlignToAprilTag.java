@@ -97,6 +97,8 @@ public class AlignToAprilTag extends PIDCommand {
         // if on retro mode, dont move if dont see a target
         if (!aprilTagMode && Robot.vision.verticalOffset != 0) {
             driveCommand.execute();
+        }else if (aprilTagMode) {
+            driveCommand.execute();
         }
         // getLedCommand(tagID).execute();
     }
