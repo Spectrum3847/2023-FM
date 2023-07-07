@@ -64,7 +64,8 @@ public class AutoPaths {
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
-                                                "Balance1", new PathConstraints(4, 2.5)))).andThen(new WaitCommand(2.5))
+                                                "Balance1", new PathConstraints(4, 2.5))))
+                .andThen(new WaitCommand(2.5))
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(

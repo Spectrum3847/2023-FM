@@ -75,7 +75,7 @@ public class PilotGamepad extends Gamepad {
         /* Dpad */
         gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
         gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
-                .whileTrue(PilotCommands.scoreRoutine());
+                .onTrue(PilotCommands.scoreRoutine());
         gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
 
