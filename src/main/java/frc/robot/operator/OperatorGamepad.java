@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
 import frc.SpectrumLib.gamepads.Gamepad;
 import frc.SpectrumLib.gamepads.XboxGamepad.XboxAxis;
-import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
@@ -32,7 +31,7 @@ public class OperatorGamepad extends Gamepad {
         // gamepad.leftTriggerButton
         //         .and(rightBumper())
         //         .and(noRightTrigger())
-        //         .whileTrue(OperatorCommands.intake()); Daniel only
+        //         .whileTrue(OperatorCommands.intake()); //Daniel only
         gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
         gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
 
@@ -40,10 +39,7 @@ public class OperatorGamepad extends Gamepad {
         gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
         gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
         gamepad.yButton.whileTrue(OperatorCommands.coneTop());
-        gamepad.aButton
-                .and(noRightBumper())
-                .whileTrue(
-                        OperatorCommands.cubeMid()); // TODO: cubeMid to cubeTop is a little risky
+        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
         gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
         // ground score is below, but different buttons for Daniel and training
 
@@ -64,9 +60,9 @@ public class OperatorGamepad extends Gamepad {
         // gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
         // gamepad.selectButton.and(rightBumper()).whileTrue(ElbowCommands.zeroElbowRoutine());
 
-        AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
-                .and(rightBumper())
-                .whileTrue(OperatorCommands.manualElbow());
+        // AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
+        //         .and(rightBumper())
+        //         .whileTrue(OperatorCommands.manualElbow()); //Daniel only
 
         /* Operation Training Wheels */
         gamepad.rightBumper.whileTrue(OperatorCommands.floorScore());
