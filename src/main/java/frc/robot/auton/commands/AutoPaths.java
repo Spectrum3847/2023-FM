@@ -3,7 +3,6 @@ package frc.robot.auton.commands;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.auton.Auton;
 import frc.robot.swerve.commands.LockSwerve;
 
@@ -65,7 +64,6 @@ public class AutoPaths {
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
                                                 "Balance1", new PathConstraints(4, 2.5))))
-                .andThen(new WaitCommand(2.5))
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
