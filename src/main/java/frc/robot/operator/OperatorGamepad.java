@@ -29,10 +29,10 @@ public class OperatorGamepad extends Gamepad {
     public void setupTeleopButtons() {
 
         /* Intaking */
-        gamepad.leftTriggerButton
-                .and(rightBumper())
-                .and(noRightTrigger())
-                .whileTrue(OperatorCommands.intake());
+        // gamepad.leftTriggerButton
+        //         .and(rightBumper())
+        //         .and(noRightTrigger())
+        //         .whileTrue(OperatorCommands.intake()); Daniel only
         gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
         gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
 
