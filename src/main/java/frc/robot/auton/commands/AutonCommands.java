@@ -6,9 +6,9 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonConfig;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
+import frc.robot.swerve.commands.DriveToCubeNode;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
 import java.util.function.DoubleSupplier;
@@ -34,34 +34,16 @@ public class AutonCommands {
 
     // intaking is the same for cone and cube
     public static Command intake() {
-        return IntakeCommands.intake();
+        return IntakeCommands.intake()
+                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake());
     }
 
     public static Command eject() {
-        return IntakeCommands.eject();
+        return IntakeCommands.drop();
     }
 
     public static Command stopElevator() {
         return new RunCommand(() -> Robot.slide.stop(), Robot.slide).withTimeout(0.1);
-    }
-
-    public static Command coneMid() {
-        return OperatorCommands.coneMid()
-                .withTimeout(1.1)
-                .andThen(IntakeCommands.eject().withTimeout(.1));
-    }
-
-    public static Command coneMidFull() {
-        return OperatorCommands.coneMid()
-                .withTimeout(1.1)
-                .andThen(IntakeCommands.eject().withTimeout(.1))
-                .andThen(retractIntake().withTimeout(1.1));
-    }
-
-    public static Command coneTop() {
-        return OperatorCommands.coneTop()
-                .withTimeout(1.7)
-                .andThen(IntakeCommands.eject().withTimeout(.1));
     }
 
     public static Command autonFloorScorePosition() {
@@ -91,5 +73,50 @@ public class AutonCommands {
 
     public static Command faceBackward() {
         return aimPilotDrive(0);
+    }
+
+    public static Command cubeMidPreScore() {
+        return SlideCommands.home().alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp());
+    }
+
+    public static Command cubeMidFull() {
+        return cubeMidPreScore().withTimeout(2).andThen(eject().withTimeout(1));
+    }
+
+    public static Command cubeTopPreScore() {
+        return SlideCommands.fullExtend()
+                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp());
+    }
+
+    public static Command cubeTopFull() {
+        return cubeTopPreScore().withTimeout(2).andThen(eject().withTimeout(1));
+    }
+
+    public static Command coneMidPreScore() {
+        return IntakeCommands.slowIntake()
+                .alongWith(SlideCommands.home(), ShoulderCommands.coneUp(), ElbowCommands.coneUp());
+    }
+
+    public static Command coneMidFull() {
+        return coneMidPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
+    }
+
+    public static Command coneTopPreScore() {
+        return IntakeCommands.slowIntake()
+                .alongWith(
+                        SlideCommands.fullExtend(),
+                        ShoulderCommands.coneUp(),
+                        ElbowCommands.coneUp());
+    }
+
+    public static Command coneTopFull() {
+        return coneTopPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
+    }
+
+    public static Command alignToGridMid() {
+        return new DriveToCubeNode(0)
+                .alongWith(cubeMidPreScore())
+                .withTimeout(0.75)
+                .andThen(eject());
     }
 }

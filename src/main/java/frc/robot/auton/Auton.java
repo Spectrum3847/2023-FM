@@ -68,11 +68,17 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Clean Side (3 piece)", AutoPaths.CleanSide());
+        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
+        autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
+        autonChooser.addOption("Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
+        //autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
+        autonChooser.addOption("Bump Side (2 Piece)", AutoPaths.BumpSide());
+
         score3rd.setDefaultOption("True", true);
         score3rd.addOption("False", false);
 
         // Simple comp autos
+        autonChooser.addOption("Taxi Simple w/ High Cone", AutonCommands.cubeTopFull().andThen(new TaxiCommand()));
         autonChooser.addOption("Taxi Simple", new TaxiCommand());
         autonChooser.addOption(
                 "Nothing",
@@ -110,7 +116,7 @@ public class Auton {
         // Cone placing Commands
         // eventMap.put("ConeMid", AutonCommands.coneMid());
         eventMap.put("ConeMidFull", AutonCommands.coneMidFull());
-        eventMap.put("ConeTop", AutonCommands.coneTop());
+        eventMap.put("ConeTop", AutonCommands.cubeTopFull());
         eventMap.put("ConeHybrid", new Eject());
         // Intake Commands
         eventMap.put("Intake", AutonCommands.intake());
