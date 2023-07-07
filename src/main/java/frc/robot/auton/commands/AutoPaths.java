@@ -13,49 +13,49 @@ public class AutoPaths {
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
-                                                "CleanSide1", new PathConstraints(4, 1))))
+                                                "CleanSide1", new PathConstraints(4, 1.1))))
                 .andThen(AutonCommands.coneMidFull());
     }
 
-    public static Command CleanSidewMid() {
-        return AutonCommands.coneTopFull()
-                .andThen(
-                        Auton.getAutoBuilder()
-                                .fullAuto(
-                                        PathPlanner.loadPathGroup(
-                                                "CleanSide1", new PathConstraints(4, 1.5))))
-                .andThen(AutonCommands.coneMidFull())
-                .andThen(
-                        Auton.getAutoBuilder()
-                                .fullAuto(
-                                        PathPlanner.loadPathGroup(
-                                                "CleanSide3", new PathConstraints(4, 2))));
-    }
+    //     public static Command CleanSidewMid() {
+    //         return AutonCommands.coneTopFull()
+    //                 .andThen(
+    //                         Auton.getAutoBuilder()
+    //                                 .fullAuto(
+    //                                         PathPlanner.loadPathGroup(
+    //                                                 "CleanSide1", new PathConstraints(4, 1.5))))
+    //                 .andThen(AutonCommands.coneMidFull())
+    //                 .andThen(
+    //                         Auton.getAutoBuilder()
+    //                                 .fullAuto(
+    //                                         PathPlanner.loadPathGroup(
+    //                                                 "CleanSide3", new PathConstraints(4, 2))));
+    //     }
 
-    public static Command CleanSideAndAHalf() {
-        return AutonCommands.coneTopFull()
-                .andThen(
-                        Auton.getAutoBuilder()
-                                .fullAuto(
-                                        PathPlanner.loadPathGroup(
-                                                "CleanSide1", new PathConstraints(4, 1))))
-                .andThen(AutonCommands.coneMidFull())
-                .andThen(
-                        Auton.getAutoBuilder()
-                                .fullAuto(
-                                        PathPlanner.loadPathGroup(
-                                                "CleanSide2", new PathConstraints(4, 2))));
-    }
+    //     public static Command CleanSideAndAHalf() {
+    //         return AutonCommands.coneTopFull()
+    //                 .andThen(
+    //                         Auton.getAutoBuilder()
+    //                                 .fullAuto(
+    //                                         PathPlanner.loadPathGroup(
+    //                                                 "CleanSide1", new PathConstraints(4, 1))))
+    //                 .andThen(AutonCommands.coneMidFull())
+    //                 .andThen(
+    //                         Auton.getAutoBuilder()
+    //                                 .fullAuto(
+    //                                         PathPlanner.loadPathGroup(
+    //                                                 "CleanSide2", new PathConstraints(4, 2))));
+    //     }
 
-    public static Command BumpSide() {
-        return AutonCommands.coneTopFull()
-                .andThen(
-                        Auton.getAutoBuilder()
-                                .fullAuto(
-                                        PathPlanner.loadPathGroup(
-                                                "Bump1", new PathConstraints(4, 1.1))))
-                .andThen(AutonCommands.coneMidFull());
-    }
+    //     public static Command BumpSide() {
+    //         return AutonCommands.coneTopFull()
+    //                 .andThen(
+    //                         Auton.getAutoBuilder()
+    //                                 .fullAuto(
+    //                                         PathPlanner.loadPathGroup(
+    //                                                 "Bump1", new PathConstraints(4, 1.1))))
+    //                 .andThen(AutonCommands.coneMidFull());
+    //     }
 
     public static Command OverCharge() {
         return AutonCommands.coneTopFull()
