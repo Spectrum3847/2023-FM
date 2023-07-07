@@ -61,15 +61,15 @@ public class OperatorGamepad extends Gamepad {
                 .whileTrue(OperatorCommands.killTheRobot());
 
         /* Daniel Only */
-        gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
-        gamepad.selectButton.and(rightBumper()).whileTrue(ElbowCommands.zeroElbowRoutine());
+        // gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        // gamepad.selectButton.and(rightBumper()).whileTrue(ElbowCommands.zeroElbowRoutine());
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(rightBumper())
                 .whileTrue(OperatorCommands.manualElbow());
 
         /* Operation Training Wheels */
-        // gamepad.rightBumper.whileTrue(OperatorCommands.coneFloor());
+        gamepad.rightBumper.whileTrue(OperatorCommands.floorScore());
 
         /* Manual Control */
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
