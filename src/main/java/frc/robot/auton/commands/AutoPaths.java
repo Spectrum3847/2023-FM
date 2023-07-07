@@ -7,24 +7,25 @@ import frc.robot.auton.Auton;
 import frc.robot.swerve.commands.LockSwerve;
 
 public class AutoPaths {
-        public static Command CleanSide() {
-                return AutonCommands.coneTopFull()
-                        .andThen(
-                                Auton.getAutoBuilder()
-                                        .fullAuto(
-                                                PathPlanner.loadPathGroup(
-                                                        "CleanSide1", new PathConstraints(4, 1))))
-                        .andThen(AutonCommands.coneMidFull());
-            }
-    
-        public static Command CleanSidewMid() {
+    public static Command CleanSide() {
+        return AutonCommands.coneTopFull()
+                .andThen(
+                        Auton.getAutoBuilder()
+                                .fullAuto(
+                                        PathPlanner.loadPathGroup(
+                                                "CleanSide1", new PathConstraints(4, 1))))
+                .andThen(AutonCommands.coneMidFull());
+    }
+
+    public static Command CleanSidewMid() {
         return AutonCommands.coneTopFull()
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
                                                 "CleanSide1", new PathConstraints(4, 1.5))))
-                .andThen(AutonCommands.coneMidFull()).andThen(
+                .andThen(AutonCommands.coneMidFull())
+                .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
@@ -38,7 +39,8 @@ public class AutoPaths {
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
                                                 "CleanSide1", new PathConstraints(4, 1))))
-                .andThen(AutonCommands.coneMidFull()).andThen(
+                .andThen(AutonCommands.coneMidFull())
+                .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(

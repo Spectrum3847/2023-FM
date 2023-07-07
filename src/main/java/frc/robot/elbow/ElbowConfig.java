@@ -19,7 +19,6 @@ public class ElbowConfig extends AngleMechConfig {
     public final int home = 70;
     public final int unblockCameraPos = 20;
 
-
     public final int floor = 20;
     public final int coneUp = 19; // 12263 //done
     public final int cubeUp = 0;

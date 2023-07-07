@@ -114,7 +114,7 @@ public class AutonCommands {
     }
 
     public static Command alignToGridMid() {
-        return new DriveToCubeNode(0)
+        return new DriveToCubeNode(0, true)
                 .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
                 .andThen(eject());

@@ -171,11 +171,13 @@ public class PilotGamepad extends Gamepad {
     }
 
     public Trigger slowModeButton() {
-        return gamepad.aButton.and(noBumpers());
+        // return gamepad.aButton.and(noBumpers());
+        return new Trigger(() -> false);
     }
 
     public Trigger fpvButton() {
-        return gamepad.yButton.and(noBumpers());
+        // return gamepad.yButton.and(noBumpers());
+        return new Trigger(() -> false);
     }
 
     public double getDriveFwdPositive() {

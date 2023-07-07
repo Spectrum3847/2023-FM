@@ -70,15 +70,17 @@ public class Auton {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
         autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
         autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
-        autonChooser.addOption("Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
-        //autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
+        autonChooser.addOption(
+                "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
+        // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
         autonChooser.addOption("Bump Side (2 Piece)", AutoPaths.BumpSide());
 
         score3rd.setDefaultOption("True", true);
         score3rd.addOption("False", false);
 
         // Simple comp autos
-        autonChooser.addOption("Taxi Simple w/ High Cone", AutonCommands.cubeTopFull().andThen(new TaxiCommand()));
+        autonChooser.addOption(
+                "Taxi Simple w/ High Cone", AutonCommands.cubeTopFull().andThen(new TaxiCommand()));
         autonChooser.addOption("Taxi Simple", new TaxiCommand());
         autonChooser.addOption(
                 "Nothing",
