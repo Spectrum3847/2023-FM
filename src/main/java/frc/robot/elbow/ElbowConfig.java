@@ -21,7 +21,7 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int floor = 20;
     public final int coneTop = 19;
-    public final double coneMid = 20.5;
+    public final double coneMid = 15;
     public final int cubeUp = 0;
 
     public final int scorePos = coneTop - 17;
