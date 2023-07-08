@@ -14,6 +14,7 @@ import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
 import frc.robot.auton.commands.TaxiCommand;
+import frc.robot.pose.commands.PoseCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import java.util.HashMap;
@@ -81,10 +82,12 @@ public class Auton {
         // Simple comp autos
         autonChooser.addOption(
                 "Taxi Simple w/ High Cone",
-                AutonCommands.cubeTopFull()
+                AutonCommands.coneTopFull()
                         .andThen(AutonCommands.retractIntake().withTimeout(3))
-                        .andThen(new TaxiCommand()));
-        autonChooser.addOption("Taxi Simple", new TaxiCommand());
+                        .andThen(new TaxiCommand())
+                        .andThen(PoseCommands.resetHeading(180)));
+        autonChooser.addOption(
+                "Taxi Simple", new TaxiCommand().andThen(PoseCommands.resetHeading(180)));
         autonChooser.addOption(
                 "Nothing",
                 new PrintCommand("Doing Nothing in Auton")

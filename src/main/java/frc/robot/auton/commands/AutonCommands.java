@@ -6,6 +6,7 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonConfig;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.commands.DriveToCubeNode;
@@ -110,7 +111,14 @@ public class AutonCommands {
     }
 
     public static Command coneTopFull() {
-        return coneTopPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
+        return coneTopPreScore()
+                .withTimeout(2)
+                .andThen(
+                        ElbowCommands.score()
+                                .withTimeout(0.1)
+                                .andThen(IntakeCommands.drop())
+                                .withTimeout(0.3)
+                                .andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
     }
 
     public static Command alignToGridMid() {
