@@ -11,7 +11,7 @@ public class SlideConfig extends LinearMechConfig {
     public final double diameterInches = 1.5038;
     public final double gearRatio = 9 / 1;
     public final double maxUpPos = 59.3; // TODO: change important
-    public final double maxCarriageHeight = 77000; // 80172 max
+    public final double maxCarriageHeight = 79000; // 80172 max
 
     public final double homeThreshold = 1000; // falcon units //TODO: change
     public final double homeTimeout = 0.5; // seconds
