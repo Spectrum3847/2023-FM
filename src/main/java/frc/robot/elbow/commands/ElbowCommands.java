@@ -93,8 +93,12 @@ public class ElbowCommands {
         return setMMPercent(Elbow.config.scorePos);
     }
 
-    public static Command coneUp() {
-        return setMMPercent(Elbow.config.coneUp);
+    public static Command coneTop() {
+        return setMMPercent(Elbow.config.coneTop);
+    }
+
+    public static Command coneMid() {
+        return setMMPercent(Elbow.config.coneMid);
     }
 
     public static Command cubeUp() {

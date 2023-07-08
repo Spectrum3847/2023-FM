@@ -81,8 +81,12 @@ public class ShoulderCommands {
         return setMMPercent(Shoulder.config.floor);
     }
 
-    public static Command coneUp() {
-        return setMMPercent(Shoulder.config.coneUp);
+    public static Command coneTop() {
+        return setMMPercent(Shoulder.config.coneTop);
+    }
+
+    public static Command coneMid() {
+        return setMMPercent(Shoulder.config.coneMid);
     }
 
     public static Command cubeUp() {

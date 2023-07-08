@@ -13,15 +13,16 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int initializedPosition = 20;
 
     public final int intake = 0;
-    public final int airIntake = 15; // 23071 //done 21000
-    public final int shelfIntake = 82; // 104127 //done
+    public final int airIntake = 15;
+    public final int shelfIntake = 82;
 
     public final int home = 22;
     public final int unblockCameraPos = 22;
 
     public final int floor = 20;
-    public final int coneUp = 98; // 132550 //done
-    public final int cubeUp = 93; // 132550 //done
+    public final int coneTop = 98;
+    public final int coneMid = 98;
+    public final int cubeUp = 93;
 
     public final int safePositionForElbow = 55;
 

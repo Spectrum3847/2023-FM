@@ -95,7 +95,7 @@ public class AutonCommands {
 
     public static Command coneMidPreScore() {
         return IntakeCommands.slowIntake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.coneUp(), ElbowCommands.coneUp());
+                .alongWith(SlideCommands.home(), ShoulderCommands.coneTop(), ElbowCommands.coneTop());
     }
 
     public static Command coneMidFull() {
@@ -106,8 +106,8 @@ public class AutonCommands {
         return IntakeCommands.slowIntake()
                 .alongWith(
                         SlideCommands.fullExtend(),
-                        ShoulderCommands.coneUp(),
-                        ElbowCommands.coneUp());
+                        ShoulderCommands.coneTop(),
+                        ElbowCommands.coneTop());
     }
 
     public static Command coneTopFull() {

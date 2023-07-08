@@ -62,7 +62,7 @@ public class OperatorCommands {
 
     public static Command coneMid() {
         return IntakeCommands.slowIntake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.coneUp(), ElbowCommands.coneUp())
+                .alongWith(SlideCommands.home(), ShoulderCommands.coneMid(), ElbowCommands.coneMid())
                 .withName("OperatorConeMid");
     }
 
@@ -70,8 +70,8 @@ public class OperatorCommands {
         return IntakeCommands.slowIntake()
                 .alongWith(
                         SlideCommands.fullExtend(),
-                        ShoulderCommands.coneUp(),
-                        ElbowCommands.coneUp())
+                        ShoulderCommands.coneTop(),
+                        ElbowCommands.coneTop())
                 .withName("OperatorConeTop");
     }
 
