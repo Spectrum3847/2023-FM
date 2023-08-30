@@ -12,7 +12,9 @@ import frc.SpectrumLib.telemetry.TelemetrySubsystem;
 import frc.SpectrumLib.util.Network;
 import frc.SpectrumLib.util.Util;
 import frc.robot.auton.Auton;
-import frc.robot.elevator.Elevator;
+import frc.robot.elbow.commands.ElbowCommands;
+import frc.robot.shoulder.commands.ShoulderCommands;
+import frc.robot.slide.Slide;
 import java.util.Map;
 
 public class RobotTelemetry extends TelemetrySubsystem {
@@ -42,6 +44,16 @@ public class RobotTelemetry extends TelemetrySubsystem {
         // Column 2
         tab.addBoolean("Connected?", () -> flash())
                 .withPosition(2, 0)
+                .withSize(1, 1)
+                .withProperties(
+                        Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
+        tab.addBoolean("ElbowCond?", () -> ElbowCommands.isInitialized.getAsBoolean())
+                .withPosition(8, 4)
+                .withSize(1, 1)
+                .withProperties(
+                        Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
+        tab.addBoolean("ShoulderCond?", () -> ShoulderCommands.isInitialized.getAsBoolean())
+                .withPosition(8, 5)
                 .withSize(1, 1)
                 .withProperties(
                         Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
@@ -80,10 +92,11 @@ public class RobotTelemetry extends TelemetrySubsystem {
         tab.add("Alerts", SmartDashboard.getData("Alerts")).withPosition(4, 0).withSize(2, 2);
         tab.add("MAC Address", Robot.MAC).withPosition(4, 2).withSize(2, 1);
         tab.addString("IP Address", () -> getIP()).withPosition(4, 3).withSize(2, 1);
-        tab.addNumber("ElevatorPos", () -> Elevator.falconToInches(Robot.elevator.getPosition()))
+        tab.addNumber("SlidePos", () -> Slide.falconToInches(Robot.slide.getPosition()))
                 .withPosition(6, 0);
-        tab.addNumber("FourBarPercentAngle", () -> Robot.fourBar.getPercentAngle())
+        tab.addNumber("ShoulderPercentAngle", () -> Robot.shoulder.getPercentAngle())
                 .withPosition(6, 1); // 72000 is max
+        tab.addNumber("ElbowPercAngle", () -> Robot.elbow.getPercentAngle()).withPosition(6, 2);
         // tab.addNumber("Elevator kF", () -> Robot.elevator.getKf()).withPosition(6, 1);
     }
 

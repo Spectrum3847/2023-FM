@@ -9,10 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.SpectrumLib.sim.PhysicsSim;
 import frc.SpectrumLib.util.Network;
 import frc.robot.auton.Auton;
-import frc.robot.elevator.Elevator;
-import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.fourbar.FourBar;
-import frc.robot.fourbar.commands.FourBarCommands;
+import frc.robot.elbow.Elbow;
+import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.Intake;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.LEDs;
@@ -23,6 +21,10 @@ import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.PilotGamepad;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.pose.Pose;
+import frc.robot.shoulder.Shoulder;
+import frc.robot.shoulder.commands.ShoulderCommands;
+import frc.robot.slide.Slide;
+import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.trajectories.Trajectories;
@@ -35,9 +37,10 @@ public class Robot extends LoggedRobot {
     public static Swerve swerve;
     public static Pose pose;
     public static Trajectories trajectories;
-    public static Elevator elevator;
+    public static Slide slide;
     public static Intake intake;
-    public static FourBar fourBar;
+    public static Shoulder shoulder;
+    public static Elbow elbow;
     public static Vision vision;
     public static LEDs leds;
     public static PilotGamepad pilotGamepad;
@@ -63,12 +66,14 @@ public class Robot extends LoggedRobot {
         trajectories = new Trajectories();
         System.out.println("Started Trajectories");
 
-        elevator = new Elevator();
-        System.out.println("Started Elevator");
+        slide = new Slide();
+        System.out.println("Started Slide");
         intake = new Intake();
         System.out.println("Started Intake");
-        fourBar = new FourBar();
-        System.out.println("Started FourBar");
+        shoulder = new Shoulder();
+        System.out.println("Started Shoulder");
+        elbow = new Elbow();
+        System.out.println("Started Elbow");
 
         leds = new LEDs();
         System.out.println("Started Led");
@@ -84,8 +89,9 @@ public class Robot extends LoggedRobot {
         // commands
         SwerveCommands.setupDefaultCommand();
         IntakeCommands.setupDefaultCommand();
-        ElevatorCommands.setupDefaultCommand();
-        FourBarCommands.setupDefaultCommand();
+        SlideCommands.setupDefaultCommand();
+        ShoulderCommands.setupDefaultCommand();
+        ElbowCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
         OperatorCommands.setupDefaultCommand();
         LEDCommands.setupDefaultCommand();
@@ -105,7 +111,9 @@ public class Robot extends LoggedRobot {
         pilotGamepad.resetConfig();
         operatorGamepad.resetConfig();
         LEDCommands.setupLEDTriggers();
-        ElevatorCommands.setupElevatorTriggers();
+        SlideCommands.setupSlideTriggers();
+        ShoulderCommands.setupShoulderTriggers();
+        ElbowCommands.setupElbowTriggers();
     }
 
     /**

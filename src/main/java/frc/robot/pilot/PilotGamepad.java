@@ -67,34 +67,35 @@ public class PilotGamepad extends Gamepad {
         /* Drive */
         stickSteerTriggers();
         triggerSteering();
-        // driveTrigger();
 
         /* Aiming */
-        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI));
-        gamepad.bButton.whileTrue(IntakeCommands.launch());
+        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI)); // grid
+        // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
 
         /* Dpad */
-        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.launch());
-        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.eject());
+        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
+        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
+                .onTrue(PilotCommands.scoreRoutine());
         gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
 
         /* Aligning */
-        rightBumperOnly()
-                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 0));
-        // rightBumperOnly().whileTrue(new DriveToCubeNode(0));
-        rightBumperOnly()
-                .and(rightTrigger)
+        gamepad.bButton
+                .and(noBumpers())
                 .whileTrue(
                         new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                PilotConfig.alignmentOffset));
-        rightBumperOnly()
-                .and(leftTrigger)
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, true));
+        gamepad.bButton
+                .and(leftBumperOnly())
                 .whileTrue(
                         new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                -PilotConfig.alignmentOffset));
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, false));
+        // gamepad.bButton
+        //         .and(rightBumperOnly())
+        //         .whileTrue(
+        //                 new AlignToAprilTag(
+        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
+        //                         -PilotConfig.alignmentOffset, true));
 
         /* Reorient */
         gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));
@@ -105,11 +106,21 @@ public class PilotGamepad extends Gamepad {
         /* Start and Select */
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
         gamepad.selectButton.whileTrue(PilotCommands.lockSwerve());
+
+        /* Misc */
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupDisabledButtons() {
         gamepad.aButton.whileTrue(new OneColorLEDCommand(Color.kWhite, "White", 5));
         gamepad.startButton.whileTrue(PilotCommands.resetSteering());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.killTheRobot());
     }
 
     public void setupTestButtons() {}

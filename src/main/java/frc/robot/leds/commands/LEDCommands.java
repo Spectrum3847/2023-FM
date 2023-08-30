@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
-import frc.robot.elevator.commands.ElevatorCommands;
+import frc.robot.slide.commands.SlideCommands;
 
 /** All of the commands to schedule LEDs */
 public class LEDCommands {
@@ -13,7 +13,7 @@ public class LEDCommands {
     public static void setupDefaultCommand() {}
 
     public static void setupLEDTriggers() {
-        ElevatorCommands.elevatorUp.whileTrue(elevatorHeightLED());
+        SlideCommands.slideUp.whileTrue(elevatorHeightLED());
         Trigger startLEDEnd =
                 new Trigger(
                         () ->
@@ -37,12 +37,8 @@ public class LEDCommands {
         return new OneColorLEDCommand(Color.kRed, "LED Fail", 99, 1.5);
     }
 
-    public static Command coneFloorLED() {
+    public static Command coneLED() {
         return new OneColorLEDCommand(Color.kYellow, "Yellow Floor Cone", 99);
-    }
-
-    public static Command coneShelfLED() {
-        return new BlinkLEDCommand(Color.kYellow, "Yellow Shelf Cone", 99);
     }
 
     public static Command cubeLED() {

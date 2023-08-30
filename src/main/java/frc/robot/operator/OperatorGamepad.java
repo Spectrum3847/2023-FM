@@ -4,14 +4,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
 import frc.SpectrumLib.gamepads.Gamepad;
 import frc.SpectrumLib.gamepads.XboxGamepad.XboxAxis;
-import frc.robot.elevator.Elevator;
-import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.fourbar.commands.FourBarCommands;
+import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.commands.OperatorCommands;
-import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.shoulder.commands.ShoulderCommands;
+import frc.robot.slide.commands.SlideCommands;
 
 /** Used to add buttons to the operator gamepad and configure the joysticks */
 public class OperatorGamepad extends Gamepad {
@@ -30,73 +29,66 @@ public class OperatorGamepad extends Gamepad {
     public void setupTeleopButtons() {
 
         /* Intaking */
-        gamepad.leftBumper.whileTrue(OperatorCommands.homeAndSlowIntake());
-        gamepad.rightTriggerButton.and(rightBumper()).whileTrue(OperatorCommands.coneIntake());
-        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeIntake());
         gamepad.leftTriggerButton
                 .and(rightBumper())
-                .whileTrue(OperatorCommands.coneStandingIntake());
-        gamepad.rightTriggerButton
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.coneShelfIntake());
-        gamepad.yButton.and(rightBumper()).whileTrue(OperatorCommands.airIntake());
+                .and(noRightTrigger())
+                .whileTrue(OperatorCommands.intake()); // Daniel only
+        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
+        gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
 
-        /* Cube Scoring */
-        gamepad.aButton
-                .and(rightBumper())
-                .whileTrue(OperatorCommands.cubeFloorGoal().alongWith(PilotCommands.rumble(1, 99)));
-        gamepad.bButton
-                .and(rightBumper())
-                .whileTrue(
-                        OperatorCommands.cubeChargeStation()
-                                .alongWith(PilotCommands.rumble(1, 99)));
-        gamepad.aButton
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.cubeMid().alongWith(PilotCommands.rumble(1, 99)));
-        gamepad.bButton
-                .and(noRightBumper())
-                .whileTrue(
-                        OperatorCommands.cubeTop()
-                                .alongWith(
-                                        PilotCommands.conditionalRumble(
-                                                Elevator.config.cubeTop, 1, 99)));
+        /* Scoring/Positions */
+        gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
+        gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
+        gamepad.yButton.whileTrue(OperatorCommands.coneTop());
+        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
+        gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
+        // ground score is below, but different buttons for Daniel and training
 
-        /* Cone Scoring */
-        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.coneFloorGoal());
-        gamepad.xButton.and(noRightBumper()).whileTrue(OperatorCommands.coneMid());
-        gamepad.yButton.and(noRightBumper()).whileTrue(OperatorCommands.coneTop());
+        /* Misc */
+        gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
+        gamepad.Dpad.Down.whileTrue(IntakeCommands.eject());
+        gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
+        gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
+        gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
+        gamepad.selectButton.and(noRightBumper()).whileTrue(SlideCommands.zeroSlideRoutine());
+        gamepad.startButton.and(gamepad.selectButton).whileTrue(OperatorCommands.cancelCommands());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(OperatorCommands.killTheRobot());
 
-        /* Miscellaneous */
-        gamepad.Dpad.Up.and(noRightBumper()).whileTrue(IntakeCommands.intake());
-        gamepad.Dpad.Down.and(noRightBumper()).whileTrue(IntakeCommands.eject());
-        gamepad.Dpad.Left.and(noRightBumper()).whileTrue(LEDCommands.coneFloorLED());
-        gamepad.Dpad.Right.and(noRightBumper()).whileTrue(LEDCommands.cubeLED());
-        gamepad.selectButton.whileTrue(ElevatorCommands.zeroElevatorRoutine());
-        gamepad.startButton.whileTrue(FourBarCommands.zeroFourBarRoutine());
-        gamepad.selectButton.and(gamepad.startButton).onTrue(OperatorCommands.cancelCommands());
-
-        AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.manualFourBar());
-        AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
-                .and(noRightBumper())
-                .whileTrue(OperatorCommands.manualElevator());
+        /* Daniel Only */
+        gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        gamepad.selectButton.and(rightBumper()).whileTrue(ElbowCommands.zeroElbowRoutine());
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(rightBumper())
-                .whileTrue(OperatorCommands.slowManualFourBar());
+                .whileTrue(OperatorCommands.manualElbow()); // Daniel only
+
+        /* Operation Training Wheels */
+        // gamepad.rightBumper.whileTrue(OperatorCommands.floorScore());
+
+        /* Manual Control */
+        AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.manualShoulder());
         AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
-                .and(rightBumper())
-                .whileTrue(OperatorCommands.slowManualElevator());
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.manualSlide());
     }
 
     public void setupDisabledButtons() {
-        gamepad.aButton.whileTrue(LEDCommands.coneFloorLED());
+        gamepad.aButton.whileTrue(LEDCommands.coneLED());
         gamepad.yButton.whileTrue(LEDCommands.cubeLED());
         gamepad.bButton
                 .and(bothTriggers())
                 .and(bothBumpers())
                 .whileTrue(new CountdownLEDCommand("Manual Countdown", 120, 10, true));
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(OperatorCommands.killTheRobot());
         gamepad.bButton.toggleOnTrue(OperatorCommands.coastMode());
     }
 
@@ -118,15 +110,27 @@ public class OperatorGamepad extends Gamepad {
         return gamepad.rightTriggerButton.and(gamepad.leftTriggerButton);
     }
 
+    private Trigger noRightTrigger() {
+        return gamepad.rightTriggerButton.negate();
+    }
+
+    private Trigger noBumpers() {
+        return gamepad.rightBumper.negate().and(gamepad.leftBumper.negate());
+    }
+
     public void rumble(double intensity) {
         this.gamepad.setRumble(intensity, intensity);
     }
 
-    public double elevatorManual() {
-        return gamepad.leftStick.getY() * OperatorConfig.elevatorModifer;
+    public double slideManual() {
+        return gamepad.leftStick.getY() * OperatorConfig.slideModifer;
     }
 
-    public double fourBarManual() {
-        return gamepad.rightStick.getY() * OperatorConfig.fourBarModifer;
+    public double shoulderManual() {
+        return gamepad.rightStick.getY() * OperatorConfig.shoulderModifer;
+    }
+
+    public double elbowManual() {
+        return gamepad.rightStick.getY() * OperatorConfig.elbowModifier;
     }
 }

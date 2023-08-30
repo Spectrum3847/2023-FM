@@ -12,7 +12,7 @@ public class TaxiCommand extends ParallelCommandGroup {
     public TaxiCommand() {
         addCommands(
                 new WaitCommand(5),
-                new SwerveDrive(() -> -2, () -> 0.0, () -> 0.0).withTimeout(1.5));
+                new SwerveDrive(() -> -2, () -> 0.0, () -> 0.0).withTimeout(2.5));
     }
 
     Rotation2d finalRotation() {

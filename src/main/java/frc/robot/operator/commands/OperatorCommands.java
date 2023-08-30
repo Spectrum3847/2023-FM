@@ -6,15 +6,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
-import frc.robot.elevator.Elevator;
-import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.fourbar.FourBar;
-import frc.robot.fourbar.commands.FourBarCommands;
-import frc.robot.fourbar.commands.FourBarDelay;
-import frc.robot.intake.commands.ConeIntake;
-import frc.robot.intake.commands.CubeIntake;
+import frc.robot.elbow.commands.ElbowCommands;
+import frc.robot.exceptions.KillRobotException;
 import frc.robot.intake.commands.IntakeCommands;
-import frc.robot.operator.OperatorConfig;
+import frc.robot.shoulder.commands.ShoulderCommands;
+import frc.robot.slide.commands.SlideCommands;
 
 public class OperatorCommands {
     public static void setupDefaultCommand() {
@@ -24,109 +20,78 @@ public class OperatorCommands {
 
     /* Intaking Commands */
 
-    public static Command coneShelfIntake() {
-        return new ConeIntake(true)
-                .alongWith(ElevatorCommands.coneShelf(), FourBarCommands.coneShelf())
-                .withName("OperatorShelfCone")
-                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule());
-    }
-
-    public static Command coneStandingIntake() {
-        return new ConeIntake()
-                .alongWith(
-                        ElevatorCommands.coneStandingIntake(), FourBarCommands.coneStandingIntake())
-                .withName("OperatorStandingCone")
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule());
+    public static Command intake() {
+        return IntakeCommands.intake()
+                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake())
+                .finallyDo((b) -> homeAndSlowIntake().withTimeout(1).schedule())
+                .withName("OperatorIntake");
     }
 
     public static Command airIntake() {
-        return IntakeCommands.airIntake().withName("OperatorAirIntake");
+        return IntakeCommands.intake()
+                .alongWith(
+                        SlideCommands.home(),
+                        ShoulderCommands.airIntake(),
+                        ElbowCommands.airIntake())
+                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .withName("OperatorAirIntake");
+    }
+
+    public static Command shelfIntake() {
+        return IntakeCommands.intake()
+                .alongWith(
+                        SlideCommands.home(),
+                        ShoulderCommands.shelfIntake(),
+                        ElbowCommands.shelfIntake())
+                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .withName("OperatorShelfIntake");
     }
 
     /* Position Commands */
 
-    public static Command coneIntake() {
-        return new ConeIntake()
-                .alongWith(ElevatorCommands.coneIntake(), FourBarCommands.coneIntake())
-                .withName("OperatorFloorCone")
-                .finallyDo((b) -> finishConeIntake());
-    }
-
-    // Called by finally do, to let the intake hop up, and keep intaking for a bit after button
-    // release
-    public static void finishConeIntake() {
-        IntakeCommands.intake()
-                .alongWith(ElevatorCommands.hopElevator(), FourBarCommands.home())
-                .withTimeout(0.75)
-                .withName("OperatorFinishConeIntake")
-                .schedule();
-    }
-
-    /* Move to coneFloor position and eject cone */
-    public static Command coneFloorGoal() {
-        return ElevatorCommands.coneFloorGoal()
+    // Move to coneFloor position and eject cone
+    public static Command floorScore() {
+        return SlideCommands.home()
                 .alongWith(
-                        FourBarCommands.coneFloorGoal(),
-                        new WaitCommand(0.2).andThen(IntakeCommands.floorEject()))
+                        ShoulderCommands.floor(),
+                        ElbowCommands.floor(),
+                        new WaitCommand(0.2).andThen(IntakeCommands.drop()))
                 .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
-                .withName("OperatorConeFloorGoal");
+                .withName("OperatorFloorScore");
     }
 
     public static Command coneMid() {
         return IntakeCommands.slowIntake()
-                .alongWith(ElevatorCommands.coneMid(), FourBarCommands.coneMid())
+                .alongWith(
+                        SlideCommands.home(), ShoulderCommands.coneMid(), ElbowCommands.coneMid())
                 .withName("OperatorConeMid");
     }
 
     public static Command coneTop() {
         return IntakeCommands.slowIntake()
                 .alongWith(
-                        ElevatorCommands.coneTop(),
-                        new FourBarDelay(
-                                FourBar.config.safePositionForElevator,
-                                FourBar.config.coneTop,
-                                Elevator.config.safePositionForFourBar))
+                        SlideCommands.fullExtend(),
+                        ShoulderCommands.coneTop(),
+                        ElbowCommands.coneTop())
                 .withName("OperatorConeTop");
     }
 
-    public static Command cubeIntake() {
-        return new CubeIntake()
-                .alongWith(ElevatorCommands.cubeIntake(), FourBarCommands.cubeIntake())
-                .withName("OperatorCubeIntake");
-    }
-
-    public static Command cubeFloorGoal() {
-        return ElevatorCommands.cubeFloorGoal()
-                .alongWith(FourBarCommands.cubeFloorGoal(), IntakeCommands.cubeFloorLaunch())
-                .withName("OperatorCubeFloor")
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule());
-    }
-
     public static Command cubeMid() {
-        return IntakeCommands.intake()
-                .withTimeout(0.1)
-                .andThen(IntakeCommands.midCubeSpinUp().alongWith(ElevatorCommands.cubeMid()))
+        return SlideCommands.home()
+                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp())
                 .withName("OperatorCubeMid");
     }
 
     public static Command cubeTop() {
-        return IntakeCommands.intake()
-                .withTimeout(0.1)
-                .andThen(IntakeCommands.topCubeSpinUp().alongWith(ElevatorCommands.cubeTop()))
+        return SlideCommands.fullExtend()
+                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp())
                 .withName("OperatorCubeTop");
     }
 
-    public static Command cubeChargeStation() {
-        return IntakeCommands.intake()
-                .withTimeout(0.1)
-                .andThen(IntakeCommands.behindChargeStationSpinUp().alongWith(homeSystems()))
-                .withName("OperatorCubeCS");
-    }
-
-    /** Sets Elevator and Fourbar to coast mode */
+    /** Sets Slide, Shoulder, and Elbow to coast mode */
     public static Command coastMode() {
-        return ElevatorCommands.coastMode()
-                .alongWith(FourBarCommands.coastMode())
+        return SlideCommands.coastMode()
+                .alongWith(ShoulderCommands.coastMode(), ElbowCommands.coastMode())
                 .withName("OperatorCoastMode");
     }
 
@@ -136,47 +101,34 @@ public class OperatorCommands {
                 .withName("OperatorSlowHomeIntake");
     }
 
-    /** Goes to 0 */
+    /** Goes to home position */
     public static Command homeSystems() {
-        return FourBarCommands.home()
-                .alongWith(ElevatorCommands.safeHome())
+        return SlideCommands.home()
+                .alongWith(ShoulderCommands.home(), ElbowCommands.home())
                 .withName("OperatorHomeSystems");
     }
 
-    public static Command manualElevator() {
+    public static Command manualSlide() {
         return new RunCommand(
-                        () ->
-                                Robot.elevator.setManualOutput(
-                                        Robot.operatorGamepad.elevatorManual()),
-                        Robot.elevator)
-                .withName("OperatorManualElevator");
+                        () -> Robot.slide.setManualOutput(Robot.operatorGamepad.slideManual()),
+                        Robot.slide)
+                .withName("OperatorManualSlide");
     }
 
-    public static Command slowManualElevator() {
+    public static Command manualShoulder() {
         return new RunCommand(
                         () ->
-                                Robot.elevator.setManualOutput(
-                                        Robot.operatorGamepad.elevatorManual()
-                                                * OperatorConfig.slowModeScalar),
-                        Robot.elevator)
-                .withName("OperatorManualSlowElevator");
+                                Robot.shoulder.setManualOutput(
+                                        Robot.operatorGamepad.shoulderManual()),
+                        Robot.shoulder)
+                .withName("OperatorManualShoulder");
     }
 
-    public static Command manualFourBar() {
+    public static Command manualElbow() {
         return new RunCommand(
-                        () -> Robot.fourBar.setManualOutput(Robot.operatorGamepad.fourBarManual()),
-                        Robot.fourBar)
-                .withName("OperatorManualFourBar");
-    }
-
-    public static Command slowManualFourBar() {
-        return new RunCommand(
-                        () ->
-                                Robot.fourBar.setManualOutput(
-                                        Robot.operatorGamepad.fourBarManual()
-                                                * OperatorConfig.slowModeScalar),
-                        Robot.fourBar)
-                .withName("OperatorManualSlowFourBar");
+                        () -> Robot.elbow.setManualOutput(Robot.operatorGamepad.elbowManual()),
+                        Robot.elbow)
+                .withName("OperatorManualElbow");
     }
 
     /** Command that can be used to rumble the pilot controller */
@@ -189,5 +141,13 @@ public class OperatorCommands {
     public static Command cancelCommands() {
         return new InstantCommand(() -> CommandScheduler.getInstance().cancelAll())
                 .withName("OperatorCancelAll");
+    }
+
+    public static Command killTheRobot() {
+        return new InstantCommand(() -> operatorError()).ignoringDisable(true);
+    }
+
+    public static void operatorError() {
+        throw new KillRobotException("The robot was killed by operator");
     }
 }

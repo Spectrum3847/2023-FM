@@ -15,6 +15,7 @@ public final class RobotConfig {
     public final String alpha2023BotMAC = "00:80:2F:23:E9:33";
     public final String flash2021BotMAC = "00:80:2F:32:FC:79";
     public final String xray2023BotMAC = "00:80:2F:22:50:6D";
+    // public final String fm2023BotMAC = "";
     public final ModuleType PowerDistributionType = ModuleType.kCTRE;
 
     public static final int pigeonID = 0;
@@ -34,12 +35,11 @@ public final class RobotConfig {
         public static final int driveMotor3 = 31;
         public static final int angleMotor3 = 32;
 
-        public static final int elevatorMotor = 43;
-        public static final int fourBarMotor = 42;
+        public static final int slideMotor = 43;
+        public static final int shoulderMotor = 42;
+        public static final int elbowMotor = 41; // TODO: change
 
-        public static final int lowerRoller = 51;
-        public static final int frontRoller = 52;
-        public static final int launcher = 53;
+        public static final int intakeMotor = 52;
     }
 
     public final class Pneumatic {

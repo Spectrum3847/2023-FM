@@ -12,16 +12,16 @@ import frc.robot.swerve.configTemplates.TuningConfig;
 
 public class ALPHA2023 {
     /* Angle Offsets */
-    public static final double mod0angleOffset = 194.238281;
-    public static final double mod1angleOffset = 170.068359;
-    public static final double mod2angleOffset = 255.585938;
-    public static final double mod3angleOffset = 308.408203;
+    public static final double mod0angleOffset = 192.8867; // 194.238281
+    public static final double mod1angleOffset = 168.8379; // 170.068359
+    public static final double mod2angleOffset = 257.52; // 255.585938
+    public static final double mod3angleOffset = 307.529; // 308.408203
 
     /* Physical Configs */
     static final double trackWidth = Units.inchesToMeters(18.5);
     static final double wheelBase = Units.inchesToMeters(21.5);
-    static final double wheelDiameter = Units.inchesToMeters(4);
-    static final double driveGearRatio = (6.75 / 1.0);
+    static final double wheelDiameter = Units.inchesToMeters(4.05); // 3.85 worked for 1 meter
+    static final double driveGearRatio = (6.746 / 1.0);
     static final double angleGearRatio = (50.0 / 14.0) * (60.0 / 10.0);
     static final boolean driveMotorInvert = true;
     static final boolean angleMotorInvert = true;
@@ -37,24 +37,23 @@ public class ALPHA2023 {
     static final double driveKD = 0.0;
 
     /* Drive Motor Characterization Values */
-    static final double driveKS = (0.605 / 12); // /12 to convert from volts to %output
-    static final double driveKV = (1.72 / 12);
-    static final double driveKA = (0.193 / 12);
+    static final double driveKS =
+            (0.174 / 12); // (0.605 / 12); // /12 to convert from volts to %output
+    static final double driveKV = (2.2562 / 12); // (1.72 / 12);
+    static final double driveKA = (0.47598 / 12); // (0.193 / 12);
 
     /* Swerve Profiling Values */
-    static final double maxVelocity =
-            ((6380 / 60) / angleGearRatio) * wheelDiameter * Math.PI * 0.95; // meters per //
-    // second
+    public static final double maxVelocity =
+            ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI;
     public static final double maxAutoVelocity =
-            ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI * 0.95; // meters per //
-    // second
+            ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI;
     static final double maxAccel = maxVelocity * 1.5; // take 1/2 sec to get to max speed.
     static final double maxAngularVelocity =
-            maxVelocity / Math.hypot(trackWidth / 2.0, wheelBase / 2.0);
-    static final double maxAngularAcceleration = Math.pow(maxAngularVelocity, 2);
+            maxVelocity / Math.hypot(trackWidth / 2.0, wheelBase / 2.0) * 0.8;
+    static final double maxAngularAcceleration = Math.pow(maxAngularVelocity, 2) * 0.8;
 
     /*Rotation Controller*/
-    public static final double kPRotationController = 4.0;
+    public static final double kPRotationController = 7;
     public static final double kIRotationController = 0.0;
     public static final double kDRotationController = 0.1;
 
@@ -86,9 +85,9 @@ public class ALPHA2023 {
                             maxAccel,
                             maxAngularVelocity,
                             maxAngularAcceleration)
-                    .configNeutralModes(NeutralMode.Coast, NeutralMode.Coast)
+                    .configNeutralModes(NeutralMode.Brake, NeutralMode.Brake)
                     .configRotationController(
-                            kPRotationController, kIRotationController, kDRotationController);;
+                            kPRotationController, kIRotationController, kDRotationController);
 
     /* Module Configs */
     static final ModuleConfig Mod0 =
