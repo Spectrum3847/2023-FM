@@ -16,7 +16,7 @@ public class Shoulder extends AngleMechSubsystem {
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise); // Should be done in config
-        motorLeader.setNeutralMode(NeutralMode.Coast);
+        motorLeader.setNeutralMode(NeutralMode.Brake);
         motorLeader.configReverseSoftLimitThreshold(200);
         motorLeader.configReverseSoftLimitEnable(true);
         motorLeader.configForwardSoftLimitThreshold(config.shoulderMaxFalcon);

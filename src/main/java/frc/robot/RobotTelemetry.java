@@ -12,7 +12,6 @@ import frc.SpectrumLib.telemetry.TelemetrySubsystem;
 import frc.SpectrumLib.util.Network;
 import frc.SpectrumLib.util.Util;
 import frc.robot.auton.Auton;
-import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.Slide;
 import java.util.Map;
@@ -44,11 +43,6 @@ public class RobotTelemetry extends TelemetrySubsystem {
         // Column 2
         tab.addBoolean("Connected?", () -> flash())
                 .withPosition(2, 0)
-                .withSize(1, 1)
-                .withProperties(
-                        Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
-        tab.addBoolean("ElbowCond?", () -> ElbowCommands.isInitialized.getAsBoolean())
-                .withPosition(8, 4)
                 .withSize(1, 1)
                 .withProperties(
                         Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));

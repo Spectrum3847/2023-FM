@@ -12,17 +12,17 @@ public class ElbowConfig extends AngleMechConfig {
     // Positions set as percentage of
     public final int initializedPosition = 90;
 
-    public final int intake = 4;
-    public final int airIntake = 65;
-    public final int shelfIntake = 0;
+    public final int intake = -104;
+    public final int airIntake = -43;
+    public final int shelfIntake = -108;
 
-    public final int home = 70;
-    public final int unblockCameraPos = 20;
+    public final int home = -38;
+    public final int unblockCameraPos = -88;
 
-    public final int floor = 20;
-    public final int coneTop = 19;
-    public final double coneMid = 15;
-    public final int cubeUp = 0;
+    public final int floor = -88;
+    public final int coneTop = -89;
+    public final double coneMid = -93;
+    public final int cubeUp = -108;
 
     public final int scorePos = coneTop - 17;
     // public final int cubeScorePos = cubeUp - 2;
@@ -38,8 +38,8 @@ public class ElbowConfig extends AngleMechConfig {
         this.kI = 0; // could be 0
         this.kD = 0; // could be 0
         this.kF = 0.064;
-        this.motionCruiseVelocity = 10500;
-        this.motionAcceleration = 42000;
+        this.motionCruiseVelocity = 2000; // 10500
+        this.motionAcceleration = 42000; // 42000
 
         this.currentLimit = 10;
         this.tirggerThresholdLimit = 10;

@@ -1,31 +1,29 @@
 package frc.robot.elbow.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
 import frc.robot.elbow.Elbow;
 import java.util.function.DoubleSupplier;
 
 public class ElbowCommands {
-    public static Trigger isInitialized = new Trigger(() -> false);
+    // public static Trigger isInitialized = new Trigger(() -> false);
 
     public static void setupDefaultCommand() {
         Robot.elbow.setDefaultCommand(new ElbowHoldPosition().withName("ElbowDefaultCommand"));
     }
 
     public static void setupElbowTriggers() {
-        isInitialized = new Trigger(() -> isInPosition());
-        isInitialized.onTrue(
-                new InstantCommand(
-                                () -> {
-                                    Robot.elbow.setBrakeMode(true);
-                                    Elbow.isInitialized = true;
-                                },
-                                Robot.elbow)
-                        .ignoringDisable(true));
+        // isInitialized = new Trigger(() -> isInPosition());
+        // isInitialized.onTrue(
+        //         new InstantCommand(
+        //                         () -> {
+        //                             Robot.elbow.setBrakeMode(true);
+        //                             Elbow.isInitialized = true;
+        //                         },
+        //                         Robot.elbow)
+        //                 .ignoringDisable(true));
     }
 
     public static Command coastMode() {
