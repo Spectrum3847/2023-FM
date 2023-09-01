@@ -10,7 +10,7 @@ import frc.robot.swerve.configTemplates.PhysicalConfig.AngleSensorType;
 import frc.robot.swerve.configTemplates.SwerveConfig;
 import frc.robot.swerve.configTemplates.TuningConfig;
 
-public class ALPHA2023 {
+public class AM2023 {
     /* Angle Offsets */
     public static final double mod0angleOffset = 192.8867; // 194.238281
     public static final double mod1angleOffset = 168.8379; // 170.068359
@@ -38,9 +38,9 @@ public class ALPHA2023 {
 
     /* Drive Motor Characterization Values */
     static final double driveKS =
-            (0.174 / 12); // (0.605 / 12); // /12 to convert from volts to %output
-    static final double driveKV = (2.2562 / 12); // (1.72 / 12);
-    static final double driveKA = (0.47598 / 12); // (0.193 / 12);
+            (0.13368 / 12); // (0.605 / 12); // /12 to convert from volts to %output
+    static final double driveKV = (2.2682 / 12); // (1.72 / 12);
+    static final double driveKA = (0.24865 / 12); // (0.193 / 12);
 
     /* Swerve Profiling Values */
     public static final double maxVelocity =

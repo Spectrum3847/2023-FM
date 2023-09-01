@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.swerve.configTemplates.SwerveConfig;
-import frc.robot.swerve.configs.ALPHA2023;
+import frc.robot.swerve.configs.AM2023;
 import frc.robot.swerve.configs.FLASH2021;
 import frc.robot.swerve.configs.GAMMA2021;
 import frc.robot.swerve.configs.INFRARED2022;
@@ -51,7 +51,7 @@ public class Swerve extends SubsystemBase {
                 config = FLASH2021.config;
                 break;
             case ALPHA2023:
-                config = ALPHA2023.config;
+                config = AM2023.config;
                 break;
             case PRACTICE2023:
                 config = PRACTICE2023.config;
