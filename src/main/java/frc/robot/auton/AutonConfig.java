@@ -10,8 +10,8 @@ public class AutonConfig {
     public static final double stopTime = 0.001;
 
     // speeds
-    public static final double kMaxSpeed = 3;
-    public static final double kMaxAccel = 3.2;
+    public static final double kMaxSpeed = 4;
+    public static final double kMaxAccel = 3;
     public static final double kMaxFastSpeed = 3.4;
     public static final double kMaxFastAccel = 4;
     public static final double kMaxBalanceSpeed = 2.0;
