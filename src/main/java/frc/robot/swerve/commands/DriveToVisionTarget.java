@@ -17,7 +17,7 @@ public class DriveToVisionTarget extends PIDCommand {
     /* Config settings */
     private static double kP = 0.06;
     private static double verticalSetpoint = -15; // neg
-    private static double detectorVerticalSetpoint = -18; // neg
+    private static double detectorVerticalSetpoint = -17; // neg
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 

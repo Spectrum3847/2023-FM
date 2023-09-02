@@ -12,6 +12,8 @@ import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
+import frc.robot.vision.VisionConfig;
+
 import java.util.function.DoubleSupplier;
 
 public class AutonCommands {
@@ -123,7 +125,7 @@ public class AutonCommands {
     }
 
     public static Command alignToGridMid() {
-        return new DriveToVisionTarget(0, true)
+        return new DriveToVisionTarget(0, VisionConfig.aprilTagPipeline)
                 .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
                 .andThen(eject());
