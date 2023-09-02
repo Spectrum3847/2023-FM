@@ -12,10 +12,10 @@ import frc.robot.swerve.configTemplates.TuningConfig;
 
 public class AM2023 {
     /* Angle Offsets */
-    public static final double mod0angleOffset = 192.8867; // 194.238281
-    public static final double mod1angleOffset = 168.8379; // 170.068359
-    public static final double mod2angleOffset = 257.52; // 255.585938
-    public static final double mod3angleOffset = 307.529; // 308.408203
+    public static final double mod0angleOffset = 194.23828; // 192.8867
+    public static final double mod1angleOffset = 169.716797; // 168.8379
+    public static final double mod2angleOffset = 256.640625; // 257.52
+    public static final double mod3angleOffset = 307.44141; // 307.529
 
     /* Physical Configs */
     static final double trackWidth = Units.inchesToMeters(18.5);
