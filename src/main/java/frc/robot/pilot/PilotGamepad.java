@@ -11,7 +11,7 @@ import frc.robot.Robot;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.pilot.commands.PilotCommands;
-import frc.robot.swerve.commands.AlignToAprilTag;
+import frc.robot.swerve.commands.AlignToVisionTarget;
 import frc.robot.trajectories.commands.DistanceDrive;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
@@ -83,12 +83,12 @@ public class PilotGamepad extends Gamepad {
         gamepad.bButton
                 .and(noBumpers())
                 .whileTrue(
-                        new AlignToAprilTag(
+                        new AlignToVisionTarget(
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, true));
         gamepad.bButton
                 .and(leftBumperOnly())
                 .whileTrue(
-                        new AlignToAprilTag(
+                        new AlignToVisionTarget(
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(), 0, false));
         // gamepad.bButton
         //         .and(rightBumperOnly())
