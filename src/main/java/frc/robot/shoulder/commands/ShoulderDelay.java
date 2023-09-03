@@ -6,25 +6,36 @@ package frc.robot.shoulder.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.slide.Slide;
 
 public class ShoulderDelay extends CommandBase {
     private double safePercent;
     private double finalPercent;
     private double conditionalPos;
+    private boolean isElbowDownward; // is elbow going up or down (+/-)
+    private boolean isShoulderDownward; // is shoulder going up or down (+/-)
     /**
-     * Creates a new ShoulderDelay. Shoulder will move to safePos, wait for Elevator to be at
+     * Creates a new ShoulderDelay. Shoulder will move to safePos, wait for Elbow to be at
      * conditionalPos, then move to finalPos
      *
      * @param safePos Shoulder position that won't hit anything
-     * @param finalPos position that Shoulder will go to after Elevator is at conditionalPos
-     * @param conditionalPos position that Elevator must be at before Shoulder will move to finalPos
+     * @param finalPos position that Shoulder will go to after Elbow is at conditionalPos
+     * @param conditionalPos position that Elbow must be at before Shoulder will move to finalPos
      */
     public ShoulderDelay(double safePercent, double finalPercent, double conditionalPos) {
         // Use addRequirements() here to declare subsystem dependencies.
         this.safePercent = safePercent;
         this.finalPercent = finalPercent;
         this.conditionalPos = conditionalPos;
+        if(Robot.elbow.getPercentAngle() < conditionalPos) {
+            isElbowDownward = false;
+        } else {
+            isElbowDownward = true;
+        }
+        if(Robot.shoulder.getPercentAngle() < finalPercent) {
+            isShoulderDownward = false;
+        } else {
+            isShoulderDownward = true;
+        }
         addRequirements(Robot.shoulder);
     }
 
@@ -38,16 +49,18 @@ public class ShoulderDelay extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Robot.shoulder.getPosition() < Robot.shoulder.percentToFalcon(safePercent)) {
+        if (Robot.shoulder.getPosition() > Robot.shoulder.percentToFalcon(safePercent)) {
             Robot.shoulder.setMMPercent(safePercent);
-        } else if (Robot.slide.getPosition() >= Slide.inchesToFalcon(conditionalPos)) {
+        } else if (Robot.elbow.getPosition() <= Robot.elbow.percentToFalcon(conditionalPos)) {
             Robot.shoulder.setMMPercent(finalPercent);
         }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.shoulder.stop();
+    }
 
     // Returns true when the command should end.
     @Override
