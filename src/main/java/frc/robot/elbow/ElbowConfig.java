@@ -18,6 +18,7 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int home = 70;
     public final int unblockCameraPos = 20;
+    public final int stow = 79;
 
     public final int floor = 20;
     public final int coneTop = 19;
@@ -38,7 +39,7 @@ public class ElbowConfig extends AngleMechConfig {
         this.kI = 0; // could be 0
         this.kD = 0; // could be 0
         this.kF = 0.064;
-        this.motionCruiseVelocity = 10500;
+        this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
         this.currentLimit = 10;

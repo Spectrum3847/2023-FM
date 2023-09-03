@@ -98,9 +98,9 @@ public class DriveToVisionTarget extends PIDCommand {
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {
         // if detector, reverse output
         if (Robot.vision.isDetectorPipeline()) {
-            return new AlignToVisionTarget(() -> -(getOutput()), horizontalOffset, pipeline);
+            return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline);
         }
-        return new AlignToVisionTarget(() -> getOutput(), horizontalOffset, pipeline);
+        return new AlignToVisionTarget(() -> getOutput() * 2, horizontalOffset, pipeline);
     }
 
     public static double getVerticalSetpoint(int pipeline) {

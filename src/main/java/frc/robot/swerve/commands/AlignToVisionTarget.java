@@ -51,7 +51,7 @@ public class AlignToVisionTarget extends PIDCommand {
         driveCommand =
                 new SwerveDrive(
                         fwdPositiveSupplier, // Allows pilot to drive fwd and rev
-                        () -> getOutput(), // Moves us center to the tag
+                        () -> (getOutput() * 2), // Moves us center to the tag
                         () -> getSteering(), // Aligns to grid
                         () -> 1.0, // full velocity
                         () -> getFieldRelative()); // Field relative is true
