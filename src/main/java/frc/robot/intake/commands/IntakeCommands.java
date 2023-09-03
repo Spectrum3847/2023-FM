@@ -9,9 +9,7 @@ public class IntakeCommands {
 
     public static void setupDefaultCommand() {
 
-        Robot.intake.setDefaultCommand(
-                slowIntake()
-                        .withName("IntakeDefaultCommand"));
+        Robot.intake.setDefaultCommand(slowIntake().withName("IntakeDefaultCommand"));
     }
 
     public static Command slowIntake() {
@@ -23,8 +21,7 @@ public class IntakeCommands {
     }
 
     public static Command eject() {
-        return setVelocities(Intake.config.eject)
-                .withName("Eject");
+        return setVelocities(Intake.config.eject).withName("Eject");
     }
 
     public static Command drop() {

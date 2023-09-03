@@ -1,5 +1,6 @@
 package frc.robot.operator;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
 import frc.SpectrumLib.gamepads.Gamepad;
@@ -9,6 +10,7 @@ import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.commands.OperatorCommands;
+import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 
@@ -26,8 +28,34 @@ public class OperatorGamepad extends Gamepad {
         gamepad.rightStick.setYinvert(OperatorConfig.yInvert);
     }
 
-    public void setupTeleopButtons() {
+    // Customize driver controller configuration
+    @Override
+    public void configure() {
+        // Detect whether the xbox controller has been plugged in after start-up
+        if (!super.configured) {
+            boolean isConnected = gamepad.isConnected();
+            if (!isConnected) {
+                super.alert.set(true);
+                return;
+            }
 
+            // Configure button bindings once the driver controller is connected
+            if (DriverStation.isTest()) {
+                setupTestButtons();
+            } else if (DriverStation.isDisabled()) {
+                setupDisabledButtons();
+            } else if (!PilotCommands.manualMode.getAsBoolean()) {
+                setupTeleopButtons();
+            } else {
+                setupManualButtons();
+            }
+            super.configured = true;
+
+            super.alert.set(false);
+        }
+    }
+
+    public void setupTeleopButtons() {
         /* Intaking */
         gamepad.leftTriggerButton
                 .and(rightBumper())
@@ -76,6 +104,10 @@ public class OperatorGamepad extends Gamepad {
         AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
                 .and(noRightBumper())
                 .whileTrue(OperatorCommands.manualSlide());
+        gamepad.bButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.toggleManualMode());
     }
 
     public void setupDisabledButtons() {
@@ -90,9 +122,68 @@ public class OperatorGamepad extends Gamepad {
                 .and(bothBumpers())
                 .whileTrue(OperatorCommands.killTheRobot());
         gamepad.bButton.toggleOnTrue(OperatorCommands.coastMode());
+        gamepad.bButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.toggleManualMode());
     }
 
     public void setupTestButtons() {}
+
+    public void setupManualButtons() {
+        /* Intaking */
+        gamepad.leftTriggerButton
+                .and(rightBumper())
+                .and(noRightTrigger())
+                .whileTrue(OperatorCommands.intake()); // Daniel only
+        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
+        gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
+
+        /* Scoring/Positions */
+        gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
+        gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
+        gamepad.yButton.whileTrue(OperatorCommands.coneTop());
+        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
+        gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
+        // ground score is below, but different buttons for Daniel and training
+
+        /* Misc */
+        gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
+        gamepad.Dpad.Down.whileTrue(IntakeCommands.eject());
+        gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
+        gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
+        gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
+        gamepad.selectButton.and(noRightBumper()).whileTrue(SlideCommands.zeroSlideRoutine());
+        gamepad.startButton.and(gamepad.selectButton).whileTrue(OperatorCommands.cancelCommands());
+        gamepad.xButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(OperatorCommands.killTheRobot());
+
+        /* Daniel Only */
+        gamepad.aButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        gamepad.xButton.and(rightBumper()).whileTrue(OperatorCommands.floorScore());
+        gamepad.selectButton.and(rightBumper()).whileTrue(ElbowCommands.zeroElbowRoutine());
+
+        AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
+                .and(rightBumper())
+                .whileTrue(OperatorCommands.manualElbow()); // Daniel only
+
+        /* Operation Training Wheels */
+        // gamepad.rightBumper.whileTrue(OperatorCommands.floorScore());
+
+        /* Manual Control */
+        AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.manualShoulder());
+        AxisButton.create(gamepad, XboxAxis.LEFT_Y, 0.1)
+                .and(noRightBumper())
+                .whileTrue(OperatorCommands.manualSlide());
+        gamepad.bButton
+                .and(bothTriggers())
+                .and(bothBumpers())
+                .whileTrue(PilotCommands.toggleManualMode());
+    }
 
     private Trigger noRightBumper() {
         return gamepad.rightBumper.negate();
