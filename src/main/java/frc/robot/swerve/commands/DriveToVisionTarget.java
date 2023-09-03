@@ -57,7 +57,8 @@ public class DriveToVisionTarget extends PIDCommand {
 
     /**
      * Creates a new DriveToVisionTarget.
-     * Optionally add a command to run once the robot is a certain distance away from a target using vertical setpoints (ex: lower intake when ~1 meter away from target). The conditional command will end with the drive command if not stopped sooner
+     * Optionally add a command to run once the robot is a certain distance away from a target using vertical setpoints (ex: lower intake when ~1 meter away from target). 
+     * The conditional command will end with the drive command if not stopped earlier
      * 
      *
      * @param horizontalOffset adjustable offset in the Y axis in case robot isn't completely
