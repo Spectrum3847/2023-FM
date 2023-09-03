@@ -10,14 +10,8 @@ public class IntakeCommands {
     public static void setupDefaultCommand() {
 
         Robot.intake.setDefaultCommand(
-                slowIntake() // TODO: review
+                slowIntake()
                         .withName("IntakeDefaultCommand"));
-
-        // Robot.intake.setDefaultCommand(
-        //         stopAllMotors()
-        //                 .withTimeout(1)
-        //                 .andThen(new HoldCone()) // TODO: review
-        //                 .withName("IntakeDefaultCommand"));
     }
 
     public static Command slowIntake() {
@@ -30,15 +24,8 @@ public class IntakeCommands {
 
     public static Command eject() {
         return setVelocities(Intake.config.eject)
-                // .alongWith(ShoulderCommands.home(), SlideCommands.home())
                 .withName("Eject");
-        // .finallyDo(
-        //         (b) ->
-        //                 SlideCommands.home()
-        //                         .alongWith(ShoulderCommands.home())
-        //                         .withTimeout(1.5)
-        //                         .schedule());
-    } // TODO: review
+    }
 
     public static Command drop() {
         return setVelocities(Intake.config.drop).withName("Drop");

@@ -18,8 +18,8 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int home = -38;
     public final int unblockCameraPos = -88;
-    public final int stow = 79; //change
-    
+    public final int stow = -29;
+
 
     public final int floor = -88;
     public final int coneTop = -89;
@@ -32,13 +32,13 @@ public class ElbowConfig extends AngleMechConfig {
     public final double zeroSpeed = -0.2;
 
     // Physical Constants
-    public final double gearRatio = 1; // TODO: might change?
+    public final double gearRatio = 1; // TODO: change; not actually used though
 
     public ElbowConfig() {
         super("Elbow");
-        this.kP = 0.4; // not accurate value, just testing //TODO: change
-        this.kI = 0; // could be 0
-        this.kD = 0; // could be 0
+        this.kP = 0.4;
+        this.kI = 0;
+        this.kD = 0;
         this.kF = 0.064;
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;

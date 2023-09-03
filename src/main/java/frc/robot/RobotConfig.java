@@ -37,7 +37,7 @@ public final class RobotConfig {
 
         public static final int slideMotor = 43;
         public static final int shoulderMotor = 42;
-        public static final int elbowMotor = 41; // TODO: change
+        public static final int elbowMotor = 41;
 
         public static final int intakeMotor = 52;
     }

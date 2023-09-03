@@ -2,11 +2,11 @@ package frc.robot.intake;
 
 public class IntakeConfig {
 
-    public double lowerDiameter = 0.8; // TODO: config: change
+    public double lowerDiameter = 0.8; // TODO: config: change; not actually used though
     public double frontDiameter = 2.125;
     public double launcherDiamter = 3;
 
-    public double lowerGearRatio = 12 / 15; // TODO: config: change
+    public double lowerGearRatio = 12 / 15; // TODO: config: change; not actually used though
     public double frontGearRatio = 18 / 22;
     public double launcherGearRatio = 18 / 12;
 
@@ -19,7 +19,7 @@ public class IntakeConfig {
 
     public double intakeCone = 3000;
 
-    public double currentLimit = 10; // TODO: review
+    public double currentLimit = 10;
     public double threshold = 20;
 
     public double velocityKp = 0.065;

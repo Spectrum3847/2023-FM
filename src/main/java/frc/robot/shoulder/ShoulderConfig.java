@@ -34,9 +34,9 @@ public class ShoulderConfig extends AngleMechConfig {
 
     public ShoulderConfig() {
         super("Shoulder");
-        this.kP = 0.4; // not accurate value, just testing
-        this.kI = 0; // could be 0
-        this.kD = 0; // could be 0
+        this.kP = 0.4;
+        this.kI = 0;
+        this.kD = 0;
         this.kF = 0.064;
         this.motionCruiseVelocity = 4000; // 10500
         this.motionAcceleration = 42000;
