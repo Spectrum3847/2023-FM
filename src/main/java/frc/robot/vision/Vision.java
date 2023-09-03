@@ -47,10 +47,7 @@ public class Vision extends SubsystemBase {
         horizontalOffset = 0;
         verticalOffset = 0;
 
-        // LimelightHelpers.setLEDMode_ForceOff(null);
-        // LimelightHelpers.setLEDMode_ForceOn(null);
-        LimelightHelpers.setLEDMode_PipelineControl(null);
-        LimelightHelpers.setPipelineIndex(null, 0);
+        LimelightHelpers.setLEDMode_ForceOff(null);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -333,6 +330,19 @@ public class Vision extends SubsystemBase {
         return LimelightHelpers.getFiducialID("");
     }
 
+    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
+    public void setLimelightPipeline(int pipelineIndex) {
+        System.out.println("setPipeline: " + pipelineIndex);
+        LimelightHelpers.setPipelineIndex(null, pipelineIndex);
+    }
+
+    /** @return if current LL pipeline is on cube or cone detector */
+    public boolean isDetectorPipeline() {
+        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(null);
+        return currentPipeline == VisionConfig.coneDetectorPipeline
+                || currentPipeline == VisionConfig.cubeDetectorPipeline;
+    }
+
     /**
      * Prints the vision, estimated, and odometry pose to SmartDashboard
      *
@@ -386,13 +396,5 @@ public class Vision extends SubsystemBase {
             theta -= 360;
             System.out.println(" needed new theta: " + df.format(theta));
         }
-    }
-
-    public void setAprilTagPipeline() {
-        LimelightHelpers.setPipelineIndex(null, 0);
-    }
-
-    public void setRetroPipeline() {
-        LimelightHelpers.setPipelineIndex(null, 1);
     }
 }

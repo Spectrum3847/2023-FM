@@ -1,5 +1,7 @@
 package frc.robot.auton;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -7,14 +9,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
-import frc.robot.auton.commands.TaxiCommand;
-import frc.robot.pose.commands.PoseCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import java.util.HashMap;
@@ -68,55 +66,55 @@ public class Auton {
 
     // A chooser for autonomous commands
     public static void setupSelectors() {
-        // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
-        // autonChooser.addOption(
-        // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
-        // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
-        // autonChooser.addOption("Bump Side (2 Piece)", AutoPaths.BumpSide());
+        // // Advanced comp autos with odometry (Ordered by likelyhood of running)
+        // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
+        // autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
+        // // autonChooser.addOption(
+        // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
+        // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
+        // // autonChooser.addOption("Bump Side (2 Piece)", AutoPaths.BumpSide());
 
-        score3rd.setDefaultOption("True", true);
-        score3rd.addOption("False", false);
+        // score3rd.setDefaultOption("True", true);
+        // score3rd.addOption("False", false);
 
-        // Simple comp autos
-        autonChooser.addOption(
-                "Taxi Simple w/ High Cone",
-                AutonCommands.coneTopFull()
-                        .andThen(AutonCommands.retractIntake().withTimeout(3))
-                        .andThen(new TaxiCommand())
-                        .andThen(PoseCommands.resetHeading(180)));
-        autonChooser.addOption(
-                "Taxi Simple", new TaxiCommand().andThen(PoseCommands.resetHeading(180)));
-        autonChooser.addOption(
-                "Nothing",
-                new PrintCommand("Doing Nothing in Auton")
-                        .andThen(new WaitCommand(5))); // setups an auto that does nothing
-        // // Autos for tuning/testing (not used at comp)
+        // // Simple comp autos
         // autonChooser.addOption(
-        // "1 Meter",
-        // getAutoBuilder()
-        // .fullAuto(
-        // PathPlanner.loadPathGroup(
-        // "1 Meter",
-        // new PathConstraints(
-        // AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        //         "Taxi Simple w/ High Cone",
+        //         AutonCommands.coneTopFull()
+        //                 .andThen(AutonCommands.retractIntake().withTimeout(3))
+        //                 .andThen(new TaxiCommand())
+        //                 .andThen(PoseCommands.resetHeading(180)));
         // autonChooser.addOption(
-        // "3 Meters",
-        // getAutoBuilder()
-        // .fullAuto(
-        // PathPlanner.loadPathGroup(
-        // "3 Meters",
-        // new PathConstraints(
-        // AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        //         "Taxi Simple", new TaxiCommand().andThen(PoseCommands.resetHeading(180)));
         // autonChooser.addOption(
-        // "5 Meters",
-        // getAutoBuilder()
-        // .fullAuto(
-        // PathPlanner.loadPathGroup(
-        // "5 Meters",
-        // new PathConstraints(
-        // AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        //         "Nothing",
+        //         new PrintCommand("Doing Nothing in Auton")
+        //                 .andThen(new WaitCommand(5))); // setups an auto that does nothing
+        // Autos for tuning/testing (not used at comp)
+        autonChooser.addOption(
+                "1 Meter",
+                getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup(
+                                        "1 Meter",
+                                        new PathConstraints(
+                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        autonChooser.addOption(
+                "3 Meters",
+                getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup(
+                                        "3 Meters",
+                                        new PathConstraints(
+                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        autonChooser.addOption(
+                "5 Meters",
+                getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup(
+                                        "5 Meters",
+                                        new PathConstraints(
+                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
     }
 
     // Adds event mapping to autonomous commands

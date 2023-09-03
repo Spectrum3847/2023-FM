@@ -19,8 +19,8 @@ public class IntakeConfig {
 
     public double intakeCone = 3000;
 
-    public double currentLimit = 20; // TODO: review
-    public double threshold = 40;
+    public double currentLimit = 10; // TODO: review
+    public double threshold = 20;
 
     public double velocityKp = 0.065;
     public double velocityKf = 0.0519;

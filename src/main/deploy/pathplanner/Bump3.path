@@ -2,17 +2,17 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.866489311925993,
-        "y": 0.9231046883146402
+        "x": 1.81,
+        "y": 0.51
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.248033724137625,
-        "y": 0.8795770223119402
+        "x": 2.3577485751462732,
+        "y": 0.5621877910422491
       },
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": null,
+      "velOverride": 1.0,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -24,20 +24,20 @@
     },
     {
       "anchorPoint": {
-        "x": 4.543200139031858,
-        "y": 0.7798261210557514
+        "x": 4.597609721535233,
+        "y": 0.7616895935546256
       },
       "prevControl": {
-        "x": 4.960340271557737,
-        "y": 0.8070309123074395
+        "x": 4.0098805247527185,
+        "y": 0.6935470779856384
       },
       "nextControl": {
-        "x": 4.198860683427843,
-        "y": 0.757369200038098
+        "x": 5.223319920324052,
+        "y": 0.8342357035591264
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": null,
+      "velOverride": 4.0,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -49,15 +49,15 @@
     },
     {
       "anchorPoint": {
-        "x": 2.5572503776586504,
-        "y": 0.6
+        "x": 6.293375042890437,
+        "y": 1.532492012352446
       },
       "prevControl": {
-        "x": 2.97439051018453,
-        "y": 0.6362730550022504
+        "x": 6.003190602872435,
+        "y": 1.2876488910872557
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 45.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -71,23 +71,17 @@
     }
   ],
   "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
+  "maxAcceleration": 2.6,
   "isReversed": null,
   "markers": [
     {
-      "position": 1.0,
+      "position": 0.0,
       "names": [
-        "Intake"
+        "IntakeCube"
       ]
     },
     {
-      "position": 2.0,
-      "names": [
-        "RetractIntake"
-      ]
-    },
-    {
-      "position": 0.01,
+      "position": 0.25,
       "names": [
         "RetractIntake"
       ]

@@ -18,6 +18,7 @@ public class ShoulderConfig extends AngleMechConfig {
 
     public final int home = 22;
     public final int unblockCameraPos = 22;
+    public final int stow = 31;
 
     public final int floor = 20;
     public final int coneTop = 98;
@@ -37,8 +38,8 @@ public class ShoulderConfig extends AngleMechConfig {
         this.kI = 0; // could be 0
         this.kD = 0; // could be 0
         this.kF = 0.064;
-        this.motionCruiseVelocity = 2000; // 10500
-        this.motionAcceleration = 42000; // 42000
+        this.motionCruiseVelocity = 4000; // 10500
+        this.motionAcceleration = 42000;
 
         this.currentLimit = 10;
         this.tirggerThresholdLimit = 10;

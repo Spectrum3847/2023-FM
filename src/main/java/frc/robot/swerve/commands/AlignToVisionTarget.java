@@ -16,7 +16,7 @@ import java.util.function.DoubleSupplier;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AlignToAprilTag extends PIDCommand {
+public class AlignToVisionTarget extends PIDCommand {
 
     private static double lowKP = 0.035;
     private static double highKP = 0.06;
@@ -24,11 +24,17 @@ public class AlignToAprilTag extends PIDCommand {
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
     private static double out;
-    private boolean aprilTagMode;
+    private int pipelineIndex;
 
-    /** Creates a new AlignToAprilTag. */
-    public AlignToAprilTag(
-            DoubleSupplier fwdPositiveSupplier, double offset, boolean aprilTagMode) {
+    /**
+     * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
+     * retroreflective tape, detector target) on the Field Oriented X-axis.
+     *
+     * @param fwdPositiveSupplier
+     * @param offset
+     * @param pipeline
+     */
+    public AlignToVisionTarget(DoubleSupplier fwdPositiveSupplier, double offset, int pipeline) {
         super(
                 // The controller that the command will use
                 new PIDController(lowKP, 0, 0),
@@ -41,21 +47,55 @@ public class AlignToAprilTag extends PIDCommand {
                 Robot.swerve);
 
         this.getController().setTolerance(tolerance);
+        this.pipelineIndex = pipeline;
         driveCommand =
                 new SwerveDrive(
                         fwdPositiveSupplier, // Allows pilot to drive fwd and rev
-                        () -> getOutput(), // Moves us center to the tag
+                        () -> (getOutput() * 2), // Moves us center to the tag
                         () -> getSteering(), // Aligns to grid
                         () -> 1.0, // full velocity
-                        () -> true); // Field relative is true
+                        () -> getFieldRelative()); // Field relative is true
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
-        this.aprilTagMode = aprilTagMode;
-        this.setName("AlignToAprilTag");
+        this.setName("AlignToVisionTarget");
+    }
+
+    /**
+     * Gets the measurement source for the PIDController. This changes to the opposite source if the
+     * pipeline is the detector pipeline.
+     *
+     * @param index pipeline index
+     * @return
+     */
+    private double getMeasurementSource(int index) {
+        if (Robot.vision.isDetectorPipeline()) {
+            return -(Robot.vision.getHorizontalOffset());
+        }
+        return Robot.vision.getHorizontalOffset();
     }
 
     public double getSteering() {
+        // dont set rotation on detector pipelines
+        if (Robot.vision.isDetectorPipeline()) {
+            return 0;
+        }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
+    }
+
+    public boolean getFieldRelative() {
+        // drive robot oriented if on detector pipelines
+        if (Robot.vision.isDetectorPipeline()) {
+            return false;
+        }
+        return true;
+    }
+
+    public static double getOutput() {
+        // reverse direction for robot pov
+        if (Robot.vision.isDetectorPipeline()) {
+            return -out;
+        }
+        return out;
     }
 
     public static void setOutput(double output) {
@@ -65,10 +105,6 @@ public class AlignToAprilTag extends PIDCommand {
         }
 
         out = out * Robot.swerve.config.tuning.maxVelocity * 0.3;
-    }
-
-    public static double getOutput() {
-        return out;
     }
 
     @Override
@@ -84,31 +120,20 @@ public class AlignToAprilTag extends PIDCommand {
             this.getController().setP(lowKP);
         }
 
-        if (aprilTagMode) {
-            Robot.vision.setAprilTagPipeline();
-        } else {
-            Robot.vision.setRetroPipeline();
-        }
+        Robot.vision.setLimelightPipeline(pipelineIndex);
     }
 
     @Override
     public void execute() {
         super.execute();
-        // if on retro mode, dont move if dont see a target
-        if (!aprilTagMode && Robot.vision.verticalOffset != 0) {
-            driveCommand.execute();
-        } else if (aprilTagMode) {
-            driveCommand.execute();
-        }
+        driveCommand.execute();
         // getLedCommand(tagID).execute();
     }
 
     @Override
     public void end(boolean interrupted) {
+        // Robot.vision.setLimelightPipeline(VisionConfig.aprilTagPipeline);
         // getLedCommand(tagID).end(interrupted);
-        if (!aprilTagMode) {
-            Robot.vision.setAprilTagPipeline();
-        }
     }
 
     // Returns true when the command should end.

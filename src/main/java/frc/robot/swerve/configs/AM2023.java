@@ -10,17 +10,17 @@ import frc.robot.swerve.configTemplates.PhysicalConfig.AngleSensorType;
 import frc.robot.swerve.configTemplates.SwerveConfig;
 import frc.robot.swerve.configTemplates.TuningConfig;
 
-public class ALPHA2023 {
+public class AM2023 {
     /* Angle Offsets */
-    public static final double mod0angleOffset = 192.8867; // 194.238281
-    public static final double mod1angleOffset = 168.8379; // 170.068359
-    public static final double mod2angleOffset = 257.52; // 255.585938
-    public static final double mod3angleOffset = 307.529; // 308.408203
+    public static final double mod0angleOffset = 194.23828; // 192.8867
+    public static final double mod1angleOffset = 169.716797; // 168.8379
+    public static final double mod2angleOffset = 256.640625; // 257.52
+    public static final double mod3angleOffset = 307.44141; // 307.529
 
     /* Physical Configs */
     static final double trackWidth = Units.inchesToMeters(18.5);
     static final double wheelBase = Units.inchesToMeters(21.5);
-    static final double wheelDiameter = Units.inchesToMeters(4.05); // 3.85 worked for 1 meter
+    static final double wheelDiameter = Units.inchesToMeters(3.965); // 3.85 worked for 1 meter
     static final double driveGearRatio = (6.746 / 1.0);
     static final double angleGearRatio = (50.0 / 14.0) * (60.0 / 10.0);
     static final boolean driveMotorInvert = true;
@@ -38,9 +38,9 @@ public class ALPHA2023 {
 
     /* Drive Motor Characterization Values */
     static final double driveKS =
-            (0.174 / 12); // (0.605 / 12); // /12 to convert from volts to %output
-    static final double driveKV = (2.2562 / 12); // (1.72 / 12);
-    static final double driveKA = (0.47598 / 12); // (0.193 / 12);
+            (0.13368 / 12); // (0.605 / 12); // /12 to convert from volts to %output
+    static final double driveKV = (2.2682 / 12); // (1.72 / 12);
+    static final double driveKA = (0.24865 / 12); // (0.193 / 12);
 
     /* Swerve Profiling Values */
     public static final double maxVelocity =

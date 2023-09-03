@@ -63,6 +63,11 @@ public class ElbowCommands {
                 Robot.elbow);
     }
 
+    /* Misc Positions */
+    public static Command stow() {
+        return setMMPercent(Elbow.config.stow);
+    }
+
     /* Intaking Positions */
 
     public static Command intake() {
