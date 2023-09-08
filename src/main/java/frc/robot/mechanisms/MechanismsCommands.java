@@ -62,6 +62,14 @@ public class MechanismsCommands {
                 .withName("OperatorSlowHomeIntake");
     }
 
+    public static Command scoreRoutine() {
+        return ElbowCommands.score()
+                .withTimeout(0.1)
+                .andThen(IntakeCommands.drop())
+                .withTimeout(0.3)
+                .andThen(homeSystems().withTimeout(2.5));
+    }
+
     /** Goes to home position */
     public static Command homeSystems() {
         return SlideCommands.home()
