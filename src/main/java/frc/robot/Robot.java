@@ -217,6 +217,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void autonomousExit() {
+        // swerve.brakeMode(false); make sure to put it back in brake if you uncomment this 
         RobotTelemetry.print("@@ Auton Exit");
     }
 

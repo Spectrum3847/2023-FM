@@ -55,14 +55,6 @@ public class PilotCommands {
     //             .andThen(OperatorCommands.homeSystems());
     // }
 
-    public static Command scoreRoutine() {
-        return ElbowCommands.score()
-                .withTimeout(0.1)
-                .andThen(IntakeCommands.drop())
-                .withTimeout(0.3)
-                .andThen(OperatorCommands.homeSystems().withTimeout(2.5));
-    }
-
     /**
      * Drive the robot and control orientation using the right stick
      *
