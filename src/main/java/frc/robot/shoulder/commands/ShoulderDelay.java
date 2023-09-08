@@ -26,12 +26,12 @@ public class ShoulderDelay extends CommandBase {
         this.safePercent = safePercent;
         this.finalPercent = finalPercent;
         this.conditionalPos = conditionalPos;
-        if(Robot.elbow.getPercentAngle() < conditionalPos) {
+        if (Robot.elbow.getPercentAngle() < conditionalPos) {
             isElbowDownward = false;
         } else {
             isElbowDownward = true;
         }
-        if(Robot.shoulder.getPercentAngle() < finalPercent) {
+        if (Robot.shoulder.getPercentAngle() < finalPercent) {
             isShoulderDownward = false;
         } else {
             isShoulderDownward = true;

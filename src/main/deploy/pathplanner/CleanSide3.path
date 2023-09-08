@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.793025235173278,
-        "y": 4.905886127561729
+        "x": 2.7776366663844443,
+        "y": 4.544828918717667
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -71,26 +71,7 @@
     }
   ],
   "maxVelocity": null,
-  "maxAcceleration": 3.0,
+  "maxAcceleration": 3.5,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 1.5,
-      "names": [
-        "IntakeCube"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "RetractIntake"
-      ]
-    },
-    {
-      "position": 0.01,
-      "names": [
-        "RetractIntake"
-      ]
-    }
-  ]
+  "markers": []
 }

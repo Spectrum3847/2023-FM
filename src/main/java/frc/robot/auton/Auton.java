@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
 import frc.robot.swerve.commands.LockSwerve;
@@ -68,7 +69,7 @@ public class Auton {
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
         // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        // autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
+        autonChooser.addOption("Clean Side 5", AutoPaths.CleanSide5());
         // // autonChooser.addOption(
         // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
         // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());

@@ -18,6 +18,31 @@ public class AutoPaths {
                 .andThen(AutonCommands.coneMidFull());
     }
 
+    public static Command CleanSide1() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanSide2() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanSide3() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanSide4() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(1, 1)));
+    }
+
+    public static Command CleanSide5() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4)));
+    }
+
     //     public static Command CleanSidewMid() {
     //         return AutonCommands.coneTopFull()
     //                 .andThen(

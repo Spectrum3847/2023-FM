@@ -48,12 +48,5 @@
   "maxVelocity": 4.0,
   "maxAcceleration": 4.0,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.01,
-      "names": [
-        "RetractIntake"
-      ]
-    }
-  ]
+  "markers": []
 }
