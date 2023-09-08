@@ -217,7 +217,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void autonomousExit() {
-        // swerve.brakeMode(false); make sure to put it back in brake if you uncomment this 
+        swerve.brakeMode(false); // make sure to put swerve back in brake if uncomment
         RobotTelemetry.print("@@ Auton Exit");
     }
 
@@ -231,6 +231,8 @@ public class Robot extends LoggedRobot {
         }*/
         swerve.setLastAngleToCurrentAngle(); // Should set the current falcon angle to the last
         // angle
+
+        swerve.brakeMode(true);
 
         // ElevatorCommands.safeHome().withTimeout(1).schedule(); // home elevator
 
