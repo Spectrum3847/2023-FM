@@ -1,7 +1,5 @@
 package frc.robot.pilot;
 
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
@@ -14,9 +12,7 @@ import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
-import frc.robot.swerve.commands.AlignToVisionTarget;
 import frc.robot.swerve.commands.DriveToVisionTarget;
-import frc.robot.trajectories.commands.DistanceDrive;
 import frc.robot.vision.VisionConfig;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
@@ -66,33 +62,6 @@ public class PilotGamepad extends Gamepad {
                 PilotConfig.steeringExp,
                 PilotConfig.steeringScaler * Robot.swerve.config.tuning.maxAngularVelocity);
         gamepad.triggers.setTwistInvert(PilotConfig.steeringInvert);
-    }
-
-    // Customize driver controller configuration
-    @Override
-    public void configure() {
-        // Detect whether the xbox controller has been plugged in after start-up
-        if (!super.configured) {
-            boolean isConnected = gamepad.isConnected();
-            if (!isConnected) {
-                super.alert.set(true);
-                return;
-            }
-
-            // Configure button bindings once the driver controller is connected
-            if (DriverStation.isTest()) {
-                setupTestButtons();
-            } else if (DriverStation.isDisabled()) {
-                setupDisabledButtons();
-            } else if (!PilotCommands.manualMode.getAsBoolean()) {
-                setupTeleopButtons();
-            } else {
-                setupManualButtons();
-            }
-            super.configured = true;
-
-            super.alert.set(false);
-        }
     }
 
     public void setupTeleopButtons() {
@@ -159,10 +128,6 @@ public class PilotGamepad extends Gamepad {
                 .and(bothTriggers())
                 .and(bothBumpers())
                 .whileTrue(PilotCommands.killTheRobot());
-        gamepad.bButton
-                .and(bothTriggers())
-                .and(bothBumpers())
-                .whileTrue(PilotCommands.toggleManualMode());
     }
 
     public void setupDisabledButtons() {
@@ -172,72 +137,9 @@ public class PilotGamepad extends Gamepad {
                 .and(bothTriggers())
                 .and(bothBumpers())
                 .whileTrue(PilotCommands.killTheRobot());
-        gamepad.bButton
-                .and(bothTriggers())
-                .and(bothBumpers())
-                .whileTrue(PilotCommands.toggleManualMode());
     }
 
     public void setupTestButtons() {}
-
-    public void setupManualButtons() {
-        /* Drive */
-        stickSteerTriggers();
-        triggerSteering();
-
-        /* Aiming */
-        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI)); // grid
-        // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
-
-        /* Dpad */
-        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
-        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
-                .onTrue(MechanismsCommands.scoreRoutine());
-        gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
-        gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
-
-        /* Aligning */
-        gamepad.bButton
-                .and(noBumpers())
-                .whileTrue(
-                        new AlignToVisionTarget(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                0,
-                                VisionConfig.aprilTagPipeline));
-        gamepad.bButton
-                .and(leftBumperOnly())
-                .whileTrue(
-                        new AlignToVisionTarget(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                0,
-                                VisionConfig.aprilTagPipeline));
-        // gamepad.bButton
-        //         .and(rightBumperOnly())
-        //         .whileTrue(
-        //                 new AlignToAprilTag(
-        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
-        //                         -PilotConfig.alignmentOffset, true));
-
-        /* Reorient */
-        gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));
-        gamepad.Dpad.Left.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(90));
-        gamepad.Dpad.Down.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(180));
-        gamepad.Dpad.Right.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(270));
-
-        /* Start and Select */
-        gamepad.startButton.whileTrue(PilotCommands.resetSteering());
-        gamepad.selectButton.whileTrue(PilotCommands.lockSwerve());
-
-        /* Misc */
-        gamepad.xButton
-                .and(bothTriggers())
-                .and(bothBumpers())
-                .whileTrue(PilotCommands.killTheRobot());
-        gamepad.bButton
-                .and(bothTriggers())
-                .and(bothBumpers())
-                .whileTrue(PilotCommands.toggleManualMode());
-    }
 
     public double getPilotScalar() {
         return Robot.pilotGamepad.slowModeButton().getAsBoolean()
