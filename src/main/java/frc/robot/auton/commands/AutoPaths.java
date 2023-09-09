@@ -3,7 +3,9 @@ package frc.robot.auton.commands;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Robot;
 import frc.robot.auton.Auton;
 import frc.robot.swerve.commands.LockSwerve;
 
@@ -39,8 +41,11 @@ public class AutoPaths {
     }
 
     public static Command CleanSide5() {
-        return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4)));
+        return (Auton.getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4))))
+                .withTimeout(0.8)
+                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }
 
     //     public static Command CleanSidewMid() {

@@ -31,7 +31,7 @@ public class SlideConfig extends LinearMechConfig {
         this.kI = 0;
         this.kD = 0;
         this.kF = 0.064;
-        this.motionCruiseVelocity = 4000; // 24500
+        this.motionCruiseVelocity = 24500; // 24500
         this.motionAcceleration = 40000; // 40000
 
         this.currentLimit = 30;

@@ -30,6 +30,12 @@ public class SwerveCommands {
                 .ignoringDisable(true);
     }
 
+    public static Command coastMode() {
+        return new RunCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve)
+                .withName("CoastMode")
+                .ignoringDisable(true);
+    }
+
     public static Command brakeMode(double timeout) {
         return brakeMode().withTimeout(timeout);
     }

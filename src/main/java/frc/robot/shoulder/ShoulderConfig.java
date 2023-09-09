@@ -38,7 +38,7 @@ public class ShoulderConfig extends AngleMechConfig {
         this.kI = 0;
         this.kD = 0;
         this.kF = 0.064;
-        this.motionCruiseVelocity = 4000; // 10500
+        this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
         this.currentLimit = 10;
