@@ -7,17 +7,21 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
+import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.LockSwerve;
+import frc.robot.vision.VisionConfig;
 
 public class AutoPaths {
     public static Command CleanSide() {
-        return AutonCommands.coneTopFull()
+        return AutonCommands.coneTop()
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
-                                                "CleanSide1", new PathConstraints(4, 1.1))))
-                .andThen(AutonCommands.coneMidFull());
+                                                "CleanSide1", new PathConstraints(4, 3.5))))
+                .andThen(new DriveToVisionTarget(0, VisionConfig.coneDetectorPipeline))
+                .andThen(MechanismsCommands.coneStandingIntake());
     }
 
     public static Command CleanSide1() {
