@@ -26,6 +26,7 @@ public class DriveToVisionTarget extends PIDCommand {
     private Command conditionalCommand = null;
     private double conditionalVerticalSetpoint; 
     private boolean commandStarted = false;
+    private double heading = Integer.MIN_VALUE;
     /**
      * Creates a new DriveToVisionTarget.
      * Aligns to a vision target in both X and Y axes (field-oriented). If used for automation
@@ -72,6 +73,22 @@ public class DriveToVisionTarget extends PIDCommand {
         this.conditionalCommand = conditionalCommand;
         this.conditionalVerticalSetpoint = conditionalVerticalSetpoint;
     }
+
+        /**
+     * Creates a new DriveToVisionTarget.
+     * Optionally add a heading to have the robot turn to (radians)
+     * 
+     *
+     * @param horizontalOffset adjustable offset in the Y axis in case robot isn't completely
+     *     aligned. Default value should be 0
+     * @param pipeline the pipeline to use for vision {@link VisionConfig}
+     * @param heading heading to have the robot turn to (radians)
+     */
+    public DriveToVisionTarget(double horizontalOffset, int pipeline, double heading) {
+        this(horizontalOffset, pipeline);
+        this.heading = heading;
+    }
+
 
     @Override
     public void initialize() {
@@ -132,9 +149,18 @@ public class DriveToVisionTarget extends PIDCommand {
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {
         // if detector, reverse output
         if (Robot.vision.isDetectorPipeline()) {
-            return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline);
+            //if heading is set, rotate to heading 
+            if(heading == Integer.MIN_VALUE) {
+                return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline);
+            } else {
+                return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+            }
         }
-        return new AlignToVisionTarget(() -> getOutput() * 2, horizontalOffset, pipeline);
+        if(heading == Integer.MIN_VALUE) {
+            return new AlignToVisionTarget(() -> getOutput() * 2, horizontalOffset, pipeline);
+        } else {
+            return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+        }
     }
 
     public static double getVerticalSetpoint(int pipeline) {

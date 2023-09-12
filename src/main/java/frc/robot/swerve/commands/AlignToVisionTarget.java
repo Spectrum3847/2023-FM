@@ -25,6 +25,7 @@ public class AlignToVisionTarget extends PIDCommand {
     DoubleSupplier fwdPositiveSupplier;
     private static double out;
     private int pipelineIndex;
+    private double heading = Integer.MIN_VALUE;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
@@ -61,6 +62,21 @@ public class AlignToVisionTarget extends PIDCommand {
     }
 
     /**
+     * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
+     * retroreflective tape, detector target) on the Field Oriented X-axis.
+     * Adds customizable heading to the command (radians)
+     *
+     * @param fwdPositiveSupplier
+     * @param offset
+     * @param pipeline
+     * @param heading rotation the robot will face
+     */
+    public AlignToVisionTarget(DoubleSupplier fwdPositiveSupplier, double offset, int pipeline, double heading) {
+        this(fwdPositiveSupplier, offset, pipeline);
+        this.heading = heading;
+    }
+
+    /**
      * Gets the measurement source for the PIDController. This changes to the opposite source if the
      * pipeline is the detector pipeline.
      *
@@ -75,6 +91,11 @@ public class AlignToVisionTarget extends PIDCommand {
     }
 
     public double getSteering() {
+        //if customizable heading is set, rotate to that heading
+        if(heading != Integer.MIN_VALUE) {
+            return Robot.swerve.calculateRotationController(() -> heading);
+        }
+
         // dont set rotation on detector pipelines
         if (Robot.vision.isDetectorPipeline()) {
             return 0;
