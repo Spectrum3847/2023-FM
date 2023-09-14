@@ -73,24 +73,5 @@
   "maxVelocity": null,
   "maxAcceleration": 3.0,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 1.5,
-      "names": [
-        "IntakeCube"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "RetractIntake"
-      ]
-    },
-    {
-      "position": 0.01,
-      "names": [
-        "RetractIntake"
-      ]
-    }
-  ]
+  "markers": []
 }

@@ -72,10 +72,11 @@ public class SlideDelay extends CommandBase {
     }
 
     /* Called every time the scheduler runs while the command is scheduled.
-     *
-     * if slide is going down and fourbar is out too far and slide is greater than safepos then go to safe position
-     * otherwise just go straight down
-     */
+         *
+         * if slide is going down and fourbar is out too far and slide is greater than safepos then
+    go to safe position
+         * otherwise just go straight down
+         */
     @Override
     public void execute() {
         if (simpleDelay) {

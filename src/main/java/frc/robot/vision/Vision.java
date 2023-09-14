@@ -48,6 +48,7 @@ public class Vision extends SubsystemBase {
         verticalOffset = 0;
 
         LimelightHelpers.setLEDMode_ForceOff(null);
+        setLimelightPipeline(VisionConfig.coneDetectorPipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -332,7 +333,6 @@ public class Vision extends SubsystemBase {
 
     /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
     public void setLimelightPipeline(int pipelineIndex) {
-        System.out.println("setPipeline: " + pipelineIndex);
         LimelightHelpers.setPipelineIndex(null, pipelineIndex);
     }
 

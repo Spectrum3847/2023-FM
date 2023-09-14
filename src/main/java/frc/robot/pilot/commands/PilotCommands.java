@@ -3,12 +3,8 @@ package frc.robot.pilot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
-import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.exceptions.KillRobotException;
-import frc.robot.intake.commands.IntakeCommands;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
 import frc.robot.swerve.commands.HeadingLock;
 import frc.robot.swerve.commands.LockSwerve;
@@ -18,8 +14,6 @@ import java.util.function.DoubleSupplier;
 
 /** Should contain commands used only by the pilot controller and to rumble pilot command */
 public class PilotCommands {
-
-    public static Trigger manualMode = new Trigger(() -> false);
 
     /** Set default command to turn off the rumble */
     public static void setupDefaultCommand() {
@@ -142,28 +136,6 @@ public class PilotCommands {
 
     public static Command killTheRobot() {
         return new InstantCommand(() -> driverError()).ignoringDisable(true);
-    }
-
-    public static Command enterManualMode() {
-        return new InstantCommand(() -> setManualMode(true))
-                .alongWith(rumble(1, 1))
-                .withName("Enter Manual Mode");
-    }
-
-    public static Command exitManualMode() {
-        return new InstantCommand(() -> setManualMode(false))
-                .alongWith(rumble(1, 1))
-                .withName("Exit Manual Mode");
-    }
-
-    public static Command toggleManualMode() {
-        return new InstantCommand(() -> setManualMode(!manualMode.getAsBoolean()))
-                .alongWith(rumble(1, 1))
-                .withName("Toggle Manual Mode");
-    }
-
-    public static void setManualMode(boolean status) {
-        manualMode = new Trigger(() -> status);
     }
 
     public static void driverError() {

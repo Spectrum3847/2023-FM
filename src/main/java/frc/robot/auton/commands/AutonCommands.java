@@ -123,6 +123,16 @@ public class AutonCommands {
                                 .andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
     }
 
+    public static Command coneTop() {
+        return coneTopPreScore()
+                .withTimeout(1.4)
+                .andThen(
+                        ElbowCommands.score()
+                                .withTimeout(0.05)
+                                .andThen(IntakeCommands.drop())
+                                .withTimeout(0.2));
+    }
+
     public static Command alignToGridMid() {
         return new DriveToVisionTarget(0, VisionConfig.aprilTagPipeline)
                 // .alongWith(cubeMidPreScore())

@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
+import frc.robot.vision.VisionCommands;
+import frc.robot.vision.VisionConfig;
 import java.util.HashMap;
 
 public class Auton {
@@ -68,7 +71,8 @@ public class Auton {
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
         // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        // autonChooser.addOption("Clean Side (2 Piece)", AutoPaths.CleanSide());
+        autonChooser.addOption("Clean Side Test", AutoPaths.CleanSide());
+        autonChooser.addOption("Cone Top Test", AutonCommands.coneTop());
         // // autonChooser.addOption(
         // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
         // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
@@ -131,6 +135,10 @@ public class Auton {
         eventMap.put("LockSwerve", new LockSwerve());
         eventMap.put("FaceForward", AutonCommands.faceForward());
         eventMap.put("FaceBackward", AutonCommands.faceBackward());
+        // LimeLight Commands
+        eventMap.put(
+                "LimeLightGP",
+                VisionCommands.setLimelightPipeline(VisionConfig.coneDetectorPipeline));
     }
 
     /**

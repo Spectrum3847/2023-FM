@@ -71,26 +71,7 @@
     }
   ],
   "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
+  "maxAcceleration": 3.5,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 1.0,
-      "names": [
-        "Intake"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "RetractIntake"
-      ]
-    },
-    {
-      "position": 0.01,
-      "names": [
-        "RetractIntake"
-      ]
-    }
-  ]
+  "markers": []
 }
