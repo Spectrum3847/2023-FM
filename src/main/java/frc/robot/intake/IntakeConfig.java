@@ -12,8 +12,8 @@ public class IntakeConfig {
 
     public double falconMaxSpeed = 6380; // RPM
 
-    public double intake = 2000;
-    public double slowIntake = 600;
+    public double intake = 5000; // 2000
+    public double slowIntake = 1500; // 600
     public double eject = -3000;
     public double drop = -300;
 

@@ -1,5 +1,9 @@
 package frc.robot.vision;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Robot;
+
 public class VisionCommands {
 
     /*public static Command aimToHybridSpot(int spot) {
@@ -48,4 +52,10 @@ public class VisionCommands {
         }
     }
     */
+
+    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
+    public static Command setLimelightPipeline(int pipelineIndex) {
+        return new InstantCommand(
+                () -> Robot.vision.setLimelightPipeline(pipelineIndex), Robot.vision);
+    }
 }

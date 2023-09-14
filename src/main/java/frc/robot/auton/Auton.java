@@ -16,6 +16,8 @@ import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
+import frc.robot.vision.VisionCommands;
+import frc.robot.vision.VisionConfig;
 import java.util.HashMap;
 
 public class Auton {
@@ -133,6 +135,10 @@ public class Auton {
         eventMap.put("LockSwerve", new LockSwerve());
         eventMap.put("FaceForward", AutonCommands.faceForward());
         eventMap.put("FaceBackward", AutonCommands.faceBackward());
+        // LimeLight Commands
+        eventMap.put(
+                "LimeLightGP",
+                VisionCommands.setLimelightPipeline(VisionConfig.coneDetectorPipeline));
     }
 
     /**
