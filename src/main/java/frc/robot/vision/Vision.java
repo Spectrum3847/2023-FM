@@ -358,6 +358,11 @@ public class Vision extends SubsystemBase {
                 || currentPipeline == VisionConfig.cubeDetectorPipeline;
     }
 
+    public boolean isReflectivePipeline(String limelight) {
+        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
+        return currentPipeline == VisionConfig.reflectivePipeline;
+    }
+
     /**
      * Prints the vision, estimated, and odometry pose to SmartDashboard
      *

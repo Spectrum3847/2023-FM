@@ -18,6 +18,7 @@ public class DriveToVisionTarget extends PIDCommand {
     private static double kP = 0.06;
     private static double verticalSetpoint = -15; // neg
     private static double detectorVerticalSetpoint = -10; // neg
+    private static double reflectiveVerticalSetpoint = -10; // neg
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
@@ -174,6 +175,9 @@ public class DriveToVisionTarget extends PIDCommand {
     public static double getVerticalSetpoint(int pipeline) {
         if (Robot.vision.isDetectorPipeline(limelight)) {
             return detectorVerticalSetpoint;
+        }
+        else if (Robot.vision.isReflectivePipeline(limelight)) {
+            return reflectiveVerticalSetpoint;
         }
         return verticalSetpoint;
     }
