@@ -72,7 +72,8 @@ public class DriveToVisionTarget extends PIDCommand {
      * @param conditionalVerticalSetpoint vertical setpoint to run the conditional command at.
      *     (Limelight `ty` value)
      */
-    public DriveToVisionTarget(String limelight, 
+    public DriveToVisionTarget(
+            String limelight,
             double horizontalOffset,
             int pipeline,
             Command conditionalCommand,
@@ -82,21 +83,20 @@ public class DriveToVisionTarget extends PIDCommand {
         this.conditionalVerticalSetpoint = conditionalVerticalSetpoint;
     }
 
-        /**
-     * Creates a new DriveToVisionTarget.
-     * Optionally add a heading to have the robot turn to (radians)
-     * 
+    /**
+     * Creates a new DriveToVisionTarget. Optionally add a heading to have the robot turn to
+     * (radians)
      *
      * @param horizontalOffset adjustable offset in the Y axis in case robot isn't completely
      *     aligned. Default value should be 0
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      * @param heading heading to have the robot turn to (radians)
      */
-    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline, double heading) {
+    public DriveToVisionTarget(
+            String limelight, double horizontalOffset, int pipeline, double heading) {
         this(limelight, horizontalOffset, pipeline);
         this.heading = heading;
     }
-
 
     @Override
     public void initialize() {
@@ -157,17 +157,21 @@ public class DriveToVisionTarget extends PIDCommand {
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {
         // if detector, reverse output
         if (Robot.vision.isDetectorPipeline(limelight)) {
-            //if heading is set, rotate to heading 
-            if(heading == Integer.MIN_VALUE) {
-                return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline);
+            // if heading is set, rotate to heading
+            if (heading == Integer.MIN_VALUE) {
+                return new AlignToVisionTarget(
+                        limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline);
             } else {
-                return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+                return new AlignToVisionTarget(
+                        limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
             }
         }
-        if(heading == Integer.MIN_VALUE) {
-            return new AlignToVisionTarget(limelight, () -> getOutput() * 2, horizontalOffset, pipeline);
+        if (heading == Integer.MIN_VALUE) {
+            return new AlignToVisionTarget(
+                    limelight, () -> getOutput() * 2, horizontalOffset, pipeline);
         } else {
-            return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+            return new AlignToVisionTarget(
+                    limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
         }
     }
 

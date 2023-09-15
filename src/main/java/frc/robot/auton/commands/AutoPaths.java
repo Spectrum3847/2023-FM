@@ -20,7 +20,9 @@ public class AutoPaths {
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
                                                 "CleanSide1", new PathConstraints(4, 3.5))))
-                .andThen(new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline))
+                .andThen(
+                        new DriveToVisionTarget(
+                                VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline))
                 .andThen(MechanismsCommands.coneStandingIntake());
     }
 
