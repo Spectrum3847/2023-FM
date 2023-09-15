@@ -138,7 +138,7 @@ public class Auton {
         // LimeLight Commands
         eventMap.put(
                 "LimeLightGP",
-                VisionCommands.setLimelightPipeline(VisionConfig.coneDetectorPipeline));
+                VisionCommands.setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline));
     }
 
     /**

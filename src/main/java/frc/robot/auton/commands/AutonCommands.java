@@ -134,7 +134,7 @@ public class AutonCommands {
     }
 
     public static Command alignToGridMid() {
-        return new DriveToVisionTarget(0, VisionConfig.aprilTagPipeline)
+        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.aprilTagPipeline)
                 // .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
                 .andThen(eject());

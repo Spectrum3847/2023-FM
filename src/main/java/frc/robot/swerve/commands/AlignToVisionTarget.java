@@ -26,21 +26,23 @@ public class AlignToVisionTarget extends PIDCommand {
     private static double out;
     private int pipelineIndex;
     private double heading = Integer.MIN_VALUE;
+    private static String limelight;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
      * retroreflective tape, detector target) on the Field Oriented X-axis.
      *
+     * @param limelight {@link VisionConfig}
      * @param fwdPositiveSupplier
      * @param offset
      * @param pipeline
      */
-    public AlignToVisionTarget(DoubleSupplier fwdPositiveSupplier, double offset, int pipeline) {
+    public AlignToVisionTarget(String limelight, DoubleSupplier fwdPositiveSupplier, double offset, int pipeline) {
         super(
                 // The controller that the command will use
                 new PIDController(lowKP, 0, 0),
                 // This should return the measurement
-                () -> Robot.vision.getHorizontalOffset(),
+                () -> Robot.vision.getHorizontalOffset(limelight),
                 // This should return the setpoint (can also be a constant)
                 () -> offset,
                 // This uses the output
@@ -59,6 +61,7 @@ public class AlignToVisionTarget extends PIDCommand {
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
         this.setName("AlignToVisionTarget");
+        this.limelight = limelight;
     }
 
     /**
@@ -71,8 +74,8 @@ public class AlignToVisionTarget extends PIDCommand {
      * @param pipeline
      * @param heading rotation the robot will face
      */
-    public AlignToVisionTarget(DoubleSupplier fwdPositiveSupplier, double offset, int pipeline, double heading) {
-        this(fwdPositiveSupplier, offset, pipeline);
+    public AlignToVisionTarget(String limelight, DoubleSupplier fwdPositiveSupplier, double offset, int pipeline, double heading) {
+        this(limelight, fwdPositiveSupplier, offset, pipeline);
         this.heading = heading;
     }
 
@@ -84,10 +87,10 @@ public class AlignToVisionTarget extends PIDCommand {
      * @return
      */
     private double getMeasurementSource(int index) {
-        if (Robot.vision.isDetectorPipeline()) {
-            return -(Robot.vision.getHorizontalOffset());
+        if (Robot.vision.isDetectorPipeline(limelight)) {
+            return -(Robot.vision.getHorizontalOffset(limelight));
         }
-        return Robot.vision.getHorizontalOffset();
+        return Robot.vision.getHorizontalOffset(limelight);
     }
 
     public double getSteering() {
@@ -97,7 +100,7 @@ public class AlignToVisionTarget extends PIDCommand {
         }
 
         // dont set rotation on detector pipelines
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             return 0;
         }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
@@ -105,7 +108,7 @@ public class AlignToVisionTarget extends PIDCommand {
 
     public boolean getFieldRelative() {
         // drive robot oriented if on detector pipelines
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             return false;
         }
         return true;
@@ -113,7 +116,7 @@ public class AlignToVisionTarget extends PIDCommand {
 
     public static double getOutput() {
         // reverse direction for robot pov
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             return -out;
         }
         return out;
@@ -135,13 +138,13 @@ public class AlignToVisionTarget extends PIDCommand {
         // getLedCommand(tagID).initialize();
         Robot.swerve.resetRotationController();
         driveCommand.initialize();
-        if (Robot.vision.getVerticalOffset() > 16) {
+        if (Robot.vision.getVerticalOffset(limelight) > 16) {
             this.getController().setP(highKP);
         } else {
             this.getController().setP(lowKP);
         }
 
-        Robot.vision.setLimelightPipeline(pipelineIndex);
+        Robot.vision.setLimelightPipeline(limelight, pipelineIndex);
     }
 
     @Override

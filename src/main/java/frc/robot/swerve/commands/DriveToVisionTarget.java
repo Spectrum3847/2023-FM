@@ -17,7 +17,7 @@ public class DriveToVisionTarget extends PIDCommand {
     /* Config settings */
     private static double kP = 0.06;
     private static double verticalSetpoint = -15; // neg
-    private static double detectorVerticalSetpoint = -17; // neg
+    private static double detectorVerticalSetpoint = -10; // neg
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
@@ -27,6 +27,7 @@ public class DriveToVisionTarget extends PIDCommand {
     private double conditionalVerticalSetpoint;
     private boolean commandStarted = false;
     private double heading = Integer.MIN_VALUE;
+    private static String limelight;
     /**
      * Creates a new DriveToVisionTarget. Aligns to a vision target in both X and Y axes
      * (field-oriented). If used for automation purposes, it is best to give it a timeout as a
@@ -36,7 +37,7 @@ public class DriveToVisionTarget extends PIDCommand {
      *     aligned. Default value should be 0
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      */
-    public DriveToVisionTarget(double horizontalOffset, int pipeline) {
+    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline) {
         super(
                 // The controller that the command will use
                 new PIDController(kP, 0, 0),
@@ -54,6 +55,7 @@ public class DriveToVisionTarget extends PIDCommand {
         addRequirements(Robot.swerve);
         // Configure additional PID options by calling `getController` here.
         this.getController().setTolerance(tolerance);
+        this.limelight = limelight;
     }
 
     /**
@@ -70,12 +72,12 @@ public class DriveToVisionTarget extends PIDCommand {
      * @param conditionalVerticalSetpoint vertical setpoint to run the conditional command at.
      *     (Limelight `ty` value)
      */
-    public DriveToVisionTarget(
+    public DriveToVisionTarget(String limelight, 
             double horizontalOffset,
             int pipeline,
             Command conditionalCommand,
             double conditionalVerticalSetpoint) {
-        this(horizontalOffset, pipeline);
+        this(limelight, horizontalOffset, pipeline);
         this.conditionalCommand = conditionalCommand;
         this.conditionalVerticalSetpoint = conditionalVerticalSetpoint;
     }
@@ -90,8 +92,8 @@ public class DriveToVisionTarget extends PIDCommand {
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      * @param heading heading to have the robot turn to (radians)
      */
-    public DriveToVisionTarget(double horizontalOffset, int pipeline, double heading) {
-        this(horizontalOffset, pipeline);
+    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline, double heading) {
+        this(limelight, horizontalOffset, pipeline);
         this.heading = heading;
     }
 
@@ -131,7 +133,7 @@ public class DriveToVisionTarget extends PIDCommand {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             if (Math.floor(getVerticalOffset()) == detectorVerticalSetpoint + 1) {
                 return true;
             }
@@ -154,30 +156,30 @@ public class DriveToVisionTarget extends PIDCommand {
 
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {
         // if detector, reverse output
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             //if heading is set, rotate to heading 
             if(heading == Integer.MIN_VALUE) {
-                return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline);
+                return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline);
             } else {
-                return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+                return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
             }
         }
         if(heading == Integer.MIN_VALUE) {
-            return new AlignToVisionTarget(() -> getOutput() * 2, horizontalOffset, pipeline);
+            return new AlignToVisionTarget(limelight, () -> getOutput() * 2, horizontalOffset, pipeline);
         } else {
-            return new AlignToVisionTarget(() -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+            return new AlignToVisionTarget(limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
         }
     }
 
     public static double getVerticalSetpoint(int pipeline) {
-        if (Robot.vision.isDetectorPipeline()) {
+        if (Robot.vision.isDetectorPipeline(limelight)) {
             return detectorVerticalSetpoint;
         }
         return verticalSetpoint;
     }
 
     private static double getVerticalOffset() {
-        double offset = Robot.vision.getVerticalOffset();
+        double offset = Robot.vision.getVerticalOffset(limelight);
         return (offset == 0) ? verticalSetpoint : offset;
     }
 }
