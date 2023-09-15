@@ -89,8 +89,10 @@ public class PilotGamepad extends Gamepad {
                 .whileTrue(
                         MechanismsCommands.stowIntake()
                                 .alongWith(
-                                        new DriveToVisionTarget(VisionConfig.DETECT_LL,
-                                                0, VisionConfig.coneDetectorPipeline))
+                                        new DriveToVisionTarget(
+                                                VisionConfig.DETECT_LL,
+                                                0,
+                                                VisionConfig.coneDetectorPipeline))
                                 .andThen(MechanismsCommands.coneStandingIntake()));
         gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
         // gamepad.bButton

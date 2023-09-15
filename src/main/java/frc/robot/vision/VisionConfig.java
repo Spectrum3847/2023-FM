@@ -22,7 +22,6 @@ public final class VisionConfig {
     public static final int coneDetectorPipeline = 5;
     public static final int cubeDetectorPipeline = 6;
 
-
     /* How many degrees back is limelight rotated from perfectly vertical */
     public static final double limelightAngle = -22.5;
     public static final double limelightLensHeight = 41.374; // inches

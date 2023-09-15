@@ -41,7 +41,7 @@ public class ShoulderConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 10;
+        this.currentLimit = 30;
         this.tirggerThresholdLimit = 10;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;
