@@ -53,9 +53,10 @@ public class VisionCommands {
     }
     */
 
-    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
-    public static Command setLimelightPipeline(int pipelineIndex) {
+    /** @param limelight name of limelight to control in {@link VisionConfig}
+     * @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
+    public static Command setLimelightPipeline(String limelight, int pipelineIndex) {
         return new InstantCommand(
-                () -> Robot.vision.setLimelightPipeline(pipelineIndex), Robot.vision);
+                () -> Robot.vision.setLimelightPipeline(limelight, pipelineIndex), Robot.vision);
     }
 }
