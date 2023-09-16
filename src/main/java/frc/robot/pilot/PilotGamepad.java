@@ -98,11 +98,15 @@ public class PilotGamepad extends Gamepad {
                 .and(noBumpers())
                 .whileTrue(
                         new DriveToVisionTarget(
+                                VisionConfig.DEFAULT_LL, 0, VisionConfig.reflectivePipeline));
+        gamepad.bButton
+                .and(rightBumperOnly())
+                .whileTrue(
+                        new AlignToVisionTarget(
                                 VisionConfig.DEFAULT_LL,
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
                                 0,
                                 VisionConfig.reflectivePipeline));
-        gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
         // gamepad.bButton
         //         .and(noBumpers())
         //         .whileTrue(
