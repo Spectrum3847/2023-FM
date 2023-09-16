@@ -22,7 +22,7 @@ public class ShoulderConfig extends AngleMechConfig {
 
     public final int floor = 20;
     public final int coneTop = 98;
-    public final int coneMid = 95;
+    public final int coneMid = 98;
     public final int cubeUp = 93;
 
     public final int safePositionForElbow = 55;

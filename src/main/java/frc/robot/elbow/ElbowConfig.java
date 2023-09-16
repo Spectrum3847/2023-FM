@@ -14,7 +14,7 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int intake = -100;
     public final int airIntake = -43;
-    public final int shelfIntake = -108;
+    public final int shelfIntake = -98;
 
     public final int home = -38;
     public final int unblockCameraPos = -88;
@@ -22,7 +22,7 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int floor = -88;
     public final int coneTop = -89;
-    public final double coneMid = -93;
+    public final double coneMid = -89;
     public final int cubeUp = -108;
 
     public final int scorePos = coneTop - 17;
