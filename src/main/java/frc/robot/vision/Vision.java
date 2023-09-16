@@ -27,13 +27,16 @@ public class Vision extends SubsystemBase {
     /** For Pilot Gamepad */
     public boolean canUseAutoPilot = false;
 
-    public double horizontalOffset, verticalOffset, horizontalOffsetDetect, verticalOffsetDetect;
+    public double defaultHorizontalOffset,
+            defaultVerticalOffset,
+            detectHorizontalOffset,
+            detectVerticalOffset;
 
     private Pose3d botPose3d; // Uses the limelight rotation instead of the gyro rotation
     private Pair<Pose3d, Double> photonVisionPose;
     private int targetSeenCount;
     private boolean targetSeen, visionStarted, initialized = false;
-    private LimelightHelpers.LimelightResults jsonResults, jsonResultsDetect;
+    private LimelightHelpers.LimelightResults jsonResults, detectJsonResults;
 
     // testing
     private final DecimalFormat df = new DecimalFormat();
@@ -43,12 +46,13 @@ public class Vision extends SubsystemBase {
         botPose = new Pose2d(0, 0, new Rotation2d(Units.degreesToRadians(0)));
         botPose3d = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
         targetSeenCount = 0;
-        horizontalOffset = 0;
-        verticalOffset = 0;
+        defaultHorizontalOffset = 0;
+        defaultVerticalOffset = 0;
 
-        LimelightHelpers.setLEDMode_ForceOff("limelight-detect");
-        setLimelightPipeline("limelight", VisionConfig.reflectivePipeline);
-        setLimelightPipeline("limelight-detect", VisionConfig.coneDetectorPipeline);
+        // configure both limelights
+        LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
+        setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline);
+        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.reflectivePipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -62,17 +66,17 @@ public class Vision extends SubsystemBase {
         /* update feed status by looking for an empty json */
         visionConnected =
                 !NetworkTableInstance.getDefault()
-                        .getTable("limelight")
+                        .getTable(VisionConfig.DEFAULT_LL)
                         .getEntry("json")
                         .getString("")
                         .equals("");
         checkTargetHistory();
-        jsonResults = LimelightHelpers.getLatestResults("");
-        horizontalOffset = LimelightHelpers.getTX("");
-        verticalOffset = LimelightHelpers.getTY("");
-        jsonResultsDetect = LimelightHelpers.getLatestResults("limelight-detect");
-        horizontalOffsetDetect = LimelightHelpers.getTX("limelight-detect");
-        verticalOffsetDetect = LimelightHelpers.getTY("limelight-detect");
+        jsonResults = LimelightHelpers.getLatestResults(VisionConfig.DEFAULT_LL);
+        defaultHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
+        defaultVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
+        detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
+        detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
+        detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
         // this method can call update() if vision pose estimation needs to be updated in
         // Vision.java
     }
@@ -211,23 +215,9 @@ public class Vision extends SubsystemBase {
         return false;
     }
 
-    public double getDistanceToTarget(String limelightName) {
-        double angleToGoal;
-        if (limelightName == "") {
-            angleToGoal = Units.degreesToRadians(VisionConfig.limelightAngle + verticalOffset);
-
-            return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight)
-                    / Math.tan(angleToGoal);
-        } else if (limelightName == "limelight-detect") {
-            angleToGoal =
-                    Units.degreesToRadians(VisionConfig.limelightAngle + verticalOffsetDetect);
-
-            return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight)
-                    / Math.tan(angleToGoal);
-        }
-
-        angleToGoal = Units.degreesToRadians(VisionConfig.limelightAngle + verticalOffset);
-
+    public double getDistanceToTarget() {
+        double angleToGoal =
+                Units.degreesToRadians(VisionConfig.limelightAngle + defaultVerticalOffset);
         return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight) / Math.tan(angleToGoal);
     }
 
@@ -337,44 +327,44 @@ public class Vision extends SubsystemBase {
         targetSeen = targetSeenCount > 2; // has been seen for 3 loops
     }
 
-    public double getHorizontalOffset(String limelightName) {
-        if (limelightName == "") {
-            return horizontalOffset;
-        } else if (limelightName == "limelight-detect") {
-            return horizontalOffsetDetect;
+    public double getHorizontalOffset(String limelight) {
+        if (limelight.equals(VisionConfig.DETECT_LL)) {
+            return detectHorizontalOffset;
         }
-        return horizontalOffset;
+        return defaultHorizontalOffset;
     }
 
-    public double getVerticalOffset(String limelightName) {
-        if (limelightName == "") {
-
-            return verticalOffset;
-        } else if (limelightName == "limelight-detect") {
-
-            return verticalOffsetDetect;
+    public double getVerticalOffset(String limelight) {
+        if (limelight.equals(VisionConfig.DETECT_LL)) {
+            return detectVerticalOffset;
         }
-        return verticalOffset;
+        return defaultVerticalOffset;
     }
 
     public double getClosestTagID() {
         return LimelightHelpers.getFiducialID("");
     }
 
-    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
-    public void setLimelightPipeline(String limelightName, int pipelineIndex) {
-        LimelightHelpers.setPipelineIndex(limelightName, pipelineIndex);
+    /**
+     * @param limelight name of limelight to control in {@link VisionConfig}
+     * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
+     */
+    public void setLimelightPipeline(String limelight, int pipelineIndex) {
+        LimelightHelpers.setPipelineIndex(limelight, pipelineIndex);
     }
 
-    /** @return if current LL pipeline is on cube or cone detector */
-    public boolean isDetectorPipeline(String limelightName) {
-        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelightName);
+    /**
+     * @param limelight name of limelight to check see {@link VisionConfig}
+     * @return if current LL pipeline is on cube or cone detector
+     */
+    public boolean isDetectorPipeline(String limelight) {
+        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
         return currentPipeline == VisionConfig.coneDetectorPipeline
                 || currentPipeline == VisionConfig.cubeDetectorPipeline;
     }
 
-    public boolean isReflectivePipeline(String limelightName) {
-        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelightName);
+    public boolean isReflectivePipeline(String limelight) {
+        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
         return currentPipeline == VisionConfig.reflectivePipeline;
     }
 
