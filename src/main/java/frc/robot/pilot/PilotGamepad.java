@@ -12,7 +12,7 @@ import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
-import frc.robot.swerve.commands.DriveToVisionTarget;
+import frc.robot.swerve.commands.AlignToVisionTarget;
 import frc.robot.vision.VisionConfig;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
@@ -96,8 +96,11 @@ public class PilotGamepad extends Gamepad {
         gamepad.bButton
                 .and(noBumpers())
                 .whileTrue(
-                        new DriveToVisionTarget(
-                                VisionConfig.DEFAULT_LL, 0, VisionConfig.reflectivePipeline));
+                        new AlignToVisionTarget(
+                                VisionConfig.DEFAULT_LL,
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                0,
+                                VisionConfig.reflectivePipeline));
         gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
         // gamepad.bButton
         //         .and(noBumpers())
