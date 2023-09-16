@@ -169,10 +169,10 @@ public class DriveToVisionTarget extends PIDCommand {
         }
         if (heading == Integer.MIN_VALUE) {
             return new AlignToVisionTarget(
-                    limelight, () -> getOutput() * 2, horizontalOffset, pipeline);
+                    limelight, () -> getOutput(), horizontalOffset, pipeline);
         } else {
             return new AlignToVisionTarget(
-                    limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+                    limelight, () -> getOutput(), horizontalOffset, pipeline, heading);
         }
     }
 
