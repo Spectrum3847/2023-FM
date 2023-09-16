@@ -57,7 +57,7 @@ public class FM2023 {
     public static final double kIRotationController = 0.0;
     public static final double kDRotationController = 0.1;
 
-    public static final GyroConfig gyro = INFRARED2022.gyro;
+    public static final GyroConfig gyro = XRAY2023.gyro;
 
     public static final PhysicalConfig physical =
             new PhysicalConfig(
@@ -92,19 +92,43 @@ public class FM2023 {
     /* Module Configs */
     static final ModuleConfig Mod0 =
             new ModuleConfig(
-                    Motors.driveMotor0, Motors.angleMotor0, 3, mod0angleOffset, physical, tuning);
+                    XRAY2023.canBus,
+                    Motors.driveMotor0,
+                    Motors.angleMotor0,
+                    3,
+                    mod0angleOffset,
+                    physical,
+                    tuning);
 
     static final ModuleConfig Mod1 =
             new ModuleConfig(
-                    Motors.driveMotor1, Motors.angleMotor1, 13, mod1angleOffset, physical, tuning);
+                    XRAY2023.canBus,
+                    Motors.driveMotor1,
+                    Motors.angleMotor1,
+                    13,
+                    mod1angleOffset,
+                    physical,
+                    tuning);
 
     static final ModuleConfig Mod2 =
             new ModuleConfig(
-                    Motors.driveMotor2, Motors.angleMotor2, 23, mod2angleOffset, physical, tuning);
+                    XRAY2023.canBus,
+                    Motors.driveMotor2,
+                    Motors.angleMotor2,
+                    23,
+                    mod2angleOffset,
+                    physical,
+                    tuning);
 
     static final ModuleConfig Mod3 =
             new ModuleConfig(
-                    Motors.driveMotor3, Motors.angleMotor3, 33, mod3angleOffset, physical, tuning);
+                    XRAY2023.canBus,
+                    Motors.driveMotor3,
+                    Motors.angleMotor3,
+                    33,
+                    mod3angleOffset,
+                    physical,
+                    tuning);
 
     public static final ModuleConfig[] modules = new ModuleConfig[] {Mod0, Mod1, Mod2, Mod3};
 
