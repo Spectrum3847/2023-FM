@@ -63,7 +63,7 @@ multigroup_rejector:0
 pipeline_led_enabled:0
 pipeline_led_power:0
 pipeline_res:2
-pipeline_type:5
+pipeline_type:0
 red_balance:1200
 roi_x:0
 roi_y:0
