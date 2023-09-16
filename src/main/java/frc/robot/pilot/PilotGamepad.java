@@ -84,16 +84,20 @@ public class PilotGamepad extends Gamepad {
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(MechanismsCommands.stowIntake());
 
         /* Aligning */
+        // gamepad.bButton
+        //         .and(noBumpers())
+        //         .whileTrue(
+        //                 MechanismsCommands.stowIntake()
+        //                         .alongWith(
+        //                                 new DriveToVisionTarget(
+        //                                         VisionConfig.DEFAULT_LL,
+        //                                         0,
+        //                                         VisionConfig.reflectivePipeline)));
         gamepad.bButton
                 .and(noBumpers())
                 .whileTrue(
-                        MechanismsCommands.stowIntake()
-                                .alongWith(
-                                        new DriveToVisionTarget(
-                                                VisionConfig.DETECT_LL,
-                                                0,
-                                                VisionConfig.coneDetectorPipeline))
-                                .andThen(MechanismsCommands.coneStandingIntake()));
+                        new DriveToVisionTarget(
+                                VisionConfig.DEFAULT_LL, 0, VisionConfig.reflectivePipeline));
         gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
         // gamepad.bButton
         //         .and(noBumpers())

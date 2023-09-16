@@ -2,28 +2,28 @@ package frc.robot.auton.commands;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
-
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
 import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.vision.VisionConfig;
 
 public class AutoPaths {
     public static Command HeadingTest() {
-        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline, Units.degreesToRadians(100))
+        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline)
+                .alongWith(OperatorCommands.intake())
                 .andThen(MechanismsCommands.coneStandingIntake());
     }
 
     public static Command ConePoleTest() {
         return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.reflectivePipeline);
     }
-    
+
     public static Command CleanSide() {
         return AutonCommands.coneTop()
                 .andThen(

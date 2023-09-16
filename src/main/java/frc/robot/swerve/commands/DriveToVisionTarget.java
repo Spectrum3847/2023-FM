@@ -38,7 +38,8 @@ public class DriveToVisionTarget extends PIDCommand {
      *     aligned. Default value should be 0
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      */
-    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline) {
+    public DriveToVisionTarget(
+            String limelight, double horizontalOffset, int pipeline, double heading) {
         super(
                 // The controller that the command will use
                 new PIDController(kP, 0, 0),
@@ -51,6 +52,7 @@ public class DriveToVisionTarget extends PIDCommand {
                     setOutput(output);
                 });
         this.horizontalOffset = horizontalOffset;
+        this.heading = heading;
         alignToTag = getVisionTargetCommand(pipeline);
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.swerve);
@@ -79,7 +81,7 @@ public class DriveToVisionTarget extends PIDCommand {
             int pipeline,
             Command conditionalCommand,
             double conditionalVerticalSetpoint) {
-        this(limelight, horizontalOffset, pipeline);
+        this(limelight, horizontalOffset, pipeline, Integer.MIN_VALUE);
         this.conditionalCommand = conditionalCommand;
         this.conditionalVerticalSetpoint = conditionalVerticalSetpoint;
     }
@@ -93,10 +95,8 @@ public class DriveToVisionTarget extends PIDCommand {
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      * @param heading heading to have the robot turn to (radians)
      */
-    public DriveToVisionTarget(
-            String limelight, double horizontalOffset, int pipeline, double heading) {
-        this(limelight, horizontalOffset, pipeline);
-        this.heading = heading;
+    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline) {
+        this(limelight, horizontalOffset, pipeline, Integer.MIN_VALUE);
     }
 
     @Override
@@ -179,8 +179,7 @@ public class DriveToVisionTarget extends PIDCommand {
     public static double getVerticalSetpoint(int pipeline) {
         if (Robot.vision.isDetectorPipeline(limelight)) {
             return detectorVerticalSetpoint;
-        }
-        else if (Robot.vision.isReflectivePipeline(limelight)) {
+        } else if (Robot.vision.isReflectivePipeline(limelight)) {
             return reflectiveVerticalSetpoint;
         }
         return verticalSetpoint;

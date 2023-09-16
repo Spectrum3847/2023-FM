@@ -73,6 +73,7 @@ public class Auton {
         // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
         autonChooser.addOption("Clean Side Test", AutoPaths.CleanSide());
         autonChooser.addOption("Cone Top Test", AutonCommands.coneTop());
+        autonChooser.addOption("Heading", AutoPaths.HeadingTest());
         // // autonChooser.addOption(
         // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
         // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());

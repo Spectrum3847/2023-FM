@@ -18,7 +18,7 @@ import java.util.function.DoubleSupplier;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AlignToVisionTarget extends PIDCommand {
 
-    private static double lowKP = 0.035;
+    private static double lowKP = 0.02;
     private static double highKP = 0.06;
     private static double tolerance = 2;
     SwerveDrive driveCommand;
