@@ -124,7 +124,7 @@ public class AlignToVisionTarget extends PIDCommand {
         out = out * Robot.swerve.config.tuning.maxVelocity * 0.3;
     }
 
-    private void setKp(){
+    private void setKp() {
         if (Robot.vision.getVerticalOffset(m_limelight) > 16) {
             this.getController().setP(highKP);
         } else {

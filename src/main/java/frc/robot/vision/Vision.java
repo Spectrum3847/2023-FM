@@ -350,7 +350,8 @@ public class Vision extends SubsystemBase {
      * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
      */
     public void setLimelightPipeline(String limelight, int pipelineIndex) {
-        LimelightHelpers.setPipelineIndex(limelight, pipelineIndex);
+        LimelightHelpers.setPipelineIndex(VisionConfig.DEFAULT_LL, pipelineIndex);
+        LimelightHelpers.setPipelineIndex(VisionConfig.DETECT_LL, pipelineIndex);
     }
 
     /**
