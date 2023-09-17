@@ -27,14 +27,14 @@ public class Vision extends SubsystemBase {
     /** For Pilot Gamepad */
     public boolean canUseAutoPilot = false;
 
-    public double defaultHorizontalOffset,
-            defaultVerticalOffset,
-            detectHorizontalOffset,
-            detectVerticalOffset;
+    public double defaultHorizontalOffset = 0;
+    public double defaultVerticalOffset = 0;
+    public double detectHorizontalOffset = 0;
+    public double detectVerticalOffset = 0;
 
     private Pose3d botPose3d; // Uses the limelight rotation instead of the gyro rotation
     private Pair<Pose3d, Double> photonVisionPose;
-    private int targetSeenCount;
+    private int targetSeenCount = 0;
     private boolean targetSeen, visionStarted, initialized = false;
     private LimelightHelpers.LimelightResults jsonResults, detectJsonResults;
 

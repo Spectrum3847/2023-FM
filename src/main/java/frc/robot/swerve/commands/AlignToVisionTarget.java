@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
+import frc.robot.vision.VisionConfig;
 import java.util.function.DoubleSupplier;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -23,10 +24,10 @@ public class AlignToVisionTarget extends PIDCommand {
     private static double tolerance = 2;
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
-    private static double out;
-    private int pipelineIndex;
+    private static double out = 0;
+    private int pipelineIndex = 0;
     private double heading = Integer.MIN_VALUE;
-    private static String limelight;
+    private static String m_limelight = VisionConfig.DEFAULT_LL;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
@@ -62,7 +63,7 @@ public class AlignToVisionTarget extends PIDCommand {
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
         this.setName("AlignToVisionTarget");
-        this.limelight = limelight;
+        m_limelight = limelight;
     }
 
     /**
@@ -85,20 +86,6 @@ public class AlignToVisionTarget extends PIDCommand {
         this.heading = heading;
     }
 
-    /**
-     * Gets the measurement source for the PIDController. This changes to the opposite source if the
-     * pipeline is the detector pipeline.
-     *
-     * @param index pipeline index
-     * @return
-     */
-    private double getMeasurementSource(int index) {
-        if (Robot.vision.isDetectorPipeline(limelight)) {
-            return -(Robot.vision.getHorizontalOffset(limelight));
-        }
-        return Robot.vision.getHorizontalOffset(limelight);
-    }
-
     public double getSteering() {
         // if customizable heading is set, rotate to that heading
         if (heading != Integer.MIN_VALUE) {
@@ -106,7 +93,7 @@ public class AlignToVisionTarget extends PIDCommand {
         }
 
         // dont set rotation on detector pipelines
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             return 0;
         }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
@@ -114,7 +101,7 @@ public class AlignToVisionTarget extends PIDCommand {
 
     public boolean getFieldRelative() {
         // drive robot oriented if on detector pipelines
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             return false;
         }
         return true;
@@ -122,7 +109,7 @@ public class AlignToVisionTarget extends PIDCommand {
 
     public static double getOutput() {
         // reverse direction for robot pov
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             return -out;
         }
         return out;
@@ -137,6 +124,14 @@ public class AlignToVisionTarget extends PIDCommand {
         out = out * Robot.swerve.config.tuning.maxVelocity * 0.3;
     }
 
+    private void setKp(){
+        if (Robot.vision.getVerticalOffset(m_limelight) > 16) {
+            this.getController().setP(highKP);
+        } else {
+            this.getController().setP(lowKP);
+        }
+    }
+
     @Override
     public void initialize() {
         super.initialize();
@@ -144,19 +139,16 @@ public class AlignToVisionTarget extends PIDCommand {
         // getLedCommand(tagID).initialize();
         Robot.swerve.resetRotationController();
         driveCommand.initialize();
-        if (Robot.vision.getVerticalOffset(limelight) > 16) {
-            this.getController().setP(highKP);
-        } else {
-            this.getController().setP(lowKP);
-        }
+        setKp();
 
-        Robot.vision.setLimelightPipeline(limelight, pipelineIndex);
+        Robot.vision.setLimelightPipeline(m_limelight, pipelineIndex);
     }
 
     @Override
     public void execute() {
         super.execute();
         driveCommand.execute();
+        setKp();
         // getLedCommand(tagID).execute();
     }
 
