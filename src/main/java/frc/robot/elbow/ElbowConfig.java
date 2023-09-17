@@ -21,11 +21,11 @@ public class ElbowConfig extends AngleMechConfig {
     public final int stow = -29;
 
     public final int floor = -88;
-    public final int coneTop = -89;
-    public final double coneMid = -89;
-    public final int cubeUp = -108;
+    public final int coneTop = -80;
+    public final double coneMid = -80;
+    public final int cubeUp = -112; // -108
 
-    public final int scorePos = coneTop - 17;
+    public final int scorePos = coneTop - 26;
     // public final int cubeScorePos = cubeUp - 2;
 
     public final double zeroSpeed = -0.2;
@@ -42,7 +42,7 @@ public class ElbowConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 30;
+        this.currentLimit = 10;
         this.tirggerThresholdLimit = 10;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;

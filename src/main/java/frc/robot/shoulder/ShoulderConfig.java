@@ -23,7 +23,7 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int floor = 20;
     public final int coneTop = 98;
     public final int coneMid = 98;
-    public final int cubeUp = 93;
+    public final int cubeUp = 90; // 93
 
     public final int safePositionForElbow = 55;
 
@@ -41,7 +41,7 @@ public class ShoulderConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 30;
+        this.currentLimit = 10;
         this.tirggerThresholdLimit = 10;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;

@@ -19,7 +19,7 @@ public class IntakeConfig {
 
     public double intakeCone = 3000;
 
-    public double currentLimit = 10;
+    public double currentLimit = 7;
     public double threshold = 20;
 
     public double velocityKp = 0.065;
