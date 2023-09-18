@@ -16,7 +16,7 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int airIntake = 15;
     public final int shelfIntake = 82;
 
-    public final int home = 22;
+    public final int home = 15;
     public final int unblockCameraPos = 22;
     public final int stow = 31;
 

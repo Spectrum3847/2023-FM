@@ -16,7 +16,7 @@ public class ElbowConfig extends AngleMechConfig {
     public final int airIntake = -43;
     public final int shelfIntake = -98;
 
-    public final int home = -38;
+    public final int home = -25;
     public final int unblockCameraPos = -88;
     public final int stow = -29;
 
