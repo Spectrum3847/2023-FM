@@ -49,6 +49,13 @@ public class OperatorCommands {
 
     /* Position Commands */
 
+    public static Command preScorePos() {
+        return IntakeCommands.slowIntake()
+                .alongWith(
+                        SlideCommands.home(), ShoulderCommands.prescore(), ElbowCommands.prescore())
+                .withName("PreScorePosition");
+    }
+
     // Move to coneFloor position and eject cone
     public static Command floorScore() {
         return SlideCommands.home()
