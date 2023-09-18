@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
+import frc.robot.RobotTelemetry;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.vision.VisionConfig;
@@ -27,7 +28,7 @@ public class AlignToVisionTarget extends PIDCommand {
     private static double out = 0;
     private int pipelineIndex = 0;
     private double heading = Integer.MIN_VALUE;
-    private static String m_limelight = VisionConfig.DEFAULT_LL;
+    private String m_limelight = VisionConfig.DEFAULT_LL;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
@@ -93,7 +94,7 @@ public class AlignToVisionTarget extends PIDCommand {
         }
 
         // dont set rotation on detector pipelines
-        if (Robot.vision.isDetectorPipeline(m_limelight)) {
+        if (pipelineIndex > 2) {
             return 0;
         }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
@@ -107,12 +108,17 @@ public class AlignToVisionTarget extends PIDCommand {
         return true;
     }
 
-    public static double getOutput() {
-        // reverse direction for robot pov
-        if (Robot.vision.isDetectorPipeline(m_limelight)) {
-            return -out;
+    public double getOutput() {
+        // If there are no targets don't move
+        if (Robot.vision.isTarget(m_limelight)) {
+            // reverse direction for robot pov
+            if (Robot.vision.isDetectorPipeline(m_limelight)) {
+                return -out;
+            }
+            return out;
         }
-        return out;
+        RobotTelemetry.print("No Targets: Output Off");
+        return 0;
     }
 
     public static void setOutput(double output) {
@@ -149,6 +155,8 @@ public class AlignToVisionTarget extends PIDCommand {
         super.execute();
         driveCommand.execute();
         setKp();
+        // RobotTelemetry.print("Aim Target? = " + Robot.vision.isAimTarget());
+        // RobotTelemetry.print("Detect Target? = " + Robot.vision.isDetetTarget());
         // getLedCommand(tagID).execute();
     }
 

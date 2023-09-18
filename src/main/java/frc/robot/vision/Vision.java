@@ -27,8 +27,8 @@ public class Vision extends SubsystemBase {
     /** For Pilot Gamepad */
     public boolean canUseAutoPilot = false;
 
-    public double defaultHorizontalOffset = 0;
-    public double defaultVerticalOffset = 0;
+    public double aimHorizontalOffset = 0;
+    public double aimVerticalOffset = 0;
     public double detectHorizontalOffset = 0;
     public double detectVerticalOffset = 0;
 
@@ -36,6 +36,8 @@ public class Vision extends SubsystemBase {
     private Pair<Pose3d, Double> photonVisionPose;
     private int targetSeenCount = 0;
     private boolean targetSeen, visionStarted, initialized = false;
+    private boolean aimTarget = false;
+    private boolean detectTarget = false;
     private LimelightHelpers.LimelightResults jsonResults, detectJsonResults;
 
     // testing
@@ -46,8 +48,8 @@ public class Vision extends SubsystemBase {
         botPose = new Pose2d(0, 0, new Rotation2d(Units.degreesToRadians(0)));
         botPose3d = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
         targetSeenCount = 0;
-        defaultHorizontalOffset = 0;
-        defaultVerticalOffset = 0;
+        aimHorizontalOffset = 0;
+        aimVerticalOffset = 0;
 
         // configure both limelights
         LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
@@ -72,13 +74,30 @@ public class Vision extends SubsystemBase {
                         .equals("");
         checkTargetHistory();
         jsonResults = LimelightHelpers.getLatestResults(VisionConfig.DEFAULT_LL);
-        defaultHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
-        defaultVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
+        aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
+        aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
+        aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
         detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
         detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
         detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
+        detectTarget = LimelightHelpers.getTV(VisionConfig.DETECT_LL);
         // this method can call update() if vision pose estimation needs to be updated in
         // Vision.java
+    }
+
+    public boolean isAimTarget() {
+        return aimTarget;
+    }
+
+    public boolean isDetetTarget() {
+        return detectTarget;
+    }
+
+    public boolean isTarget(String limelight) {
+        if (limelight == VisionConfig.DETECT_LL) {
+            return isDetetTarget();
+        }
+        return isAimTarget();
     }
 
     /**
@@ -217,7 +236,7 @@ public class Vision extends SubsystemBase {
 
     public double getDistanceToTarget() {
         double angleToGoal =
-                Units.degreesToRadians(VisionConfig.limelightAngle + defaultVerticalOffset);
+                Units.degreesToRadians(VisionConfig.limelightAngle + aimVerticalOffset);
         return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight) / Math.tan(angleToGoal);
     }
 
@@ -331,14 +350,14 @@ public class Vision extends SubsystemBase {
         if (limelight.equals(VisionConfig.DETECT_LL)) {
             return detectHorizontalOffset;
         }
-        return defaultHorizontalOffset;
+        return aimHorizontalOffset;
     }
 
     public double getVerticalOffset(String limelight) {
         if (limelight.equals(VisionConfig.DETECT_LL)) {
             return detectVerticalOffset;
         }
-        return defaultVerticalOffset;
+        return aimVerticalOffset;
     }
 
     public double getClosestTagID() {

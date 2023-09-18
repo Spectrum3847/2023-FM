@@ -72,9 +72,9 @@ public class RobotTelemetry extends TelemetrySubsystem {
         //         .withSize(1, 1)
         //         .withProperties(
         //                 Map.of("Color when true", "#50C878", "Color when false", "#FF0000"));
-        tab.addNumber("DefLLVerticalOffset", () -> Robot.vision.defaultVerticalOffset)
+        tab.addNumber("DefLLVerticalOffset", () -> Robot.vision.aimVerticalOffset)
                 .withPosition(3, 4);
-        tab.addNumber("DefLLHorizontalOffset", () -> Robot.vision.defaultHorizontalOffset)
+        tab.addNumber("DefLLHorizontalOffset", () -> Robot.vision.aimHorizontalOffset)
                 .withPosition(3, 5);
         // tab.addNumber("LLXDistance", () -> Robot.vision.getDistanceToTarget()).withPosition(3,
         // 5);
