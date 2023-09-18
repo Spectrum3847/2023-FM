@@ -14,18 +14,19 @@ public class ElbowConfig extends AngleMechConfig {
 
     public final int intake = -100;
     public final int airIntake = -43;
-    public final int shelfIntake = -108;
+    public final int shelfIntake = -98;
 
-    public final int home = -38;
+    public final int home = -25;
     public final int unblockCameraPos = -88;
     public final int stow = -29;
 
     public final int floor = -88;
-    public final int coneTop = -89;
-    public final double coneMid = -93;
-    public final int cubeUp = -108;
+    public final int coneTop = -80;
+    public final double coneMid = coneTop;
+    public final int prescore = -60;
+    public final int cubeUp = -112; // -108
 
-    public final int scorePos = coneTop - 17;
+    public final int scorePos = coneTop - 26;
     // public final int cubeScorePos = cubeUp - 2;
 
     public final double zeroSpeed = -0.2;
@@ -42,8 +43,8 @@ public class ElbowConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 30;
-        this.tirggerThresholdLimit = 10;
+        this.currentLimit = 5;
+        this.tirggerThresholdLimit = 5;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;
         this.kNeutralMode = NeutralMode.Brake;

@@ -1,0 +1,6 @@
+Move /usr/local/natinst/labview/lvrt to ni-lvrt.
+Install script as lvrt.
+Set lvrt permission to x for all users
+
+Rename the webserv file to .bak
+/usr/local/natinst/etc/init.d/systemWebServer

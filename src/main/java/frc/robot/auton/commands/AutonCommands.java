@@ -9,6 +9,7 @@ import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
+import frc.robot.swerve.commands.AlignToVisionTarget;
 import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
@@ -138,5 +139,41 @@ public class AutonCommands {
                 // .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
                 .andThen(eject());
+    }
+
+    public static Command alignToConeNode() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline, 0)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToCubeNode() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline, 0)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToCubeFloor() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.cubeDetectorPipeline)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToConeFloor() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.coneDetectorPipeline)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
     }
 }

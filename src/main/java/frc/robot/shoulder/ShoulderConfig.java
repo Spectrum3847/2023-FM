@@ -16,14 +16,15 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int airIntake = 15;
     public final int shelfIntake = 82;
 
-    public final int home = 22;
+    public final int home = 15;
     public final int unblockCameraPos = 22;
     public final int stow = 31;
 
     public final int floor = 20;
+    public final int prescore = 60;
     public final int coneTop = 98;
-    public final int coneMid = 95;
-    public final int cubeUp = 93;
+    public final int coneMid = coneTop;
+    public final int cubeUp = 90; // 93
 
     public final int safePositionForElbow = 55;
 
@@ -41,8 +42,8 @@ public class ShoulderConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 30;
-        this.tirggerThresholdLimit = 10;
+        this.currentLimit = 5;
+        this.tirggerThresholdLimit = 5;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;
         this.kNeutralMode = NeutralMode.Brake;

@@ -1,5 +1,6 @@
 package frc.robot.pilot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
@@ -10,10 +11,9 @@ import frc.robot.Robot;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.swerve.commands.AlignToVisionTarget;
-import frc.robot.swerve.commands.DriveToVisionTarget;
+import frc.robot.trajectories.commands.DistanceDrive;
 import frc.robot.vision.VisionConfig;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
@@ -71,42 +71,33 @@ public class PilotGamepad extends Gamepad {
         triggerSteering();
 
         /* Aiming */
-        gamepad.xButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(Math.PI)); // grid
-        // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
-
-        /* Dpad */
-        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
-        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
-                .onTrue(MechanismsCommands.scoreRoutine());
-        // gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
-        // gamepad.Dpad.Right.and(noBumpers()).whileTrue(new
-        // DistanceDrive(Units.inchesToMeters(-5)));
-        gamepad.Dpad.Left.and(noBumpers()).whileTrue(OperatorCommands.intake());
-        gamepad.Dpad.Right.and(noBumpers()).whileTrue(MechanismsCommands.stowIntake());
-
-        /* Aligning */
-        // gamepad.bButton
-        //         .and(noBumpers())
-        //         .whileTrue(
-        //                 MechanismsCommands.stowIntake()
-        //                         .alongWith(
-        //                                 new DriveToVisionTarget(
-        //                                         VisionConfig.DEFAULT_LL,
-        //                                         0,
-        //                                         VisionConfig.reflectivePipeline)));
-        gamepad.bButton
+        gamepad.xButton
                 .and(noBumpers())
-                .whileTrue(
-                        new DriveToVisionTarget(
-                                VisionConfig.DEFAULT_LL, 0, VisionConfig.reflectivePipeline));
-        gamepad.bButton
-                .and(rightBumperOnly())
                 .whileTrue(
                         new AlignToVisionTarget(
                                 VisionConfig.DEFAULT_LL,
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
                                 0,
                                 VisionConfig.reflectivePipeline));
+        // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
+
+        /* Dpad */
+        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
+        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
+                .onTrue(MechanismsCommands.scoreRoutine());
+        gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
+        gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
+
+        /* Aligning */
+        gamepad.bButton
+                .and(noBumpers())
+                .whileTrue(
+                        new AlignToVisionTarget(
+                                VisionConfig.DEFAULT_LL,
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                0,
+                                VisionConfig.aprilTagPipeline));
+        gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
         // gamepad.bButton
         //         .and(noBumpers())
         //         .whileTrue(

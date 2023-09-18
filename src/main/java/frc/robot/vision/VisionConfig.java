@@ -14,7 +14,7 @@ public final class VisionConfig {
 
     /* Limelight Configuration */
     public static final String DETECT_LL = "limelight-detect";
-    public static final String DEFAULT_LL = "limelight";
+    public static final String DEFAULT_LL = "limelight-aim";
 
     /* Pipeline config */
     public static final int aprilTagPipeline = 0;

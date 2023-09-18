@@ -61,4 +61,20 @@ public class VisionCommands {
         return new InstantCommand(
                 () -> Robot.vision.setLimelightPipeline(limelight, pipelineIndex), Robot.vision);
     }
+
+    public static Command setCubeNodePipeline() {
+        return setLimelightPipeline("", VisionConfig.aprilTagPipeline);
+    }
+
+    public static Command setConeNodePipeline() {
+        return setLimelightPipeline("", VisionConfig.reflectivePipeline);
+    }
+
+    public static Command setConeDetectPipeline() {
+        return setLimelightPipeline("", VisionConfig.coneDetectorPipeline);
+    }
+
+    public static Command setCubeDetectPipeline() {
+        return setLimelightPipeline("", VisionConfig.cubeDetectorPipeline);
+    }
 }
