@@ -12,14 +12,16 @@ public class IntakeConfig {
 
     public double falconMaxSpeed = 6380; // RPM
 
-    public double intake = 5000; // 2000
-    public double slowIntake = 1500; // 600
+    public double intake = 6500; // 2000
+    public double slowIntake = 900; // 600
+    public double slowIntakePercentage =
+            0.06; // This is used instead of a velocity to lower hold current
     public double eject = -3000;
     public double drop = -300;
 
     public double intakeCone = 3000;
 
-    public double currentLimit = 7;
+    public double currentLimit = 10;
     public double threshold = 20;
 
     public double velocityKp = 0.065;

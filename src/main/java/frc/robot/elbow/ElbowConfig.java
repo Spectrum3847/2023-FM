@@ -16,7 +16,7 @@ public class ElbowConfig extends AngleMechConfig {
     public final int airIntake = -43;
     public final int shelfIntake = -98;
 
-    public final int home = -38;
+    public final int home = -25;
     public final int unblockCameraPos = -88;
     public final int stow = -29;
 
@@ -43,8 +43,8 @@ public class ElbowConfig extends AngleMechConfig {
         this.motionCruiseVelocity = 10500; // 10500
         this.motionAcceleration = 42000;
 
-        this.currentLimit = 10;
-        this.tirggerThresholdLimit = 10;
+        this.currentLimit = 5;
+        this.tirggerThresholdLimit = 5;
         this.PeakCurrentDuration = 0.0;
         this.EnableCurrentLimit = true;
         this.kNeutralMode = NeutralMode.Brake;

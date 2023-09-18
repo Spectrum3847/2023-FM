@@ -9,11 +9,15 @@ public class IntakeCommands {
 
     public static void setupDefaultCommand() {
 
-        Robot.intake.setDefaultCommand(slowIntake().withName("IntakeDefaultCommand"));
+        Robot.intake.setDefaultCommand(holdPercentOutput().withName("IntakeDefaultCommand"));
     }
 
     public static Command slowIntake() {
         return setVelocities(Intake.config.slowIntake).withName("SlowIntake");
+    }
+
+    public static Command holdPercentOutput() {
+        return setIntakeRollers(Intake.config.slowIntakePercentage).withName("HoldPercentOutput");
     }
 
     public static Command intake() {
