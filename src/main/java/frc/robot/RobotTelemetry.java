@@ -12,7 +12,6 @@ import frc.SpectrumLib.telemetry.TelemetrySubsystem;
 import frc.SpectrumLib.util.Network;
 import frc.SpectrumLib.util.Util;
 import frc.robot.auton.Auton;
-import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.Slide;
 import java.util.Map;
@@ -47,11 +46,6 @@ public class RobotTelemetry extends TelemetrySubsystem {
                 .withSize(1, 1)
                 .withProperties(
                         Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
-        tab.addBoolean("ElbowCond?", () -> ElbowCommands.isInitialized.getAsBoolean())
-                .withPosition(8, 4)
-                .withSize(1, 1)
-                .withProperties(
-                        Map.of("Color when true", "#300068", "Color when false", "#FFFFFF"));
         tab.addBoolean("ShoulderCond?", () -> ShoulderCommands.isInitialized.getAsBoolean())
                 .withPosition(8, 5)
                 .withSize(1, 1)
@@ -78,9 +72,12 @@ public class RobotTelemetry extends TelemetrySubsystem {
         //         .withSize(1, 1)
         //         .withProperties(
         //                 Map.of("Color when true", "#50C878", "Color when false", "#FF0000"));
-        tab.addNumber("LLVerticalOffset", () -> Robot.vision.verticalOffset).withPosition(3, 4);
-        tab.addNumber("LLHorizontalOffset", () -> Robot.vision.horizontalOffset).withPosition(3, 5);
-        tab.addNumber("LLXDistance", () -> Robot.vision.getDistanceToTarget()).withPosition(3, 5);
+        tab.addNumber("DefLLVerticalOffset", () -> Robot.vision.aimVerticalOffset)
+                .withPosition(3, 4);
+        tab.addNumber("DefLLHorizontalOffset", () -> Robot.vision.aimHorizontalOffset)
+                .withPosition(3, 5);
+        // tab.addNumber("LLXDistance", () -> Robot.vision.getDistanceToTarget()).withPosition(3,
+        // 5);
 
         tab.addNumber("Match Time", () -> Timer.getMatchTime())
                 .withPosition(2, 1)

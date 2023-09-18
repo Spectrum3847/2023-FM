@@ -10,10 +10,10 @@ public class SlideConfig extends LinearMechConfig {
     // All these are in inches
     public final double diameterInches = 1.5038;
     public final double gearRatio = 9 / 1;
-    public final double maxUpPos = 59.3; // TODO: change important
+    public final double maxUpPos = 59.3;
     public final double maxCarriageHeight = 79000; // 80172 max
 
-    public final double homeThreshold = 1000; // falcon units //TODO: change
+    public final double homeThreshold = 1000; // falcon units
     public final double homeTimeout = 0.5; // seconds
     public final double maxHomeTimeout = 4; // seconds, no home command can take longer than this
     public final double holdConeHeight =
@@ -28,11 +28,11 @@ public class SlideConfig extends LinearMechConfig {
     public SlideConfig() {
         super(name);
         this.kP = 0.43;
-        this.kI = 0; // could be 0
-        this.kD = 0; // could be 0
+        this.kI = 0;
+        this.kD = 0;
         this.kF = 0.064;
-        this.motionCruiseVelocity = 24500;
-        this.motionAcceleration = 40000;
+        this.motionCruiseVelocity = 24500; // 24500
+        this.motionAcceleration = 40000; // 40000
 
         this.currentLimit = 30;
         this.tirggerThresholdLimit = 30;

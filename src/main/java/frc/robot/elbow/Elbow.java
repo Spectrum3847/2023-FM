@@ -16,8 +16,8 @@ public class Elbow extends AngleMechSubsystem {
         config.updateTalonFXConfig();
         setupFalconLeader();
         motorLeader.setInverted(TalonFXInvertType.Clockwise); // Should be done in config
-        motorLeader.setNeutralMode(NeutralMode.Coast);
-        motorLeader.configReverseSoftLimitThreshold(200); // TODO: change?
+        motorLeader.setNeutralMode(NeutralMode.Brake);
+        motorLeader.configReverseSoftLimitThreshold(-68316);
         motorLeader.configReverseSoftLimitEnable(true);
         motorLeader.configForwardSoftLimitThreshold(config.elbowMaxFalcon);
         motorLeader.configForwardSoftLimitEnable(true);

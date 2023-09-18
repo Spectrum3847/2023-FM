@@ -111,9 +111,10 @@ public class Robot extends LoggedRobot {
         pilotGamepad.resetConfig();
         operatorGamepad.resetConfig();
         LEDCommands.setupLEDTriggers();
-        SlideCommands.setupSlideTriggers();
-        ShoulderCommands.setupShoulderTriggers();
-        ElbowCommands.setupElbowTriggers();
+        // this breaks the shoulder
+        // SlideCommands.setupSlideTriggers();
+        // ShoulderCommands.setupShoulderTriggers();
+        // ElbowCommands.setupElbowTriggers();
     }
 
     /**
@@ -230,6 +231,8 @@ public class Robot extends LoggedRobot {
         }*/
         swerve.setLastAngleToCurrentAngle(); // Should set the current falcon angle to the last
         // angle
+
+        swerve.brakeMode(true);
 
         // ElevatorCommands.safeHome().withTimeout(1).schedule(); // home elevator
 

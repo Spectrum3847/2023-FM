@@ -27,14 +27,18 @@ public class Vision extends SubsystemBase {
     /** For Pilot Gamepad */
     public boolean canUseAutoPilot = false;
 
-    public double horizontalOffset, verticalOffset;
+    public double aimHorizontalOffset = 0;
+    public double aimVerticalOffset = 0;
+    public double detectHorizontalOffset = 0;
+    public double detectVerticalOffset = 0;
 
     private Pose3d botPose3d; // Uses the limelight rotation instead of the gyro rotation
     private Pair<Pose3d, Double> photonVisionPose;
-    private int targetSeenCount;
+    private int targetSeenCount = 0;
     private boolean targetSeen, visionStarted, initialized = false;
-
-    private LimelightHelpers.LimelightResults jsonResults;
+    private boolean aimTarget = false;
+    private boolean detectTarget = false;
+    private LimelightHelpers.LimelightResults jsonResults, detectJsonResults;
 
     // testing
     private final DecimalFormat df = new DecimalFormat();
@@ -44,13 +48,13 @@ public class Vision extends SubsystemBase {
         botPose = new Pose2d(0, 0, new Rotation2d(Units.degreesToRadians(0)));
         botPose3d = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
         targetSeenCount = 0;
-        horizontalOffset = 0;
-        verticalOffset = 0;
+        aimHorizontalOffset = 0;
+        aimVerticalOffset = 0;
 
-        // LimelightHelpers.setLEDMode_ForceOff(null);
-        // LimelightHelpers.setLEDMode_ForceOn(null);
-        LimelightHelpers.setLEDMode_PipelineControl(null);
-        LimelightHelpers.setPipelineIndex(null, 0);
+        // configure both limelights
+        LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
+        setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline);
+        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.reflectivePipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -64,16 +68,36 @@ public class Vision extends SubsystemBase {
         /* update feed status by looking for an empty json */
         visionConnected =
                 !NetworkTableInstance.getDefault()
-                        .getTable("limelight")
+                        .getTable(VisionConfig.DEFAULT_LL)
                         .getEntry("json")
                         .getString("")
                         .equals("");
         checkTargetHistory();
-        jsonResults = LimelightHelpers.getLatestResults("");
-        horizontalOffset = LimelightHelpers.getTX("");
-        verticalOffset = LimelightHelpers.getTY("");
+        jsonResults = LimelightHelpers.getLatestResults(VisionConfig.DEFAULT_LL);
+        aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
+        aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
+        aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
+        detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
+        detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
+        detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
+        detectTarget = LimelightHelpers.getTV(VisionConfig.DETECT_LL);
         // this method can call update() if vision pose estimation needs to be updated in
         // Vision.java
+    }
+
+    public boolean isAimTarget() {
+        return aimTarget;
+    }
+
+    public boolean isDetetTarget() {
+        return detectTarget;
+    }
+
+    public boolean isTarget(String limelight) {
+        if (limelight == VisionConfig.DETECT_LL) {
+            return isDetetTarget();
+        }
+        return isAimTarget();
     }
 
     /**
@@ -211,7 +235,8 @@ public class Vision extends SubsystemBase {
     }
 
     public double getDistanceToTarget() {
-        double angleToGoal = Units.degreesToRadians(VisionConfig.limelightAngle + verticalOffset);
+        double angleToGoal =
+                Units.degreesToRadians(VisionConfig.limelightAngle + aimVerticalOffset);
         return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight) / Math.tan(angleToGoal);
     }
 
@@ -321,16 +346,41 @@ public class Vision extends SubsystemBase {
         targetSeen = targetSeenCount > 2; // has been seen for 3 loops
     }
 
-    public double getHorizontalOffset() {
-        return horizontalOffset;
+    public double getHorizontalOffset(String limelight) {
+        if (limelight.equals(VisionConfig.DETECT_LL)) {
+            return detectHorizontalOffset;
+        }
+        return aimHorizontalOffset;
     }
 
-    public double getVerticalOffset() {
-        return verticalOffset;
+    public double getVerticalOffset(String limelight) {
+        if (limelight.equals(VisionConfig.DETECT_LL)) {
+            return detectVerticalOffset;
+        }
+        return aimVerticalOffset;
     }
 
     public double getClosestTagID() {
         return LimelightHelpers.getFiducialID("");
+    }
+
+    /**
+     * @param limelight name of limelight to control in {@link VisionConfig}
+     * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
+     */
+    public void setLimelightPipeline(String limelight, int pipelineIndex) {
+        LimelightHelpers.setPipelineIndex(VisionConfig.DEFAULT_LL, pipelineIndex);
+        LimelightHelpers.setPipelineIndex(VisionConfig.DETECT_LL, pipelineIndex);
+    }
+
+    /**
+     * @param limelight name of limelight to check see {@link VisionConfig}
+     * @return if current LL pipeline is on cube or cone detector
+     */
+    public boolean isDetectorPipeline(String limelight) {
+        double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
+        return currentPipeline == VisionConfig.coneDetectorPipeline
+                || currentPipeline == VisionConfig.cubeDetectorPipeline;
     }
 
     /**
@@ -386,13 +436,5 @@ public class Vision extends SubsystemBase {
             theta -= 360;
             System.out.println(" needed new theta: " + df.format(theta));
         }
-    }
-
-    public void setAprilTagPipeline() {
-        LimelightHelpers.setPipelineIndex(null, 0);
-    }
-
-    public void setRetroPipeline() {
-        LimelightHelpers.setPipelineIndex(null, 1);
     }
 }

@@ -9,9 +9,11 @@ import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
-import frc.robot.swerve.commands.DriveToCubeNode;
+import frc.robot.swerve.commands.AlignToVisionTarget;
+import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
+import frc.robot.vision.VisionConfig;
 import java.util.function.DoubleSupplier;
 
 public class AutonCommands {
@@ -122,10 +124,56 @@ public class AutonCommands {
                                 .andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
     }
 
+    public static Command coneTop() {
+        return coneTopPreScore()
+                .withTimeout(1.4)
+                .andThen(
+                        ElbowCommands.score()
+                                .withTimeout(0.05)
+                                .andThen(IntakeCommands.drop())
+                                .withTimeout(0.2));
+    }
+
     public static Command alignToGridMid() {
-        return new DriveToCubeNode(0, true)
-                .alongWith(cubeMidPreScore())
+        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.aprilTagPipeline)
+                // .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
                 .andThen(eject());
+    }
+
+    public static Command alignToConeNode() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline, 0)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToCubeNode() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline, 0)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToCubeFloor() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.cubeDetectorPipeline)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command alignToConeFloor() {
+        return new AlignToVisionTarget(
+                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.coneDetectorPipeline)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
     }
 }

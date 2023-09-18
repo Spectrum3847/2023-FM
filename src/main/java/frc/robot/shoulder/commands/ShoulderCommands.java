@@ -57,6 +57,12 @@ public class ShoulderCommands {
         return new RunCommand(() -> Robot.shoulder.setMMPercent(percent), Robot.shoulder);
     }
 
+    /* Misc Positions */
+
+    public static Command stow() {
+        return setMMPercent(Shoulder.config.stow);
+    }
+
     /* Intake Positions */
 
     public static Command intake() {

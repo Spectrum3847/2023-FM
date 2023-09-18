@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
-import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.exceptions.KillRobotException;
-import frc.robot.intake.commands.IntakeCommands;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
 import frc.robot.swerve.commands.HeadingLock;
 import frc.robot.swerve.commands.LockSwerve;
@@ -51,14 +48,6 @@ public class PilotCommands {
     //             .withTimeout(0.3)
     //             .andThen(OperatorCommands.homeSystems());
     // }
-
-    public static Command scoreRoutine() {
-        return ElbowCommands.score()
-                .withTimeout(0.1)
-                .andThen(IntakeCommands.drop())
-                .withTimeout(0.3)
-                .andThen(OperatorCommands.homeSystems().withTimeout(2.5));
-    }
 
     /**
      * Drive the robot and control orientation using the right stick

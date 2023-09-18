@@ -49,11 +49,11 @@
     },
     {
       "anchorPoint": {
-        "x": 5.5,
+        "x": 5.75,
         "y": 4.65
       },
       "prevControl": {
-        "x": 4.859398503086426,
+        "x": 5.109398503086426,
         "y": 4.65
       },
       "nextControl": null,
@@ -71,25 +71,19 @@
     }
   ],
   "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
+  "maxAcceleration": 3.5,
   "isReversed": null,
   "markers": [
-    {
-      "position": 1.0,
-      "names": [
-        "Intake"
-      ]
-    },
-    {
-      "position": 2.0,
-      "names": [
-        "RetractIntake"
-      ]
-    },
     {
       "position": 0.01,
       "names": [
         "RetractIntake"
+      ]
+    },
+    {
+      "position": 1.5,
+      "names": [
+        "Intake"
       ]
     }
   ]

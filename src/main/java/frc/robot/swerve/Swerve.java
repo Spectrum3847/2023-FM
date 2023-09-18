@@ -19,9 +19,9 @@ import frc.robot.Robot;
 import frc.robot.swerve.configTemplates.SwerveConfig;
 import frc.robot.swerve.configs.AM2023;
 import frc.robot.swerve.configs.FLASH2021;
+import frc.robot.swerve.configs.FM2023;
 import frc.robot.swerve.configs.GAMMA2021;
 import frc.robot.swerve.configs.INFRARED2022;
-import frc.robot.swerve.configs.PRACTICE2023;
 import frc.robot.swerve.configs.XRAY2023;
 import frc.robot.swerve.gyros.GyroIO;
 import frc.robot.swerve.gyros.Pigeon1;
@@ -54,7 +54,7 @@ public class Swerve extends SubsystemBase {
                 config = AM2023.config;
                 break;
             case PRACTICE2023:
-                config = PRACTICE2023.config;
+                config = FM2023.config;
                 break;
             default:
                 config = XRAY2023.config;
