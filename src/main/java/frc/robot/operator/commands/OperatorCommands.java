@@ -95,6 +95,19 @@ public class OperatorCommands {
                 .withName("OperatorCubeTop");
     }
 
+    public static Command launch() {
+        return SlideCommands.home()
+                .alongWith(ShoulderCommands.launch(), ElbowCommands.throwBack())
+                .withTimeout(0.3)
+                .andThen(
+                        ElbowCommands.throwFwd()
+                                .alongWith(
+                                        IntakeCommands.stopAllMotors()
+                                                .withTimeout(0.1)
+                                                .andThen(IntakeCommands.eject())))
+                .withTimeout(0.7);
+    }
+
     /** Sets Slide, Shoulder, and Elbow to coast mode */
     public static Command coastMode() {
         return SlideCommands.coastMode()
