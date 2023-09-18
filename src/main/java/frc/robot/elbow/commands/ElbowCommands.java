@@ -40,7 +40,7 @@ public class ElbowCommands {
     }
 
     public static Command setManualOutput(double speed) {
-        return setManualOutput(speed);
+        return setManualOutput(() -> speed);
     }
 
     public static Command setManualOutput(DoubleSupplier speed) {
@@ -127,5 +127,17 @@ public class ElbowCommands {
     public static boolean isInPosition() {
         return !Elbow.isInitialized
                 && Robot.elbow.getPercentAngle() >= Elbow.config.initializedPosition;
+    }
+
+    public static Command throwBack() {
+        return setMMPercent(Elbow.config.throwBack).withTimeout(0.25);
+    }
+
+    public static Command throwFwd() {
+        return setManualOutput(-1).withTimeout(0.25).andThen(stop());
+    }
+
+    public static Command launch() {
+        return throwBack().andThen(throwFwd());
     }
 }
