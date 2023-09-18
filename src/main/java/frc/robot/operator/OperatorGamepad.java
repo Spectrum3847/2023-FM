@@ -38,6 +38,7 @@ public class OperatorGamepad extends Gamepad {
 
         /* Scoring/Positions */
         gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
+        gamepad.leftBumper.and(rightBumper()).whileTrue(OperatorCommands.preScorePos());
         gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
         gamepad.yButton.whileTrue(OperatorCommands.coneTop());
         gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
