@@ -21,7 +21,10 @@ import java.text.DecimalFormat;
 public class Vision extends SubsystemBase {
     public PhotonVision photonVision;
     public Pose2d botPose;
-    public boolean visionIntegrated, visionConnected = false;
+    public boolean visionIntegrated = false;
+    public boolean aimLimelightConnected = false;
+    public boolean detectLimelightConnected = false;
+
     /** For LEDs */
     public boolean poseOverriden = false;
     /** For Pilot Gamepad */
@@ -66,21 +69,35 @@ public class Vision extends SubsystemBase {
     @Override
     public void periodic() {
         /* update feed status by looking for an empty json */
-        visionConnected =
+        aimLimelightConnected =
                 !NetworkTableInstance.getDefault()
                         .getTable(VisionConfig.DEFAULT_LL)
                         .getEntry("json")
                         .getString("")
                         .equals("");
-        checkTargetHistory();
-        jsonResults = LimelightHelpers.getLatestResults(VisionConfig.DEFAULT_LL);
-        aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
-        aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
-        aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
-        detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
-        detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
-        detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
-        detectTarget = LimelightHelpers.getTV(VisionConfig.DETECT_LL);
+
+        detectLimelightConnected =
+                !NetworkTableInstance.getDefault()
+                        .getTable(VisionConfig.DETECT_LL)
+                        .getEntry("json")
+                        .getString("")
+                        .equals("");
+
+        // checkTargetHistory();
+
+        if (aimLimelightConnected) {
+            jsonResults = LimelightHelpers.getLatestResults(VisionConfig.DEFAULT_LL);
+            aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
+            aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
+            aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
+        }
+
+        if (detectLimelightConnected) {
+            detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
+            detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
+            detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
+            detectTarget = LimelightHelpers.getTV(VisionConfig.DETECT_LL);
+        }
         // this method can call update() if vision pose estimation needs to be updated in
         // Vision.java
     }
