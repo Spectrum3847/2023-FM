@@ -96,6 +96,10 @@ public class ElbowCommands {
         return setMMPercent(Elbow.config.scorePos);
     }
 
+    public static Command prescore() {
+        return setMMPercent(Elbow.config.prescore);
+    }
+
     public static Command coneTop() {
         return setMMPercent(Elbow.config.coneTop);
     }
