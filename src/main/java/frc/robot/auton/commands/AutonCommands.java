@@ -125,7 +125,7 @@ public class AutonCommands {
 
     public static Command coneTop() {
         return coneTopPreScore()
-                .withTimeout(1.4)
+                .withTimeout(1.3)
                 .andThen(
                         ElbowCommands.score()
                                 .withTimeout(0.05)
