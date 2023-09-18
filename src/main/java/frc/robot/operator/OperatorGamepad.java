@@ -47,7 +47,8 @@ public class OperatorGamepad extends Gamepad {
 
         /* Misc */
         gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
-        gamepad.Dpad.Down.whileTrue(IntakeCommands.eject());
+        gamepad.Dpad.Down.and(noBumpers()).whileTrue(IntakeCommands.eject());
+        gamepad.Dpad.Down.and(rightBumper()).whileTrue(OperatorCommands.launch());
         gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
         gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
         gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());

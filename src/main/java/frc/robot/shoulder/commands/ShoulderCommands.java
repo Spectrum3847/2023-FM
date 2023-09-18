@@ -91,6 +91,10 @@ public class ShoulderCommands {
         return setMMPercent(Shoulder.config.prescore);
     }
 
+    public static Command launch() {
+        return setMMPercent(Shoulder.config.launch);
+    }
+
     public static Command coneTop() {
         return setMMPercent(Shoulder.config.coneTop);
     }
