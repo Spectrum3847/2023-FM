@@ -25,15 +25,15 @@
     {
       "anchorPoint": {
         "x": 2.80209349892384,
-        "y": 0.75
+        "y": 0.7
       },
       "prevControl": {
         "x": 2.1812849446525373,
-        "y": 0.7303115412751529
+        "y": 0.6803115412751528
       },
       "nextControl": {
         "x": 3.7825541733710146,
-        "y": 0.7810945449887485
+        "y": 0.7310945449887485
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -73,18 +73,5 @@
   "maxVelocity": 4.0,
   "maxAcceleration": 3.5,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.01,
-      "names": [
-        "RetractIntake"
-      ]
-    },
-    {
-      "position": 1.5,
-      "names": [
-        "Intake"
-      ]
-    }
-  ]
+  "markers": []
 }

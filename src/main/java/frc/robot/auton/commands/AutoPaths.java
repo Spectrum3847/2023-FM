@@ -54,7 +54,7 @@ public class AutoPaths {
 
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(1, 1)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanSide5() {
@@ -67,28 +67,29 @@ public class AutoPaths {
 
     public static Command CleanBumpSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(0.5, 0.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanBumpSide2() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(0.5, 0.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanBumpSide3() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(0.5, 0.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanBumpSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(0.5, 0.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanBumpSide5() {
         return (Auton.getAutoBuilder()
                         .fullAuto(
-                                PathPlanner.loadPathGroup("CleanBumpSide5", new PathConstraints(0.5, 0.5))))
+                                PathPlanner.loadPathGroup(
+                                        "CleanBumpSide5", new PathConstraints(4, 4))))
                 .withTimeout(0.8)
                 .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }
