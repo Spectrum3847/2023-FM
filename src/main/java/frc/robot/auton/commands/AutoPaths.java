@@ -65,6 +65,34 @@ public class AutoPaths {
                 .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }
 
+    public static Command CleanBumpSide1() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(0.5, 0.5)));
+    }
+
+    public static Command CleanBumpSide2() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(0.5, 0.5)));
+    }
+
+    public static Command CleanBumpSide3() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(0.5, 0.5)));
+    }
+
+    public static Command CleanBumpSide4() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(0.5, 0.5)));
+    }
+
+    public static Command CleanBumpSide5() {
+        return (Auton.getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup("CleanBumpSide5", new PathConstraints(0.5, 0.5))))
+                .withTimeout(0.8)
+                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
+    }
+
     //     public static Command CleanSidewMid() {
     //         return AutonCommands.coneTopFull()
     //                 .andThen(

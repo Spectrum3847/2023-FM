@@ -21,7 +21,7 @@ crop_x_min:-1
 crop_y_max:0.5
 crop_y_min:-1
 cross_a_a:1
-cross_a_x:0.087
+cross_a_x:0.108
 cross_a_y:0
 cross_b_a:1
 cross_b_x:0

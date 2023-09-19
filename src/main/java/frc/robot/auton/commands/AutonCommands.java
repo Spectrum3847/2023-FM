@@ -143,7 +143,7 @@ public class AutonCommands {
 
     public static Command alignToConeNode() {
         return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline, 0)
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline)
                 .alongWith(IntakeCommands.stopAllMotors())
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
@@ -152,7 +152,7 @@ public class AutonCommands {
 
     public static Command alignToCubeNode() {
         return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline, 0)
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline)
                 .alongWith(IntakeCommands.stopAllMotors())
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
@@ -171,6 +171,15 @@ public class AutonCommands {
     public static Command alignToConeFloor() {
         return new AlignToVisionTarget(
                         VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.coneDetectorPipeline)
+                .alongWith(IntakeCommands.stopAllMotors())
+                .alongWith(ElbowCommands.stop())
+                .alongWith(ShoulderCommands.stop())
+                .alongWith(SlideCommands.stop());
+    }
+
+    public static Command driveToConeNode() {
+        return new DriveToVisionTarget(
+                        VisionConfig.DEFAULT_LL, 0, VisionConfig.reflectivePipeline, Math.PI)
                 .alongWith(IntakeCommands.stopAllMotors())
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
