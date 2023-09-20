@@ -11,6 +11,7 @@ import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
+import frc.robot.vision.VisionCommands;
 
 /** Used to add buttons to the operator gamepad and configure the joysticks */
 public class OperatorGamepad extends Gamepad {
@@ -50,7 +51,9 @@ public class OperatorGamepad extends Gamepad {
         gamepad.Dpad.Down.and(noBumpers()).whileTrue(IntakeCommands.eject());
         gamepad.Dpad.Down.and(rightBumper()).whileTrue(OperatorCommands.launch());
         gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
+        gamepad.Dpad.Left.onTrue(VisionCommands.setConeNodePipeline());
         gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
+        gamepad.Dpad.Right.onTrue(VisionCommands.setCubeNodePipeline());
         gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
         gamepad.selectButton.and(noRightBumper()).whileTrue(SlideCommands.zeroSlideRoutine());
         gamepad.startButton.and(gamepad.selectButton).whileTrue(OperatorCommands.cancelCommands());

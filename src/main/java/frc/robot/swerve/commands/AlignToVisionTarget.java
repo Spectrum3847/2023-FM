@@ -98,7 +98,7 @@ public class AlignToVisionTarget extends PIDCommand {
             return 0;
         }
 
-        //One node alignment rotate to face the grid
+        // One node alignment rotate to face the grid
         return Robot.swerve.calculateRotationController(() -> Math.PI);
     }
 
