@@ -15,9 +15,10 @@ import frc.robot.vision.VisionConfig;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveToVisionTarget extends PIDCommand {
     /* Config settings */
-    private static double kP = 0.06;
+    private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint = -15; // neg
     private static double detectorVerticalSetpoint = -10; // neg
+    private static double reflectiveVerticalSetpoint = -5.5; // neg -6
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
@@ -27,7 +28,7 @@ public class DriveToVisionTarget extends PIDCommand {
     private double conditionalVerticalSetpoint;
     private boolean commandStarted = false;
     private double heading = Integer.MIN_VALUE;
-    private static String limelight;
+    private static String m_limelight;
     /**
      * Creates a new DriveToVisionTarget. Aligns to a vision target in both X and Y axes
      * (field-oriented). If used for automation purposes, it is best to give it a timeout as a
@@ -37,7 +38,8 @@ public class DriveToVisionTarget extends PIDCommand {
      *     aligned. Default value should be 0
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      */
-    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline) {
+    public DriveToVisionTarget(
+            String limelight, double horizontalOffset, int pipeline, double heading) {
         super(
                 // The controller that the command will use
                 new PIDController(kP, 0, 0),
@@ -49,13 +51,14 @@ public class DriveToVisionTarget extends PIDCommand {
                 output -> {
                     setOutput(output);
                 });
+        m_limelight = limelight;
         this.horizontalOffset = horizontalOffset;
+        this.heading = heading;
         alignToTag = getVisionTargetCommand(pipeline);
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(Robot.swerve);
+        // addRequirements(Robot.swerve);
         // Configure additional PID options by calling `getController` here.
         this.getController().setTolerance(tolerance);
-        this.limelight = limelight;
     }
 
     /**
@@ -78,7 +81,7 @@ public class DriveToVisionTarget extends PIDCommand {
             int pipeline,
             Command conditionalCommand,
             double conditionalVerticalSetpoint) {
-        this(limelight, horizontalOffset, pipeline);
+        this(limelight, horizontalOffset, pipeline, Integer.MIN_VALUE);
         this.conditionalCommand = conditionalCommand;
         this.conditionalVerticalSetpoint = conditionalVerticalSetpoint;
     }
@@ -92,10 +95,8 @@ public class DriveToVisionTarget extends PIDCommand {
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      * @param heading heading to have the robot turn to (radians)
      */
-    public DriveToVisionTarget(
-            String limelight, double horizontalOffset, int pipeline, double heading) {
-        this(limelight, horizontalOffset, pipeline);
-        this.heading = heading;
+    public DriveToVisionTarget(String limelight, double horizontalOffset, int pipeline) {
+        this(limelight, horizontalOffset, pipeline, Integer.MIN_VALUE);
     }
 
     @Override
@@ -127,13 +128,13 @@ public class DriveToVisionTarget extends PIDCommand {
         if (conditionalCommand != null && commandStarted == true) {
             conditionalCommand.end(interrupted);
         }
-        Robot.swerve.stop();
+        // Robot.swerve.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             if (Math.floor(getVerticalOffset()) == detectorVerticalSetpoint + 1) {
                 return true;
             }
@@ -156,34 +157,36 @@ public class DriveToVisionTarget extends PIDCommand {
 
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {
         // if detector, reverse output
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             // if heading is set, rotate to heading
             if (heading == Integer.MIN_VALUE) {
                 return new AlignToVisionTarget(
-                        limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline);
+                        m_limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline);
             } else {
                 return new AlignToVisionTarget(
-                        limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+                        m_limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
             }
         }
         if (heading == Integer.MIN_VALUE) {
             return new AlignToVisionTarget(
-                    limelight, () -> getOutput() * 2, horizontalOffset, pipeline);
+                    m_limelight, () -> getOutput(), horizontalOffset, pipeline);
         } else {
             return new AlignToVisionTarget(
-                    limelight, () -> -(getOutput() * 2), horizontalOffset, pipeline, heading);
+                    m_limelight, () -> getOutput(), horizontalOffset, pipeline, heading);
         }
     }
 
     public static double getVerticalSetpoint(int pipeline) {
-        if (Robot.vision.isDetectorPipeline(limelight)) {
+        if (Robot.vision.isDetectorPipeline(m_limelight)) {
             return detectorVerticalSetpoint;
+        } else if (Robot.vision.isReflectivePipeline(m_limelight)) {
+            return reflectiveVerticalSetpoint;
         }
         return verticalSetpoint;
     }
 
     private static double getVerticalOffset() {
-        double offset = Robot.vision.getVerticalOffset(limelight);
+        double offset = Robot.vision.getVerticalOffset(m_limelight);
         return (offset == 0) ? verticalSetpoint : offset;
     }
 }

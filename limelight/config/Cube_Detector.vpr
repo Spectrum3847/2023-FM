@@ -21,7 +21,7 @@ crop_x_min:-1
 crop_y_max:0.5
 crop_y_min:-1
 cross_a_a:1
-cross_a_x:0.087
+cross_a_x:0.108
 cross_a_y:0
 cross_b_a:1
 cross_b_x:0
@@ -63,7 +63,7 @@ multigroup_rejector:0
 pipeline_led_enabled:0
 pipeline_led_power:0
 pipeline_res:2
-pipeline_type:5
+pipeline_type:0
 red_balance:1200
 roi_x:0
 roi_y:0

@@ -8,11 +8,22 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
 import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.vision.VisionConfig;
 
 public class AutoPaths {
+    public static Command HeadingTest() {
+        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline)
+                .alongWith(OperatorCommands.intake())
+                .andThen(MechanismsCommands.coneStandingIntake());
+    }
+
+    public static Command ConePoleTest() {
+        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.reflectivePipeline);
+    }
+
     public static Command CleanSide() {
         return AutonCommands.coneTop()
                 .andThen(
@@ -43,13 +54,42 @@ public class AutoPaths {
 
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(1, 1)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.5)));
     }
 
     public static Command CleanSide5() {
         return (Auton.getAutoBuilder()
                         .fullAuto(
                                 PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4))))
+                .withTimeout(0.8)
+                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
+    }
+
+    public static Command CleanBumpSide1() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanBumpSide2() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanBumpSide3() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanBumpSide4() {
+        return Auton.getAutoBuilder()
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)));
+    }
+
+    public static Command CleanBumpSide5() {
+        return (Auton.getAutoBuilder()
+                        .fullAuto(
+                                PathPlanner.loadPathGroup(
+                                        "CleanBumpSide5", new PathConstraints(4, 4))))
                 .withTimeout(0.8)
                 .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }

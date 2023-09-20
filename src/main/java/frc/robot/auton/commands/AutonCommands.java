@@ -7,6 +7,7 @@ import frc.robot.auton.AutonConfig;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.operator.commands.OperatorCommands;
+import frc.robot.pose.commands.PoseCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.commands.AlignToVisionTarget;
@@ -126,7 +127,7 @@ public class AutonCommands {
 
     public static Command coneTop() {
         return coneTopPreScore()
-                .withTimeout(1.4)
+                .withTimeout(1.3)
                 .andThen(
                         ElbowCommands.score()
                                 .withTimeout(0.05)
@@ -143,7 +144,7 @@ public class AutonCommands {
 
     public static Command alignToConeNode() {
         return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline, 0)
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline)
                 .alongWith(IntakeCommands.stopAllMotors())
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
@@ -152,7 +153,7 @@ public class AutonCommands {
 
     public static Command alignToCubeNode() {
         return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline, 0)
+                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline)
                 .alongWith(IntakeCommands.stopAllMotors())
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
@@ -175,5 +176,19 @@ public class AutonCommands {
                 .alongWith(ElbowCommands.stop())
                 .alongWith(ShoulderCommands.stop())
                 .alongWith(SlideCommands.stop());
+    }
+
+    public static Command driveToConeNode() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new DriveToVisionTarget(
+                                        VisionConfig.DEFAULT_LL,
+                                        0,
+                                        VisionConfig.reflectivePipeline,
+                                        Math.PI)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
     }
 }
