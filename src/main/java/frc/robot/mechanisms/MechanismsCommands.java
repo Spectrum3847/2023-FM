@@ -1,6 +1,9 @@
 package frc.robot.mechanisms;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
@@ -62,11 +65,26 @@ public class MechanismsCommands {
                 .withName("OperatorSlowHomeIntake");
     }
 
+    public static Command scoreButton() {
+        return new ConditionalCommand(
+                scoreRoutine(), lowScore(), () -> Robot.shoulder.isScoreAngle());
+    }
+
     public static Command scoreRoutine() {
         return ElbowCommands.score()
                 .withTimeout(0.1)
                 .andThen(IntakeCommands.drop())
                 .withTimeout(0.3)
+                .andThen(homeSystems().withTimeout(2.5));
+    }
+
+    public static Command lowScore() {
+        return ElbowCommands.airIntake()
+                .alongWith(
+                        SlideCommands.home(),
+                        ShoulderCommands.airIntake(),
+                        new WaitCommand(0.1).andThen(IntakeCommands.drop()))
+                .withTimeout(0.2)
                 .andThen(homeSystems().withTimeout(2.5));
     }
 
