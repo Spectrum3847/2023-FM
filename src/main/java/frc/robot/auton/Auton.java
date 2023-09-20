@@ -82,6 +82,7 @@ public class Auton {
         autonChooser.addOption("Cone Floor Align", AutonCommands.alignToConeFloor());
         autonChooser.addOption("Cube Floor Align", AutonCommands.alignToCubeFloor());
         autonChooser.addOption("Cone Node Drive Test", AutonCommands.driveToConeNode());
+        autonChooser.addOption("Cone Ground Drive Test", AutonCommands.driveToConeFloor());
         // // autonChooser.addOption(
         // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
         // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());

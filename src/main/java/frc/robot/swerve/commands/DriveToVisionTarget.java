@@ -15,9 +15,9 @@ import frc.robot.vision.VisionConfig;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveToVisionTarget extends PIDCommand {
     /* Config settings */
-    private static double kP = 0.5; // 0.8;
+    private static double kP = 0.3; // 0.8;
     private static double verticalSetpoint = -15; // neg
-    private static double detectorVerticalSetpoint = -10; // neg
+    private static double detectorVerticalSetpoint = -2; // neg
     private static double reflectiveVerticalSetpoint = -5.5; // neg -6
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
@@ -56,7 +56,7 @@ public class DriveToVisionTarget extends PIDCommand {
         this.heading = heading;
         alignToTag = getVisionTargetCommand(pipeline);
         // Use addRequirements() here to declare subsystem dependencies.
-        // addRequirements(Robot.swerve);
+        addRequirements(Robot.swerve);
         // Configure additional PID options by calling `getController` here.
         this.getController().setTolerance(tolerance);
     }
@@ -152,7 +152,7 @@ public class DriveToVisionTarget extends PIDCommand {
     }
 
     public static double getOutput() {
-        return out;
+        return -out;
     }
 
     public AlignToVisionTarget getVisionTargetCommand(int pipeline) {

@@ -191,4 +191,18 @@ public class AutonCommands {
                                 .alongWith(ShoulderCommands.stop())
                                 .alongWith(SlideCommands.stop()));
     }
+
+    public static Command driveToConeFloor() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new DriveToVisionTarget(
+                                        VisionConfig.DETECT_LL,
+                                        0,
+                                        VisionConfig.coneDetectorPipeline,
+                                        Math.PI)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
 }
