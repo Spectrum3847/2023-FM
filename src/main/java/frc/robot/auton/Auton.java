@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.auton.commands.Eject;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import frc.robot.vision.VisionCommands;
@@ -71,18 +71,22 @@ public class Auton {
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
         // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        autonChooser.addOption("Clean Side Test", AutoPaths.CleanSide());
-        autonChooser.addOption("Clean Bump Side 1", AutoPaths.CleanBumpSide1());
-        autonChooser.addOption("Clean Bump Side 2", AutoPaths.CleanBumpSide2());
-        autonChooser.addOption("Clean Bump Side 3", AutoPaths.CleanBumpSide3());
-        autonChooser.addOption("Clean Bump Side 4", AutoPaths.CleanBumpSide4());
-        autonChooser.addOption("Cone Top Test", AutonCommands.coneTop());
-        autonChooser.addOption("Cone Node Align", AutonCommands.alignToConeNode());
-        autonChooser.addOption("Cube Node Align", AutonCommands.alignToCubeNode());
-        autonChooser.addOption("Cone Floor Align", AutonCommands.alignToConeFloor());
-        autonChooser.addOption("Cube Floor Align", AutonCommands.alignToCubeFloor());
-        autonChooser.addOption("Cone Node Drive Test", AutonCommands.driveToConeNode());
-        autonChooser.addOption("Cone Ground Drive Test", AutonCommands.driveToConeFloor());
+        // autonChooser.addOption("Cone Top Test", AutonCommands.coneTop());
+        // autonChooser.addOption("Cone Node Align", AutonCommands.alignToConeNode());
+        // autonChooser.addOption("Cube Node Align", AutonCommands.alignToCubeNode());
+        // autonChooser.addOption("Cone Floor Align", AutonCommands.alignToConeFloor());
+        // autonChooser.addOption("Cube Floor Align", AutonCommands.alignToCubeFloor());
+        // autonChooser.addOption("Cone Node Drive Test", AutonCommands.driveToConeNode());
+        // autonChooser.addOption("Cone Ground Drive Test", AutonCommands.driveToConeFloor());
+        // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
+
+        // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
+
+        autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
+
+        autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
+
+        autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // autonChooser.addOption(
         // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
         // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());

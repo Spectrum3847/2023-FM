@@ -10,7 +10,11 @@ import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
+import frc.robot.swerve.commands.AlignToAprilTag;
+import frc.robot.swerve.commands.AlignToConeNode;
 import frc.robot.swerve.commands.AlignToVisionTarget;
+import frc.robot.swerve.commands.DriveToAprilTag;
+import frc.robot.swerve.commands.DriveToConeNode;
 import frc.robot.swerve.commands.DriveToVisionTarget;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
@@ -204,5 +208,41 @@ public class AutonCommands {
                                 .alongWith(ElbowCommands.stop())
                                 .alongWith(ShoulderCommands.stop())
                                 .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command AlignToAprilTagTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new AlignToAprilTag(() -> 0, 0)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command DriveToAprilTagTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new DriveToAprilTag(0)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command AlignToConeNodeTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new AlignToConeNode(() -> 0, 0)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command DriveToConeNodeTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(new DriveToConeNode(0).alongWith(OperatorCommands.coneMid()))
+                .andThen(SwerveCommands.stop());
     }
 }

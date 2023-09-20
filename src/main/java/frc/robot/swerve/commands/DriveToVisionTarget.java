@@ -16,9 +16,9 @@ import frc.robot.vision.VisionConfig;
 public class DriveToVisionTarget extends PIDCommand {
     /* Config settings */
     private static double kP = 0.3; // 0.8;
-    private static double verticalSetpoint = -15; // neg
+    private static double verticalSetpoint = -13.5; // neg
     private static double detectorVerticalSetpoint = -2; // neg
-    private static double reflectiveVerticalSetpoint = -5.5; // neg -6
+    private static double reflectiveVerticalSetpoint = -5.3; // neg
     private double tolerance = 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
