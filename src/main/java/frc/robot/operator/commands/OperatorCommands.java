@@ -21,9 +21,15 @@ public class OperatorCommands {
     /* Intaking Commands */
 
     public static Command intake() {
-        return IntakeCommands.intake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake())
-                .finallyDo((b) -> homeAndSlowIntake().withTimeout(1).schedule())
+        return ShoulderCommands.intake()
+                .withTimeout(.25)
+                .andThen(
+                        IntakeCommands.intake()
+                                .alongWith(
+                                        SlideCommands.home(),
+                                        ShoulderCommands.intake(),
+                                        ElbowCommands.intake()))
+                .finallyDo((b) -> homeAndSlowIntake().withTimeout(1.5).schedule())
                 .withName("OperatorIntake");
     }
 
@@ -33,7 +39,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.airIntake(),
                         ElbowCommands.airIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
                 .withName("OperatorAirIntake");
     }
 
@@ -43,7 +49,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.shelfIntake(),
                         ElbowCommands.shelfIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
                 .withName("OperatorShelfIntake");
     }
 
@@ -119,6 +125,10 @@ public class OperatorCommands {
         return IntakeCommands.slowIntake()
                 .alongWith(homeSystems())
                 .withName("OperatorSlowHomeIntake");
+    }
+
+    public static Command homeAfterFloorIntake() {
+        return ElbowCommands.home().withTimeout(0.4).andThen(homeAfterFloorIntake());
     }
 
     /** Goes to home position */
