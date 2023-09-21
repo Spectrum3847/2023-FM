@@ -59,7 +59,9 @@ public class VisionCommands {
      */
     public static Command setLimelightPipeline(String limelight, int pipelineIndex) {
         return new InstantCommand(
-                () -> Robot.vision.setLimelightPipeline(limelight, pipelineIndex), Robot.vision);
+                        () -> Robot.vision.setLimelightPipeline(limelight, pipelineIndex),
+                        Robot.vision)
+                .ignoringDisable(true);
     }
 
     public static Command setCubeNodePipeline() {

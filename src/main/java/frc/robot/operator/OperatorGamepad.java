@@ -95,6 +95,10 @@ public class OperatorGamepad extends Gamepad {
                 .and(bothBumpers())
                 .whileTrue(OperatorCommands.killTheRobot());
         gamepad.bButton.toggleOnTrue(OperatorCommands.coastMode());
+        gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
+        gamepad.Dpad.Left.onTrue(VisionCommands.setConeNodePipeline());
+        gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
+        gamepad.Dpad.Right.onTrue(VisionCommands.setCubeNodePipeline());
     }
 
     public void setupTestButtons() {}

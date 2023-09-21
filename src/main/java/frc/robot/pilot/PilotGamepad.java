@@ -13,9 +13,11 @@ import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
-import frc.robot.swerve.commands.AlignToVisionTarget;
+import frc.robot.swerve.commands.AlignToAprilTag;
+import frc.robot.swerve.commands.AlignToConeFloor;
+import frc.robot.swerve.commands.AlignToConeNode;
+import frc.robot.swerve.commands.AlignToCubeFloor;
 import frc.robot.trajectories.commands.DistanceDrive;
-import frc.robot.vision.VisionConfig;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
 public class PilotGamepad extends Gamepad {
@@ -72,14 +74,7 @@ public class PilotGamepad extends Gamepad {
         triggerSteering();
 
         /* Aiming */
-        gamepad.xButton
-                .and(noBumpers())
-                .whileTrue(
-                        new AlignToVisionTarget(
-                                VisionConfig.DEFAULT_LL,
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                0,
-                                VisionConfig.reflectivePipeline));
+
         // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
 
         // Score Right Bumpter
@@ -87,42 +82,35 @@ public class PilotGamepad extends Gamepad {
         bothBumpers().onTrue(OperatorCommands.launch());
 
         /* Dpad */
-        gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());
-        gamepad.Dpad.Down.and(noBumpers().or(rightBumperOnly()))
-                .onTrue(MechanismsCommands.scoreRoutine());
+        gamepad.Dpad.Up.and(noBumpers()).whileTrue(IntakeCommands.intake());
+        gamepad.Dpad.Down.and(noBumpers()).onTrue(MechanismsCommands.scoreRoutine());
         gamepad.Dpad.Left.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(5)));
         gamepad.Dpad.Right.and(noBumpers()).whileTrue(new DistanceDrive(Units.inchesToMeters(-5)));
 
         /* Aligning */
+        // Align to Cube Node
         gamepad.bButton
                 .and(noBumpers())
+                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 2));
+
+        // Align to Cube Node
+        gamepad.bButton
+                .and(leftBumperOnly())
                 .whileTrue(
-                        new AlignToVisionTarget(
-                                VisionConfig.DEFAULT_LL,
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                0,
-                                VisionConfig.aprilTagPipeline));
-        gamepad.bButton.and(rightBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
-        // gamepad.bButton
-        //         .and(noBumpers())
-        //         .whileTrue(
-        //                 new AlignToVisionTarget(
-        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
-        //                         0,
-        //                         VisionConfig.coneDetectorPipeline));
-        // gamepad.bButton
-        //         .and(leftBumperOnly())
-        //         .whileTrue(
-        //                 new AlignToVisionTarget(
-        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
-        //                         0,
-        //                         VisionConfig.aprilTagPipeline));
-        // gamepad.bButton
-        //         .and(rightBumperOnly())
-        //         .whileTrue(
-        //                 new AlignToAprilTag(
-        //                         () -> Robot.pilotGamepad.getDriveFwdPositive(),
-        //                         -PilotConfig.alignmentOffset, true));
+                        new AlignToCubeFloor(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.5));
+
+        // Align to Cone Node (Change back using to test cone floor align)
+        gamepad.xButton
+                .and(noBumpers())
+                .whileTrue(new AlignToConeNode(() -> Robot.pilotGamepad.getDriveFwdPositive(), 2));
+
+        // Align to floor cone
+        gamepad.xButton
+                .and(leftBumperOnly())
+                .whileTrue(
+                        new AlignToConeFloor(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.5));
+
+        gamepad.yButton.and(leftBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
 
         /* Reorient */
         gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));

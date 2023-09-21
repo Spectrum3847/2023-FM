@@ -8,20 +8,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
 import frc.robot.mechanisms.MechanismsCommands;
-import frc.robot.operator.commands.OperatorCommands;
-import frc.robot.swerve.commands.DriveToVisionTarget;
+import frc.robot.swerve.commands.DriveToConeNode;
 import frc.robot.swerve.commands.LockSwerve;
-import frc.robot.vision.VisionConfig;
 
 public class AutoPaths {
-    public static Command HeadingTest() {
-        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline)
-                .alongWith(OperatorCommands.intake())
-                .andThen(MechanismsCommands.coneStandingIntake());
-    }
 
     public static Command ConePoleTest() {
-        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.reflectivePipeline);
+        return new DriveToConeNode(2);
     }
 
     public static Command CleanSide() {
@@ -32,8 +25,7 @@ public class AutoPaths {
                                         PathPlanner.loadPathGroup(
                                                 "CleanSide1", new PathConstraints(4, 3.5))))
                 .andThen(
-                        new DriveToVisionTarget(
-                                VisionConfig.DETECT_LL, 0, VisionConfig.coneDetectorPipeline))
+                        new DriveToConeNode(2))
                 .andThen(MechanismsCommands.coneStandingIntake());
     }
 

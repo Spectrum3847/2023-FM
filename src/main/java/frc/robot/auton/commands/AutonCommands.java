@@ -2,6 +2,7 @@ package frc.robot.auton.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.AutonConfig;
 import frc.robot.elbow.commands.ElbowCommands;
@@ -10,11 +11,14 @@ import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pose.commands.PoseCommands;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
-import frc.robot.swerve.commands.AlignToVisionTarget;
-import frc.robot.swerve.commands.DriveToVisionTarget;
+import frc.robot.swerve.commands.AlignToAprilTag;
+import frc.robot.swerve.commands.AlignToConeNode;
+import frc.robot.swerve.commands.DriveToConeFloor;
+import frc.robot.swerve.commands.DriveToConeNode;
+import frc.robot.swerve.commands.DriveToCubeNode;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.commands.SwerveDrive;
-import frc.robot.vision.VisionConfig;
+import frc.robot.vision.VisionCommands;
 import java.util.function.DoubleSupplier;
 
 public class AutonCommands {
@@ -135,7 +139,7 @@ public class AutonCommands {
                                 .withTimeout(0.2));
     }
 
-    public static Command alignToGridMid() {
+    /* public static Command alignToGridMid() {
         return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.aprilTagPipeline)
                 // .alongWith(cubeMidPreScore())
                 .withTimeout(0.75)
@@ -190,5 +194,72 @@ public class AutonCommands {
                                 .alongWith(ElbowCommands.stop())
                                 .alongWith(ShoulderCommands.stop())
                                 .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command driveToConeFloor() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        new DriveToVisionTarget(
+                                        VisionConfig.DETECT_LL,
+                                        0,
+                                        VisionConfig.coneDetectorPipeline,
+                                        Math.PI)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    } */
+
+    public static Command AlignToAprilTagTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        VisionCommands.setCubeNodePipeline()
+                                .withTimeout(1)
+                                .alongWith(
+                                        new WaitCommand(
+                                                1)), // Switch to cube pipeline and wait 1 sec
+                        new AlignToAprilTag(() -> 0, 0)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command DriveToCubeNode() {
+        return PoseCommands.resetHeading(180)
+                .andThen(
+                        VisionCommands.setCubeNodePipeline()
+                                .alongWith(
+                                        new WaitCommand(
+                                                1)), // Switch to cube pipeline and wait 1 sec
+                        new DriveToCubeNode(0)
+                                .alongWith(
+                                        IntakeCommands.stopAllMotors(),
+                                        ElbowCommands.stop(),
+                                        ShoulderCommands.stop(),
+                                        SlideCommands.stop()));
+    }
+
+    public static Command AlignToConeNodeTest() {
+        return PoseCommands.resetHeading(180)
+                // .andThen(VisionCommands.setConeNodePipeline(), new WaitCommand(1))
+                .andThen(
+                        new AlignToConeNode(() -> 0, 0)
+                                .alongWith(IntakeCommands.stopAllMotors())
+                                .alongWith(ElbowCommands.stop())
+                                .alongWith(ShoulderCommands.stop())
+                                .alongWith(SlideCommands.stop()));
+    }
+
+    public static Command DriveToConeNodeTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(new DriveToConeNode(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(SwerveCommands.stop());
+    }
+
+    public static Command DriveToConeFloorTest() {
+        return PoseCommands.resetHeading(180)
+                .andThen(new DriveToConeFloor(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(SwerveCommands.stop());
     }
 }
