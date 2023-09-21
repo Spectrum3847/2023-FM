@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.exceptions.KillRobotException;
@@ -21,9 +20,15 @@ public class OperatorCommands {
     /* Intaking Commands */
 
     public static Command intake() {
-        return IntakeCommands.intake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake())
-                .finallyDo((b) -> homeAndSlowIntake().withTimeout(1).schedule())
+        return ShoulderCommands.intake()
+                .withTimeout(.25)
+                .andThen(
+                        IntakeCommands.intake()
+                                .alongWith(
+                                        SlideCommands.home(),
+                                        ShoulderCommands.intake(),
+                                        ElbowCommands.intake()))
+                .finallyDo((b) -> homeAfterFloorIntake().withTimeout(1.5).schedule())
                 .withName("OperatorIntake");
     }
 
@@ -33,7 +38,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.airIntake(),
                         ElbowCommands.airIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
                 .withName("OperatorAirIntake");
     }
 
@@ -43,7 +48,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.shelfIntake(),
                         ElbowCommands.shelfIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
                 .withName("OperatorShelfIntake");
     }
 
@@ -62,20 +67,19 @@ public class OperatorCommands {
                 .alongWith(
                         ShoulderCommands.floor(),
                         ElbowCommands.floor(),
-                        new WaitCommand(0.2).andThen(IntakeCommands.drop()))
-                .finallyDo((b) -> homeSystems().withTimeout(1).schedule())
+                        IntakeCommands.holdPercentOutput())
                 .withName("OperatorFloorScore");
     }
 
     public static Command coneMid() {
-        return IntakeCommands.slowIntake()
+        return IntakeCommands.holdPercentOutput()
                 .alongWith(
                         SlideCommands.home(), ShoulderCommands.coneMid(), ElbowCommands.coneMid())
                 .withName("OperatorConeMid");
     }
 
     public static Command coneTop() {
-        return IntakeCommands.slowIntake()
+        return IntakeCommands.holdPercentOutput()
                 .alongWith(
                         SlideCommands.fullExtend(),
                         ShoulderCommands.coneTop(),
@@ -85,19 +89,28 @@ public class OperatorCommands {
 
     public static Command cubeMid() {
         return SlideCommands.home()
-                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp())
+                .alongWith(
+                        ShoulderCommands.cubeUp(),
+                        ElbowCommands.cubeUp(),
+                        IntakeCommands.holdPercentOutput())
                 .withName("OperatorCubeMid");
     }
 
     public static Command cubeTop() {
         return SlideCommands.fullExtend()
-                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp())
+                .alongWith(
+                        ShoulderCommands.cubeUp(),
+                        ElbowCommands.cubeUp(),
+                        IntakeCommands.holdPercentOutput())
                 .withName("OperatorCubeTop");
     }
 
     public static Command launch() {
         return SlideCommands.home()
-                .alongWith(ShoulderCommands.launch(), ElbowCommands.throwBack())
+                .alongWith(
+                        ShoulderCommands.launch(),
+                        ElbowCommands.throwBack(),
+                        IntakeCommands.holdPercentOutput())
                 .withTimeout(0.3)
                 .andThen(
                         ElbowCommands.throwFwd()
@@ -105,7 +118,8 @@ public class OperatorCommands {
                                         IntakeCommands.stopAllMotors()
                                                 .withTimeout(0.1)
                                                 .andThen(IntakeCommands.eject())))
-                .withTimeout(0.7);
+                .withTimeout(0.7)
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule());
     }
 
     /** Sets Slide, Shoulder, and Elbow to coast mode */
@@ -119,6 +133,10 @@ public class OperatorCommands {
         return IntakeCommands.slowIntake()
                 .alongWith(homeSystems())
                 .withName("OperatorSlowHomeIntake");
+    }
+
+    public static Command homeAfterFloorIntake() {
+        return ElbowCommands.home().withTimeout(0.4).andThen(homeSystems());
     }
 
     /** Goes to home position */

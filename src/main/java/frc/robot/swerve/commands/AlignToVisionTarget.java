@@ -93,10 +93,12 @@ public class AlignToVisionTarget extends PIDCommand {
             return Robot.swerve.calculateRotationController(() -> heading);
         }
 
-        // dont set rotation on detector pipelines
+        // dont set rotation output on detector pipelines
         if (pipelineIndex > 2) {
             return 0;
         }
+
+        // One node alignment rotate to face the grid
         return Robot.swerve.calculateRotationController(() -> Math.PI);
     }
 

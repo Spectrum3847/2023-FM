@@ -7,8 +7,8 @@ package frc.robot.leds;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.commands.ChaseLEDCommand;
 import frc.robot.leds.commands.LEDCommandBase;
+import frc.robot.leds.commands.RainbowLEDCommand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +34,10 @@ public class LEDScheduler {
     }
 
     private void intialAnimation() {
-        setDefaultAnimation("Default LED Animation", new ChaseLEDCommand("LED Default", 1, -101));
+        setDefaultAnimation(
+                "Default LED Animation",
+                new RainbowLEDCommand(
+                        "rainbow", 1, -101)); // new ChaseLEDCommand("LED Default", 1, -101));
     }
 
     public void runScheduler() {

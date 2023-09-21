@@ -2,7 +2,6 @@ package frc.robot.mechanisms;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
@@ -67,7 +66,11 @@ public class MechanismsCommands {
 
     public static Command scoreButton() {
         return new ConditionalCommand(
-                scoreRoutine(), lowScore(), () -> Robot.shoulder.isScoreAngle());
+                scoreRoutine(), floorScore(), () -> Robot.shoulder.isScoreAngle());
+    }
+
+    public static Command floorScore() {
+        return new ConditionalCommand(pilotDrop(), lowScore(), () -> Robot.shoulder.isFloorAngle());
     }
 
     public static Command scoreRoutine() {
@@ -78,13 +81,21 @@ public class MechanismsCommands {
                 .andThen(homeSystems().withTimeout(2.5));
     }
 
+    public static Command pilotDrop() {
+        return IntakeCommands.drop()
+                .withTimeout(0.5)
+                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule());
+    }
+
     public static Command lowScore() {
-        return ElbowCommands.airIntake()
+        return ElbowCommands.floor()
                 .alongWith(
                         SlideCommands.home(),
-                        ShoulderCommands.airIntake(),
-                        new WaitCommand(0.1).andThen(IntakeCommands.drop()))
-                .withTimeout(0.2)
+                        ShoulderCommands.floor(),
+                        IntakeCommands.holdPercentOutput()
+                                .withTimeout(.5)
+                                .andThen(IntakeCommands.FloorDrop()))
+                .withTimeout(1)
                 .andThen(homeSystems().withTimeout(2.5));
     }
 

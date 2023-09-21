@@ -16,12 +16,15 @@ public class IntakeConfig {
     public double slowIntake = 900; // 600
     public double slowIntakePercentage =
             0.06; // This is used instead of a velocity to lower hold current
+    public double holdIntakePercentage =
+            0.1; // This is used instead of a velocity to lower hold current
     public double eject = -3000;
     public double drop = -300;
+    public double floorDrop = -500;
 
     public double intakeCone = 3000;
 
-    public double currentLimit = 10;
+    public double currentLimit = 12;
     public double threshold = 20;
 
     public double velocityKp = 0.065;
