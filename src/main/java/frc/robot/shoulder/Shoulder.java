@@ -54,6 +54,13 @@ public class Shoulder extends AngleMechSubsystem {
         return false;
     }
 
+    public boolean isFloorAngle() {
+        if (getPercentAngle() < config.stow) {
+            return true;
+        }
+        return false;
+    }
+
     public void setMMPercent(double percent) {
         setMMPosition(percentToFalcon(percent));
     }

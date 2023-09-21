@@ -13,11 +13,11 @@ public class IntakeCommands {
     }
 
     public static Command slowIntake() {
-        return setVelocities(Intake.config.slowIntake).withName("SlowIntake");
+        return setIntakeRollers(Intake.config.slowIntakePercentage).withName("SlowIntake");
     }
 
     public static Command holdPercentOutput() {
-        return setIntakeRollers(Intake.config.slowIntakePercentage).withName("HoldPercentOutput");
+        return setIntakeRollers(Intake.config.holdIntakePercentage).withName("HoldPercentOutput");
     }
 
     public static Command intake() {
@@ -30,6 +30,10 @@ public class IntakeCommands {
 
     public static Command drop() {
         return setVelocities(Intake.config.drop).withName("Drop");
+    }
+
+    public static Command FloorDrop() {
+        return setVelocities(Intake.config.floorDrop).withName("Floor Drop");
     }
 
     public static Command setVelocities(double velocity) {

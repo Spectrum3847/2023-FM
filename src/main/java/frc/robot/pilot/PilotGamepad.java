@@ -11,6 +11,7 @@ import frc.robot.Robot;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.swerve.commands.AlignToVisionTarget;
 import frc.robot.trajectories.commands.DistanceDrive;
@@ -82,7 +83,8 @@ public class PilotGamepad extends Gamepad {
         // gamepad.yButton.and(noBumpers()).whileTrue(PilotCommands.aimPilotDrive(0)); // shelf
 
         // Score Right Bumpter
-        gamepad.rightBumper.onTrue(MechanismsCommands.scoreButton());
+        rightBumperOnly().onTrue(MechanismsCommands.scoreButton());
+        bothBumpers().onTrue(OperatorCommands.launch());
 
         /* Dpad */
         gamepad.Dpad.Up.and(noBumpers().or(rightBumperOnly())).whileTrue(IntakeCommands.intake());

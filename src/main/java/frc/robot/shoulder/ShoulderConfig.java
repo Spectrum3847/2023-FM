@@ -20,7 +20,7 @@ public class ShoulderConfig extends AngleMechConfig {
     public final int unblockCameraPos = 22;
     public final int stow = 31;
 
-    public final int floor = 20;
+    public final int floor = 15;
     public final int prescore = 60;
     public final int coneTop = 98;
     public final int coneMid = coneTop;
