@@ -13,17 +13,17 @@ import java.util.function.DoubleSupplier;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AlignToConeNode extends PIDCommand {
+public class AlignToConeFloor extends PIDCommand {
 
-    private static double kp = 0.026;
+    private static double kp = 0.05;
     private static double tolerance = 0.01;
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.5;
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
     private static double out = 0;
-    private int pipelineIndex = VisionConfig.reflectivePipeline;
-    private double heading = Math.PI;
-    private final String m_limelight = VisionConfig.DEFAULT_LL;
+    private int pipelineIndex = VisionConfig.coneDetectorPipeline;
+    private double heading = Integer.MIN_VALUE;
+    private final String m_limelight = VisionConfig.DETECT_LL;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
@@ -34,12 +34,12 @@ public class AlignToConeNode extends PIDCommand {
      * @param offset
      * @param pipeline
      */
-    public AlignToConeNode(DoubleSupplier fwdPositiveSupplier, double offset) {
+    public AlignToConeFloor(DoubleSupplier fwdPositiveSupplier, double offset) {
         super(
                 // The controller that the command will use
                 new PIDController(kp, 0, 0),
                 // This should return the measurement
-                () -> Robot.vision.getHorizontalOffset(VisionConfig.DEFAULT_LL),
+                () -> Robot.vision.getHorizontalOffset(VisionConfig.DETECT_LL),
                 // This should return the setpoint (can also be a constant)
                 () -> offset,
                 // This uses the output
@@ -56,28 +56,25 @@ public class AlignToConeNode extends PIDCommand {
                         () -> getFieldRelative()); // Field relative is true
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
-        this.setName("AlignToVisionTarget");
+        this.setName("AlignToConeOBject");
     }
 
     public double getSteering() {
-        // // if customizable heading is set, rotate to that heading
-        // if (heading != Integer.MIN_VALUE) {
-        //     return Robot.swerve.calculateRotationController(() -> heading);
-        // }
+        // if customizable heading is set, rotate to that heading
+        if (heading != Integer.MIN_VALUE) {
+            return Robot.swerve.calculateRotationController(() -> heading);
+        }
 
-        // // dont set rotation on detector pipelines
-        // if (pipelineIndex > 2) {
-        //     return 0;
-        // }
+        // dont set rotation on detector pipelines
+        if (pipelineIndex > 2) {
+            return 0;
+        }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
     }
 
     public boolean getFieldRelative() {
-        // drive robot oriented if on detector pipelines
-        // if (Robot.vision.isDetectorPipeline(m_limelight)) {
-        //     return false;
-        // }
-        return true;
+        // We go to RobotPOV to drive straight at the target
+        return false;
     }
 
     public static double getOutput() {
@@ -85,7 +82,7 @@ public class AlignToConeNode extends PIDCommand {
     }
 
     public static void setOutput(double output) {
-        out = -1 * output; // Flip the output because camera is looking back at driver station.
+        out = output;
         if (Math.abs(out) > 1) {
             out = 1 * Math.signum(out);
         }
@@ -106,7 +103,7 @@ public class AlignToConeNode extends PIDCommand {
     @Override
     public void execute() {
         super.execute();
-        if (this.getController().atSetpoint() || !Robot.vision.isAimTarget()) {
+        if (this.getController().atSetpoint() || !Robot.vision.isDetetTarget()) {
             out = 0;
         }
         driveCommand.execute();

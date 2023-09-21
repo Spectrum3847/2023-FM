@@ -4,13 +4,14 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
+import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
 
-public class DriveToConeNode extends PIDCommand {
+public class DriveToConeFloor extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            1.05; // These are different for each of our cone nodes.
+            -7.5; // These are different for each of our cone nodes.
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
@@ -19,8 +20,8 @@ public class DriveToConeNode extends PIDCommand {
     private static double tolerance = 0.05;
 
     private static double out = 0;
-    private Command alignToConeNode;
-    private static final String m_limelight = VisionConfig.DEFAULT_LL;
+    private Command alignToConeFloor;
+    private static final String m_limelight = VisionConfig.DETECT_LL;
 
     /**
      * Creates a new DriveToVisionTarget. Aligns to a vision target in both X and Y axes
@@ -31,7 +32,7 @@ public class DriveToConeNode extends PIDCommand {
      *     aligned. Default value should be 0
      * @param pipeline the pipeline to use for vision {@link VisionConfig}
      */
-    public DriveToConeNode(double horizontalOffset) {
+    public DriveToConeFloor(double horizontalOffset) {
         super(
                 // The controller that the command will use
                 new PIDController(kP, 0, 0),
@@ -45,7 +46,7 @@ public class DriveToConeNode extends PIDCommand {
                 },
                 Robot.swerve);
         this.horizontalOffset = horizontalOffset;
-        alignToConeNode = getVisionTargetCommand();
+        alignToConeFloor = getVisionTargetCommand();
         this.getController().setTolerance(tolerance);
     }
 
@@ -53,22 +54,23 @@ public class DriveToConeNode extends PIDCommand {
     public void initialize() {
         super.initialize();
         out = 0;
-        alignToConeNode.initialize();
+        alignToConeFloor.initialize();
     }
 
     @Override
     public void execute() {
         super.execute();
         // If we are already closer than the target distance stop driving.
-        if (getVerticalOffset() < getVerticalSetpoint() || !Robot.vision.isAimTarget()) {
+        if (getVerticalOffset() < getVerticalSetpoint() || !Robot.vision.isDetetTarget()) {
             out = 0;
         }
-        alignToConeNode.execute();
+        RobotTelemetry.print("Drive to Cone Out: " + out);
+        alignToConeFloor.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
-        alignToConeNode.end(interrupted);
+        alignToConeFloor.end(interrupted);
         Robot.swerve.stop();
     }
 
@@ -84,7 +86,7 @@ public class DriveToConeNode extends PIDCommand {
 
     // If out is > 1 then cap at one, make the robot drive slow and still have bigger kP
     private static void setOutput(double output) {
-        out = output;
+        out = -1 * output;
         if (Math.abs(out) > 1) {
             out = 1 * Math.signum(out);
         }
@@ -104,8 +106,8 @@ public class DriveToConeNode extends PIDCommand {
     }
 
     // Align and drive while we are doing this, pass output to it so it can drive forward.
-    public AlignToConeNode getVisionTargetCommand() {
-        return new AlignToConeNode(() -> getOutput(), horizontalOffset);
+    public Command getVisionTargetCommand() {
+        return new AlignToConeFloor(() -> getOutput(), horizontalOffset);
     }
 
     // Return where we are trying to get the target to be in the Y axis

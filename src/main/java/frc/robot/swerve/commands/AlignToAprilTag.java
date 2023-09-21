@@ -15,9 +15,9 @@ import java.util.function.DoubleSupplier;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AlignToAprilTag extends PIDCommand {
 
-    private static double lowKP = 0.03;
-    private static double highKP = 0.06;
-    private static double tolerance = 2;
+    private static double kp = 0.025;
+    private static double tolerance = 0.05;
+    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.5;
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
     private static double out = 0;
@@ -37,7 +37,7 @@ public class AlignToAprilTag extends PIDCommand {
     public AlignToAprilTag(DoubleSupplier fwdPositiveSupplier, double offset) {
         super(
                 // The controller that the command will use
-                new PIDController(lowKP, 0, 0),
+                new PIDController(kp, 0, 0),
                 // This should return the measurement
                 () -> Robot.vision.getHorizontalOffset(VisionConfig.DEFAULT_LL),
                 // This should return the setpoint (can also be a constant)
@@ -47,11 +47,10 @@ public class AlignToAprilTag extends PIDCommand {
                 Robot.swerve);
 
         this.getController().setTolerance(tolerance);
-        pipelineIndex = 0;
         driveCommand =
                 new SwerveDrive(
                         fwdPositiveSupplier, // Allows pilot to drive fwd and rev
-                        () -> (getOutput() * 2), // Moves us center to the tag
+                        () -> getOutput(), // Moves us center to the tag
                         () -> getSteering(), // Aligns to grid
                         () -> 1.0, // full velocity
                         () -> getFieldRelative()); // Field relative is true
@@ -61,23 +60,14 @@ public class AlignToAprilTag extends PIDCommand {
     }
 
     public double getSteering() {
-        // if customizable heading is set, rotate to that heading
-        if (heading != Integer.MIN_VALUE) {
-            return Robot.swerve.calculateRotationController(() -> heading);
-        }
-
-        // dont set rotation on detector pipelines
-        if (pipelineIndex > 2) {
-            return 0;
-        }
         return Robot.swerve.calculateRotationController(() -> Math.PI);
     }
 
     public boolean getFieldRelative() {
         // drive robot oriented if on detector pipelines
-        if (Robot.vision.isDetectorPipeline(m_limelight)) {
-            return false;
-        }
+        // if (Robot.vision.isDetectorPipeline(m_limelight)) {
+        //     return false;
+        // }
         return true;
     }
 
@@ -91,15 +81,7 @@ public class AlignToAprilTag extends PIDCommand {
             out = 1 * Math.signum(out);
         }
 
-        out = out * Robot.swerve.config.tuning.maxVelocity * 0.3;
-    }
-
-    private void setKp() {
-        if (Robot.vision.getVerticalOffset(m_limelight) > 16) {
-            this.getController().setP(highKP);
-        } else {
-            this.getController().setP(lowKP);
-        }
+        out = out * maxOutput;
     }
 
     @Override
@@ -109,16 +91,16 @@ public class AlignToAprilTag extends PIDCommand {
         // getLedCommand(tagID).initialize();
         Robot.swerve.resetRotationController();
         driveCommand.initialize();
-        setKp();
-
         Robot.vision.setLimelightPipeline(m_limelight, pipelineIndex);
     }
 
     @Override
     public void execute() {
         super.execute();
+        if (this.getController().atSetpoint() || !Robot.vision.isAimTarget()) {
+            out = 0;
+        }
         driveCommand.execute();
-        setKp();
         // RobotTelemetry.print("Aim Target? = " + Robot.vision.isAimTarget());
         // RobotTelemetry.print("Detect Target? = " + Robot.vision.isDetetTarget());
         // getLedCommand(tagID).execute();

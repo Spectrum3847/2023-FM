@@ -34,29 +34,13 @@ public class MechanismsCommands {
 
     public static Command stowIntake() {
         return SlideCommands.home()
-                .alongWith(ShoulderCommands.stow().withTimeout(0.2).andThen(ElbowCommands.stow()))
-                .withTimeout(1);
+                .alongWith(
+                        ElbowCommands.stow()
+                                .withTimeout(0.2)
+                                .andThen(ShoulderCommands.stow().alongWith(ElbowCommands.stow())))
+                .withTimeout(1)
+                .withName("STOW INTAKE");
     }
-
-    // public static Command cubeIntake() {
-    //     return ElevatorCommands.cubeIntake()
-    //             .alongWith(FourBarCommands.cubeIntake())
-    //             .withTimeout(0.3)
-    //             .andThen(
-    //                     new CubeIntake()
-    //                             .withTimeout(1)
-    //                             .alongWith(
-    //                                     new SwerveDrive(
-    //                                                     () -> 1, // drive fwd at full speed
-    //                                                     () -> 0,
-    //                                                     () -> 0,
-    //                                                     () -> 1.0, // full velocity
-    //                                                     () -> false // drive robot relative
-    //                                                     )
-    //                                             .withTimeout(1)
-    //                                             .andThen(homeSystems().withTimeout(1))))
-    //             .withName("MechanismsStandingCone");
-    // }
 
     public static Command homeAndSlowIntake() {
         return IntakeCommands.slowIntake()
@@ -73,6 +57,7 @@ public class MechanismsCommands {
         return new ConditionalCommand(pilotDrop(), lowScore(), () -> Robot.shoulder.isFloorAngle());
     }
 
+    // Score cone or cube in grid
     public static Command scoreRoutine() {
         return ElbowCommands.score()
                 .withTimeout(0.1)
@@ -81,12 +66,12 @@ public class MechanismsCommands {
                 .andThen(homeSystems().withTimeout(2.5));
     }
 
+    // Drop a gamepiece and return to home
     public static Command pilotDrop() {
-        return IntakeCommands.drop()
-                .withTimeout(0.5)
-                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule());
+        return IntakeCommands.drop().withTimeout(0.5).andThen(homeSystems().withTimeout(2.5));
     }
 
+    // Full low score routine for the pilot
     public static Command lowScore() {
         return ElbowCommands.floor()
                 .alongWith(
