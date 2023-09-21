@@ -24,8 +24,7 @@ public class AutoPaths {
                                 .fullAuto(
                                         PathPlanner.loadPathGroup(
                                                 "CleanSide1", new PathConstraints(4, 3.5))))
-                .andThen(
-                        new DriveToConeNode(2))
+                .andThen(new DriveToConeNode(2))
                 .andThen(MechanismsCommands.coneStandingIntake());
     }
 

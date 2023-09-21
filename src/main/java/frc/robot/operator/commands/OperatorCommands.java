@@ -38,7 +38,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.airIntake(),
                         ElbowCommands.airIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
+                .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
                 .withName("OperatorAirIntake");
     }
 
@@ -48,7 +48,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.shelfIntake(),
                         ElbowCommands.shelfIntake())
-                .finallyDo((b) -> homeSystems().withTimeout(1.5).schedule())
+                .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
                 .withName("OperatorShelfIntake");
     }
 
@@ -136,9 +136,17 @@ public class OperatorCommands {
     }
 
     public static Command homeAfterFloorIntake() {
-        return ElbowCommands.home().withTimeout(0.4).andThen(homeSystems());
+        return ElbowCommands.home()
+                .alongWith(IntakeCommands.intake())
+                .withTimeout(0.4)
+                .andThen(homeSystems());
     }
 
+    public static Command homeAfterIntake() {
+        return SlideCommands.home()
+                .alongWith(ShoulderCommands.home(), ElbowCommands.home(), IntakeCommands.intake())
+                .withName("OperatorHomeSystems");
+    }
     /** Goes to home position */
     public static Command homeSystems() {
         return SlideCommands.home()

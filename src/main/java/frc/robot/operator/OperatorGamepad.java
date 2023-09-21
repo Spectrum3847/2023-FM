@@ -40,17 +40,25 @@ public class OperatorGamepad extends Gamepad {
         /* Scoring/Positions */
         gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
         gamepad.leftBumper.and(rightBumper()).whileTrue(OperatorCommands.preScorePos());
-        gamepad.xButton.and(noBumpers()).whileTrue(OperatorCommands.coneMid());
-        gamepad.yButton.whileTrue(OperatorCommands.coneTop());
-        gamepad.aButton.and(noRightBumper()).whileTrue(OperatorCommands.cubeMid());
-        gamepad.bButton.whileTrue(OperatorCommands.cubeTop());
+        gamepad.xButton
+                .and(noBumpers())
+                .whileTrue(
+                        OperatorCommands.coneMid().alongWith(VisionCommands.setConeNodePipeline()));
+        gamepad.yButton.whileTrue(
+                OperatorCommands.coneTop().alongWith(VisionCommands.setConeNodePipeline()));
+        gamepad.aButton
+                .and(noRightBumper())
+                .whileTrue(
+                        OperatorCommands.cubeMid().alongWith(VisionCommands.setCubeNodePipeline()));
+        gamepad.bButton.whileTrue(
+                OperatorCommands.cubeTop().alongWith(VisionCommands.setCubeNodePipeline()));
         // ground score is below, but different buttons for Daniel and training
 
         /* Misc */
         gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
         gamepad.Dpad.Down.and(noBumpers()).whileTrue(IntakeCommands.eject());
         gamepad.Dpad.Down.and(rightBumper()).whileTrue(OperatorCommands.launch());
-        gamepad.Dpad.Left.whileTrue(LEDCommands.coneLED());
+        gamepad.Dpad.Left.onTrue(LEDCommands.coneLED());
         gamepad.Dpad.Left.onTrue(VisionCommands.setConeNodePipeline());
         gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
         gamepad.Dpad.Right.onTrue(VisionCommands.setCubeNodePipeline());

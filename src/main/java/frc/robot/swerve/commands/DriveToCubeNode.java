@@ -9,8 +9,7 @@ import frc.robot.vision.VisionConfig;
 public class DriveToCubeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
-    private static double verticalSetpoint =
-            2;
+    private static double verticalSetpoint = 2;
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;

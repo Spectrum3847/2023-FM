@@ -91,7 +91,8 @@ public class PilotGamepad extends Gamepad {
         // Align to Cube Node
         gamepad.bButton
                 .and(noBumpers())
-                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 2));
+                .whileTrue(
+                        new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.2));
 
         // Align to Cube Node
         gamepad.bButton
