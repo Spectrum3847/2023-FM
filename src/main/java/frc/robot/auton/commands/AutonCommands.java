@@ -95,9 +95,9 @@ public class AutonCommands {
     }
 
     public static Command finishIntakeDrive() {
-        return new SwerveDrive(() -> 0.6, () -> 0, () -> 0, () -> 1.0, () -> false, false)
+        return new SwerveDrive(() -> 1, () -> 0, () -> 0, () -> 1.0, () -> false, false)
                 .alongWith(IntakeCommands.intake())
-                .withTimeout(1);
+                .withTimeout(0.4);
     }
 
     public static Command floorPreSchool() {
@@ -153,7 +153,7 @@ public class AutonCommands {
     }
 
     public static Command coneTopScore() {
-        return coneTopPreScore().withTimeout(1.5).andThen(scoreGP());
+        return coneTopPreScore().withTimeout(1.4).andThen(scoreGP());
     }
 
     /*
