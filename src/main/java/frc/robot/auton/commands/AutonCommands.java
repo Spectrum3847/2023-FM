@@ -27,7 +27,7 @@ public class AutonCommands {
     public static Command homeSystems() {
         return ShoulderCommands.home()
                 .alongWith(SlideCommands.home(), ElbowCommands.home())
-                .withTimeout(0.5);
+                .withTimeout(1.5);
     }
 
     public static Command stopMotors() {
@@ -94,6 +94,12 @@ public class AutonCommands {
         return aimPilotDrive(0);
     }
 
+    public static Command finishIntakeDrive() {
+        return new SwerveDrive(() -> 0.6, () -> 0, () -> 0, () -> 1.0, () -> false, false)
+                .alongWith(IntakeCommands.intake())
+                .withTimeout(1);
+    }
+
     public static Command floorPreSchool() {
         return OperatorCommands.floorScore();
     }
@@ -147,7 +153,7 @@ public class AutonCommands {
     }
 
     public static Command coneTopScore() {
-        return coneTopPreScore().withTimeout(1.3).andThen(scoreGP());
+        return coneTopPreScore().withTimeout(1.5).andThen(scoreGP());
     }
 
     /*
@@ -267,13 +273,16 @@ public class AutonCommands {
 
     public static Command DriveToConeNodeTest() {
         return PoseCommands.resetHeading(180)
-                .andThen(new DriveToConeNode(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(new DriveToConeNode(2).alongWith()) // OperatorCommands.coneMid()))
                 .andThen(SwerveCommands.stop());
     }
 
     public static Command DriveToConeFloorTest() {
         return PoseCommands.resetHeading(180)
-                .andThen(new DriveToConeFloor(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(
+                        new DriveToConeFloor(0)
+                                .withTimeout(1)
+                                .andThen(finishIntakeDrive())) // OperatorCommands.coneMid()))
                 .andThen(SwerveCommands.stop());
     }
 }

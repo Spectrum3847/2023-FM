@@ -15,7 +15,7 @@ import java.util.function.DoubleSupplier;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AlignToConeNode extends PIDCommand {
 
-    private static double kp = 0.026;
+    private static double kp = 0.025;
     private static double tolerance = 0.01;
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.5;
     SwerveDrive driveCommand;

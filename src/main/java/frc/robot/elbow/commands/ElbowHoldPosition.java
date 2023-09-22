@@ -15,6 +15,7 @@ public class ElbowHoldPosition extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.shoulder.stop();
         position = Robot.elbow.getPosition();
     }
 

@@ -72,10 +72,10 @@ public class Auton {
         // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
         // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
         // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
-        // autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
+        autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
         // autonChooser.addOption("Align to CubeNode", AutonCommands.AlignToAprilTagTest());
         // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
-        // autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
+        autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
 
         // autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // Simple comp autos

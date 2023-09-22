@@ -10,13 +10,13 @@ public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            1.05; // These are different for each of our cone nodes.
+            -5.5; // These are different for each of our cone nodes.
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
-    private static double tolerance = 0.05;
+    private static double tolerance = 0.0;
 
     private static double out = 0;
     private Command alignToConeNode;
@@ -60,7 +60,7 @@ public class DriveToConeNode extends PIDCommand {
     public void execute() {
         super.execute();
         // If we are already closer than the target distance stop driving.
-        if (getVerticalOffset() < getVerticalSetpoint() || !Robot.vision.isAimTarget()) {
+        if (getVerticalOffset() <= getVerticalSetpoint() || !Robot.vision.isAimTarget()) {
             out = 0;
         }
         alignToConeNode.execute();
@@ -76,9 +76,10 @@ public class DriveToConeNode extends PIDCommand {
     @Override
     public boolean isFinished() {
         // return Math.abs(out) <= 0.05;
-        if (getVerticalOffset() > verticalSetpoint) {
+        if (getVerticalOffset() <= verticalSetpoint && Robot.vision.isAimTarget()) {
             return true; // true;
         }
+
         return false;
     }
 
