@@ -76,7 +76,7 @@ public class DriveToConeNode extends PIDCommand {
     @Override
     public boolean isFinished() {
         // return Math.abs(out) <= 0.05;
-        if (Math.floor(getVerticalOffset()) < verticalSetpoint) {
+        if (getVerticalOffset() > verticalSetpoint) {
             return true; // true;
         }
         return false;

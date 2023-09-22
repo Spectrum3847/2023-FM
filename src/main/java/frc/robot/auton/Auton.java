@@ -1,7 +1,5 @@
 package frc.robot.auton;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -11,13 +9,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
-import frc.robot.auton.commands.Eject;
-import frc.robot.operator.commands.OperatorCommands;
+import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import frc.robot.vision.VisionCommands;
-import frc.robot.vision.VisionConfig;
 import java.util.HashMap;
 
 public class Auton {
@@ -70,33 +67,17 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        // autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        // autonChooser.addOption("Cone Top Test", AutonCommands.coneTop());
-        // autonChooser.addOption("Cone Node Align", AutonCommands.alignToConeNode());
-        // autonChooser.addOption("Cube Node Align", AutonCommands.alignToCubeNode());
-        // autonChooser.addOption("Cone Floor Align", AutonCommands.alignToConeFloor());
-        // autonChooser.addOption("Cube Floor Align", AutonCommands.alignToCubeFloor());
-        // autonChooser.addOption("Cone Node Drive Test", AutonCommands.driveToConeNode());
-        // autonChooser.addOption("Cone Ground Drive Test", AutonCommands.driveToConeFloor());
+        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
+        autonChooser.addOption("Clean3", AutoPaths.CleanSide());
         // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
-
         // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
+        // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
+        // autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
+        // autonChooser.addOption("Align to CubeNode", AutonCommands.AlignToAprilTagTest());
+        // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
+        // autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
 
-        autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
-        autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
-        autonChooser.addOption("Align to CubeNode", AutonCommands.AlignToAprilTagTest());
-        autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
-        autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
-
-        autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
-        // // autonChooser.addOption(
-        // // //         "Clean Side (2 Piece and then goes to middle)", AutoPaths.CleanSidewMid());
-        // // // autonChooser.addOption("Clean Side (2.5 Piece)", AutoPaths.CleanSideAndAHalf());
-        // // autonChooser.addOption("Bump Side (2 Piece)", AutoPaths.BumpSide());
-
-        // score3rd.setDefaultOption("True", true);
-        // score3rd.addOption("False", false);
-
+        // autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // Simple comp autos
         // autonChooser.addOption(
         //         "Taxi Simple w/ High Cone",
@@ -111,51 +92,54 @@ public class Auton {
         //         new PrintCommand("Doing Nothing in Auton")
         //                 .andThen(new WaitCommand(5))); // setups an auto that does nothing
         // Autos for tuning/testing (not used at comp)
-        autonChooser.addOption(
-                "1 Meter",
-                getAutoBuilder()
-                        .fullAuto(
-                                PathPlanner.loadPathGroup(
-                                        "1 Meter",
-                                        new PathConstraints(
-                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
-        autonChooser.addOption(
-                "3 Meters",
-                getAutoBuilder()
-                        .fullAuto(
-                                PathPlanner.loadPathGroup(
-                                        "3 Meters",
-                                        new PathConstraints(
-                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
-        autonChooser.addOption(
-                "5 Meters",
-                getAutoBuilder()
-                        .fullAuto(
-                                PathPlanner.loadPathGroup(
-                                        "5 Meters",
-                                        new PathConstraints(
-                                                AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        // autonChooser.addOption(
+        //         "1 Meter",
+        //         getAutoBuilder()
+        //                 .fullAuto(
+        //                         PathPlanner.loadPathGroup(
+        //                                 "1 Meter",
+        //                                 new PathConstraints(
+        //                                         AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        // autonChooser.addOption(
+        //         "3 Meters",
+        //         getAutoBuilder()
+        //                 .fullAuto(
+        //                         PathPlanner.loadPathGroup(
+        //                                 "3 Meters",
+        //                                 new PathConstraints(
+        //                                         AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
+        // autonChooser.addOption(
+        //         "5 Meters",
+        //         getAutoBuilder()
+        //                 .fullAuto(
+        //                         PathPlanner.loadPathGroup(
+        //                                 "5 Meters",
+        //                                 new PathConstraints(
+        //                                         AutonConfig.kMaxSpeed, AutonConfig.kMaxAccel))));
     }
 
     // Adds event mapping to autonomous commands
     public static void setupEventMap() {
         // Cone placing Commands
-        // eventMap.put("ConeMid", AutonCommands.coneMid());
+        eventMap.put("ConeMid", AutonCommands.coneMidPreScore());
         eventMap.put("ConeMidFull", AutonCommands.coneMidFull());
-        eventMap.put("ConeTop", AutonCommands.cubeTopFull());
-        eventMap.put("ConeHybrid", new Eject());
+        eventMap.put("ConeTop", AutonCommands.coneTopPreScore());
+        eventMap.put("ConeTopFull", AutonCommands.coneTopFull());
+        eventMap.put("FloorPrescore", AutonCommands.floorPreSchool());
+        eventMap.put("ConeHybrid", MechanismsCommands.lowScore().withTimeout(1));
+        eventMap.put("HomeSystems", AutonCommands.homeSystems());
+
         // Intake Commands
-        eventMap.put("Intake", AutonCommands.intake());
+        eventMap.put("Intake", AutonCommands.floorIntake());
         eventMap.put("RetractIntake", AutonCommands.retractIntake());
+        eventMap.put("HoldIntake", AutonCommands.holdIntake());
         // Drivetrain Commands
         eventMap.put("LockSwerve", new LockSwerve());
         eventMap.put("FaceForward", AutonCommands.faceForward());
         eventMap.put("FaceBackward", AutonCommands.faceBackward());
         // LimeLight Commands
-        eventMap.put(
-                "LimeLightGP",
-                VisionCommands.setLimelightPipeline(
-                        VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline));
+        eventMap.put("ConeFloorPipeline", VisionCommands.setConeDetectPipeline());
+        eventMap.put("ConeNodePipeline", VisionCommands.setConeNodePipeline());
     }
 
     /**
