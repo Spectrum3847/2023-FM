@@ -23,13 +23,11 @@ import java.util.function.DoubleSupplier;
 
 public class AutonCommands {
 
-    public static void setupDefaultCommand() {}
-
     /** Goes to 0 */
-    private static Command homeSystems() {
+    public static Command homeSystems() {
         return ShoulderCommands.home()
                 .alongWith(SlideCommands.home(), ElbowCommands.home())
-                .withTimeout(0.5);
+                .withTimeout(1.5);
     }
 
     public static Command stopMotors() {
@@ -37,17 +35,30 @@ public class AutonCommands {
     }
 
     public static Command retractIntake() {
-        return homeSystems().alongWith(IntakeCommands.stopAllMotors());
+        return OperatorCommands.homeAfterFloorIntake();
     }
 
     // intaking is the same for cone and cube
-    public static Command intake() {
-        return IntakeCommands.intake()
-                .alongWith(SlideCommands.home(), ShoulderCommands.intake(), ElbowCommands.intake());
+    public static Command floorIntake() {
+        return ShoulderCommands.intake()
+                .withTimeout(.25)
+                .andThen(
+                        IntakeCommands.intake()
+                                .alongWith(
+                                        SlideCommands.home(),
+                                        ShoulderCommands.intake(),
+                                        ElbowCommands.intake()));
     }
 
-    public static Command eject() {
-        return IntakeCommands.drop();
+    public static Command holdIntake() {
+        return IntakeCommands.holdPercentOutput();
+    }
+
+    public static Command scoreGP() {
+        return ElbowCommands.score()
+                .withTimeout(0.05)
+                .andThen(IntakeCommands.drop().alongWith(ElbowCommands.score()))
+                .withTimeout(0.2);
     }
 
     public static Command stopElevator() {
@@ -83,35 +94,52 @@ public class AutonCommands {
         return aimPilotDrive(0);
     }
 
+    public static Command finishIntakeDrive() {
+        return new SwerveDrive(() -> 0.6, () -> 0, () -> 0, () -> 1.0, () -> false, false)
+                .alongWith(IntakeCommands.intake())
+                .withTimeout(1);
+    }
+
+    public static Command floorPreSchool() {
+        return OperatorCommands.floorScore();
+    }
+
     public static Command cubeMidPreScore() {
-        return SlideCommands.home().alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp());
+        return SlideCommands.home()
+                .alongWith(
+                        ShoulderCommands.cubeUp(),
+                        ElbowCommands.cubeUp(),
+                        AutonCommands.holdIntake());
     }
 
     public static Command cubeMidFull() {
-        return cubeMidPreScore().withTimeout(2).andThen(eject().withTimeout(1));
+        return cubeMidPreScore().withTimeout(2).andThen(scoreGP().withTimeout(1));
     }
 
     public static Command cubeTopPreScore() {
         return SlideCommands.fullExtend()
-                .alongWith(ShoulderCommands.cubeUp(), ElbowCommands.cubeUp());
+                .alongWith(
+                        ShoulderCommands.cubeUp(),
+                        ElbowCommands.cubeUp(),
+                        AutonCommands.holdIntake());
     }
 
     public static Command cubeTopFull() {
-        return cubeTopPreScore().withTimeout(2).andThen(eject().withTimeout(1));
+        return cubeTopPreScore().withTimeout(2).andThen(scoreGP().withTimeout(1));
     }
 
     public static Command coneMidPreScore() {
-        return IntakeCommands.slowIntake()
+        return AutonCommands.holdIntake()
                 .alongWith(
                         SlideCommands.home(), ShoulderCommands.coneTop(), ElbowCommands.coneTop());
     }
 
     public static Command coneMidFull() {
-        return coneMidPreScore().withTimeout(2).andThen(eject().withTimeout(0.1));
+        return coneMidPreScore().withTimeout(2).andThen(scoreGP().withTimeout(0.1));
     }
 
     public static Command coneTopPreScore() {
-        return IntakeCommands.slowIntake()
+        return AutonCommands.holdIntake()
                 .alongWith(
                         SlideCommands.fullExtend(),
                         ShoulderCommands.coneTop(),
@@ -121,94 +149,86 @@ public class AutonCommands {
     public static Command coneTopFull() {
         return coneTopPreScore()
                 .withTimeout(2)
-                .andThen(
-                        ElbowCommands.score()
-                                .withTimeout(0.1)
-                                .andThen(IntakeCommands.drop())
-                                .withTimeout(0.3)
-                                .andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
+                .andThen(scoreGP().andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
     }
 
-    public static Command coneTop() {
-        return coneTopPreScore()
-                .withTimeout(1.3)
-                .andThen(
-                        ElbowCommands.score()
-                                .withTimeout(0.05)
-                                .andThen(IntakeCommands.drop())
-                                .withTimeout(0.2));
+    public static Command coneTopScore() {
+        return coneTopPreScore().withTimeout(1.5).andThen(scoreGP());
     }
 
-    /* public static Command alignToGridMid() {
-        return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0, VisionConfig.aprilTagPipeline)
-                // .alongWith(cubeMidPreScore())
-                .withTimeout(0.75)
-                .andThen(eject());
-    }
-
-    public static Command alignToConeNode() {
-        return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline)
-                .alongWith(IntakeCommands.stopAllMotors())
-                .alongWith(ElbowCommands.stop())
-                .alongWith(ShoulderCommands.stop())
-                .alongWith(SlideCommands.stop());
-    }
-
-    public static Command alignToCubeNode() {
-        return new AlignToVisionTarget(
-                        VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline)
-                .alongWith(IntakeCommands.stopAllMotors())
-                .alongWith(ElbowCommands.stop())
-                .alongWith(ShoulderCommands.stop())
-                .alongWith(SlideCommands.stop());
-    }
-
-    public static Command alignToCubeFloor() {
-        return new AlignToVisionTarget(
-                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.cubeDetectorPipeline)
-                .alongWith(IntakeCommands.stopAllMotors())
-                .alongWith(ElbowCommands.stop())
-                .alongWith(ShoulderCommands.stop())
-                .alongWith(SlideCommands.stop());
-    }
-
-    public static Command alignToConeFloor() {
-        return new AlignToVisionTarget(
-                        VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.coneDetectorPipeline)
-                .alongWith(IntakeCommands.stopAllMotors())
-                .alongWith(ElbowCommands.stop())
-                .alongWith(ShoulderCommands.stop())
-                .alongWith(SlideCommands.stop());
-    }
-
-    public static Command driveToConeNode() {
-        return PoseCommands.resetHeading(180)
-                .andThen(
-                        new DriveToVisionTarget(
-                                        VisionConfig.DEFAULT_LL,
-                                        0,
-                                        VisionConfig.reflectivePipeline,
-                                        Math.PI)
-                                .alongWith(IntakeCommands.stopAllMotors())
-                                .alongWith(ElbowCommands.stop())
-                                .alongWith(ShoulderCommands.stop())
-                                .alongWith(SlideCommands.stop()));
-    }
-
-    public static Command driveToConeFloor() {
-        return PoseCommands.resetHeading(180)
-                .andThen(
-                        new DriveToVisionTarget(
-                                        VisionConfig.DETECT_LL,
-                                        0,
-                                        VisionConfig.coneDetectorPipeline,
-                                        Math.PI)
-                                .alongWith(IntakeCommands.stopAllMotors())
-                                .alongWith(ElbowCommands.stop())
-                                .alongWith(ShoulderCommands.stop())
-                                .alongWith(SlideCommands.stop()));
-    } */
+    /*
+     * public static Command alignToGridMid() {
+     * return new DriveToVisionTarget(VisionConfig.DETECT_LL, 0,
+     * VisionConfig.aprilTagPipeline)
+     * // .alongWith(cubeMidPreScore())
+     * .withTimeout(0.75)
+     * .andThen(eject());
+     * }
+     *
+     * public static Command alignToConeNode() {
+     * return new AlignToVisionTarget(
+     * VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.reflectivePipeline)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop());
+     * }
+     *
+     * public static Command alignToCubeNode() {
+     * return new AlignToVisionTarget(
+     * VisionConfig.DEFAULT_LL, () -> 0, 0, VisionConfig.aprilTagPipeline)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop());
+     * }
+     *
+     * public static Command alignToCubeFloor() {
+     * return new AlignToVisionTarget(
+     * VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.cubeDetectorPipeline)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop());
+     * }
+     *
+     * public static Command alignToConeFloor() {
+     * return new AlignToVisionTarget(
+     * VisionConfig.DETECT_LL, () -> 0, 0, VisionConfig.coneDetectorPipeline)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop());
+     * }
+     *
+     * public static Command driveToConeNode() {
+     * return PoseCommands.resetHeading(180)
+     * .andThen(
+     * new DriveToVisionTarget(
+     * VisionConfig.DEFAULT_LL,
+     * 0,
+     * VisionConfig.reflectivePipeline,
+     * Math.PI)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop()));
+     * }
+     *
+     * public static Command driveToConeFloor() {
+     * return PoseCommands.resetHeading(180)
+     * .andThen(
+     * new DriveToVisionTarget(
+     * VisionConfig.DETECT_LL,
+     * 0,
+     * VisionConfig.coneDetectorPipeline,
+     * Math.PI)
+     * .alongWith(IntakeCommands.stopAllMotors())
+     * .alongWith(ElbowCommands.stop())
+     * .alongWith(ShoulderCommands.stop())
+     * .alongWith(SlideCommands.stop()));
+     * }
+     */
 
     public static Command AlignToAprilTagTest() {
         return PoseCommands.resetHeading(180)
@@ -253,13 +273,16 @@ public class AutonCommands {
 
     public static Command DriveToConeNodeTest() {
         return PoseCommands.resetHeading(180)
-                .andThen(new DriveToConeNode(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(new DriveToConeNode(2).alongWith()) // OperatorCommands.coneMid()))
                 .andThen(SwerveCommands.stop());
     }
 
     public static Command DriveToConeFloorTest() {
         return PoseCommands.resetHeading(180)
-                .andThen(new DriveToConeFloor(0).alongWith()) // OperatorCommands.coneMid()))
+                .andThen(
+                        new DriveToConeFloor(0)
+                                .withTimeout(1)
+                                .andThen(finishIntakeDrive())) // OperatorCommands.coneMid()))
                 .andThen(SwerveCommands.stop());
     }
 }

@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7776366663844443,
-        "y": 4.544828918717667
+        "x": 4.671509770572986,
+        "y": 4.903054461690871
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -17,23 +17,23 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 4.815248051548735,
-        "y": 4.78
+        "x": 5.861571533119314,
+        "y": 4.57935766227827
       },
       "prevControl": {
-        "x": 3.9885246050381626,
-        "y": 4.82863079097121
+        "x": 5.16534206176413,
+        "y": 5.348874446407687
       },
       "nextControl": {
-        "x": 5.277729502827427,
-        "y": 4.752795208748313
+        "x": 6.042460921026355,
+        "y": 4.379427286170487
       },
       "holonomicAngle": -45.0,
       "isReversal": false,
@@ -53,8 +53,8 @@
         "y": 4.199425035213707
       },
       "prevControl": {
-        "x": 5.8164942217717375,
-        "y": 4.630904582116779
+        "x": 5.909174003621167,
+        "y": 4.522234697676046
       },
       "nextControl": null,
       "holonomicAngle": -45.0,
@@ -73,5 +73,19 @@
   "maxVelocity": null,
   "maxAcceleration": 3.5,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 1.0581818181817861,
+      "names": [
+        "Intake"
+      ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "HomeSystems",
+        "ConeFloorPipeline"
+      ]
+    }
+  ]
 }

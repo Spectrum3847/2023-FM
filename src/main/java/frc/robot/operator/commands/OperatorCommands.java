@@ -18,7 +18,6 @@ public class OperatorCommands {
     }
 
     /* Intaking Commands */
-
     public static Command intake() {
         return ShoulderCommands.intake()
                 .withTimeout(.25)
@@ -139,7 +138,7 @@ public class OperatorCommands {
         return ElbowCommands.home()
                 .alongWith(IntakeCommands.intake())
                 .withTimeout(0.4)
-                .andThen(homeSystems());
+                .andThen(homeSystems().withTimeout(1));
     }
 
     public static Command homeAfterIntake() {
@@ -147,6 +146,7 @@ public class OperatorCommands {
                 .alongWith(ShoulderCommands.home(), ElbowCommands.home(), IntakeCommands.intake())
                 .withName("OperatorHomeSystems");
     }
+
     /** Goes to home position */
     public static Command homeSystems() {
         return SlideCommands.home()

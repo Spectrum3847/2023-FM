@@ -19,6 +19,7 @@ public class ShoulderHoldPosition extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.shoulder.stop();
         position = Robot.shoulder.getPosition();
     }
 

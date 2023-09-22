@@ -4,17 +4,15 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
-import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
 
 public class DriveToConeFloor extends PIDCommand {
     /* Config settings */
-    private static double kP = 0.5; // 0.8;
-    private static double verticalSetpoint =
-            -7.5; // These are different for each of our cone nodes.
-    // private static double minOutput =
-    //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
-    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
+    private static double kP = 0.6; // 0.8;
+    private static double verticalSetpoint = -2.5; // numbers get small as the cone gets closer
+
+    private static double maxConeInView = 6;
+    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.6;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
     private static double tolerance = 0.05;
@@ -55,6 +53,7 @@ public class DriveToConeFloor extends PIDCommand {
         super.initialize();
         out = 0;
         alignToConeFloor.initialize();
+        Robot.vision.setLimelightPipeline(m_limelight, VisionConfig.coneDetectorPipeline);
     }
 
     @Override
@@ -64,7 +63,11 @@ public class DriveToConeFloor extends PIDCommand {
         if (getVerticalOffset() < getVerticalSetpoint() || !Robot.vision.isDetetTarget()) {
             out = 0;
         }
-        RobotTelemetry.print("Drive to Cone Out: " + out);
+
+        if (getVerticalOffset() > maxConeInView) {
+            out = 0;
+        }
+        // RobotTelemetry.print("Drive to Cone Out: " + out);
         alignToConeFloor.execute();
     }
 
@@ -77,9 +80,11 @@ public class DriveToConeFloor extends PIDCommand {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // return Math.abs(out) <= 0.05;
         if (Math.floor(getVerticalOffset()) < verticalSetpoint) {
             return true; // true;
+        }
+        if (getVerticalOffset() > maxConeInView) {
+            return true;
         }
         return false;
     }
