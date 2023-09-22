@@ -16,10 +16,7 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "HomeSystems",
-          "ConeFloorPipeline"
-        ],
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -81,6 +78,13 @@
       "position": 1.3781818181818335,
       "names": [
         "Intake"
+      ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "HomeSystems",
+        "ConeFloorPipeline"
       ]
     }
   ]

@@ -54,41 +54,47 @@ public class AutoPaths {
                         VisionCommands.setConeNodePipeline().withTimeout(1));
     }
 
+    // 1st use full auto
     // Drive to pre-cone 1 spot
     // Commands - homesystems, setConeFloor pipeline, deploy intake midway
     public static Command CleanSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(3, 2.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 2.5)));
     }
 
     // Drive to outside cone pre node spot to prepare for align
-    // Commands - retract intake, set cone node pipline, just after start, hold intake, at end set
+    // Commands - retract intake, set cone node pipline, just after start, hold
+    // intake, at end set
     // ConeTopPrescore
     public static Command CleanSide2() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(3, 2.5)));
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 2.5)));
     }
 
     // Drive to pre-cone 2 spot
     // Commands - homesystems, setConeFloor pipeline, deploy Intake midway
     public static Command CleanSide3() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(3, 2.5)));
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 2.5)));
     }
 
     // Drive to pre-outside cone node spot
-    // Commands - retract intake, set cone node pipeline, just after start hold intake, at end set
+    // Commands - retract intake, set cone node pipeline, just after start hold
+    // intake, at end set
     // conemidprescore
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(3, 2.5)));
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 2.5)));
     }
 
     public static Command CleanSide5() {
         return (Auton.getAutoBuilder()
-                        .fullAuto(
+                        .followPathGroupWithEvents(
                                 PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4))))
-                .withTimeout(0.8)
+                .withTimeout(0.2)
                 .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }
 
@@ -121,45 +127,45 @@ public class AutoPaths {
                 .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
     }
 
-    //     public static Command CleanSidewMid() {
-    //         return AutonCommands.coneTopFull()
-    //                 .andThen(
-    //                         Auton.getAutoBuilder()
-    //                                 .fullAuto(
-    //                                         PathPlanner.loadPathGroup(
-    //                                                 "CleanSide1", new PathConstraints(4, 1.5))))
-    //                 .andThen(AutonCommands.coneMidFull())
-    //                 .andThen(
-    //                         Auton.getAutoBuilder()
-    //                                 .fullAuto(
-    //                                         PathPlanner.loadPathGroup(
-    //                                                 "CleanSide3", new PathConstraints(4, 2))));
-    //     }
+    // public static Command CleanSidewMid() {
+    // return AutonCommands.coneTopFull()
+    // .andThen(
+    // Auton.getAutoBuilder()
+    // .fullAuto(
+    // PathPlanner.loadPathGroup(
+    // "CleanSide1", new PathConstraints(4, 1.5))))
+    // .andThen(AutonCommands.coneMidFull())
+    // .andThen(
+    // Auton.getAutoBuilder()
+    // .fullAuto(
+    // PathPlanner.loadPathGroup(
+    // "CleanSide3", new PathConstraints(4, 2))));
+    // }
 
-    //     public static Command CleanSideAndAHalf() {
-    //         return AutonCommands.coneTopFull()
-    //                 .andThen(
-    //                         Auton.getAutoBuilder()
-    //                                 .fullAuto(
-    //                                         PathPlanner.loadPathGroup(
-    //                                                 "CleanSide1", new PathConstraints(4, 1))))
-    //                 .andThen(AutonCommands.coneMidFull())
-    //                 .andThen(
-    //                         Auton.getAutoBuilder()
-    //                                 .fullAuto(
-    //                                         PathPlanner.loadPathGroup(
-    //                                                 "CleanSide2", new PathConstraints(4, 2))));
-    //     }
+    // public static Command CleanSideAndAHalf() {
+    // return AutonCommands.coneTopFull()
+    // .andThen(
+    // Auton.getAutoBuilder()
+    // .fullAuto(
+    // PathPlanner.loadPathGroup(
+    // "CleanSide1", new PathConstraints(4, 1))))
+    // .andThen(AutonCommands.coneMidFull())
+    // .andThen(
+    // Auton.getAutoBuilder()
+    // .fullAuto(
+    // PathPlanner.loadPathGroup(
+    // "CleanSide2", new PathConstraints(4, 2))));
+    // }
 
-    //     public static Command BumpSide() {
-    //         return AutonCommands.coneTopFull()
-    //                 .andThen(
-    //                         Auton.getAutoBuilder()
-    //                                 .fullAuto(
-    //                                         PathPlanner.loadPathGroup(
-    //                                                 "Bump1", new PathConstraints(4, 1.1))))
-    //                 .andThen(AutonCommands.coneMidFull());
-    //     }
+    // public static Command BumpSide() {
+    // return AutonCommands.coneTopFull()
+    // .andThen(
+    // Auton.getAutoBuilder()
+    // .fullAuto(
+    // PathPlanner.loadPathGroup(
+    // "Bump1", new PathConstraints(4, 1.1))))
+    // .andThen(AutonCommands.coneMidFull());
+    // }
 
     public static Command OverCharge() {
         return AutonCommands.coneTopFull()
