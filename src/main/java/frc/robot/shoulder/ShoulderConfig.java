@@ -22,7 +22,7 @@ public class ShoulderConfig extends AngleMechConfig {
 
     public final int floor = 15;
     public final int prescore = 60;
-    public final int coneTop = 98;
+    public final int coneTop = 94;
     public final int coneMid = coneTop;
     public final int cubeUp = 90; // 93
 
