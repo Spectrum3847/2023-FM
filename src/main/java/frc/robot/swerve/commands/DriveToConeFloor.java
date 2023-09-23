@@ -12,7 +12,7 @@ public class DriveToConeFloor extends PIDCommand {
     private static double verticalSetpoint = -2.5; // numbers get small as the cone gets closer
 
     private static double maxConeInView = 6;
-    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.6;
+    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 1;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
     private static double tolerance = 0.05;
