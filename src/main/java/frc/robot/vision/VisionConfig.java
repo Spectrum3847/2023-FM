@@ -19,8 +19,8 @@ public final class VisionConfig {
     /* Pipeline config */
     public static final int aprilTagPipeline = 0;
     public static final int reflectivePipeline = 1;
-    public static final int coneDetectorPipeline = 5;
-    public static final int cubeDetectorPipeline = 6;
+    public static final int coneDetectorPipeline = 1; // we made them the same for each limelight
+    public static final int cubeDetectorPipeline = 0; // we made them the same for each limelight
 
     /* How many degrees back is limelight rotated from perfectly vertical */
     public static final double limelightAngle = -22.5;
