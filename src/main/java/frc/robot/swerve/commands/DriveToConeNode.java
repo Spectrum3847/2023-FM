@@ -10,7 +10,7 @@ public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -5.75; // These are different for each of our cone nodes. Get negative as we get closer
+            -5.6; // These are different for each of our cone nodes. Get negative as we get closer
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
