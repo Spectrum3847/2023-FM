@@ -60,7 +60,7 @@ public class OperatorGamepad extends Gamepad {
         gamepad.Dpad.Down.and(rightBumper()).whileTrue(OperatorCommands.launch());
         gamepad.Dpad.Left.onTrue(LEDCommands.coneLED());
         gamepad.Dpad.Left.onTrue(VisionCommands.setConeNodePipeline());
-        gamepad.Dpad.Right.whileTrue(LEDCommands.cubeLED());
+        gamepad.Dpad.Right.onTrue(LEDCommands.cubeLED());
         gamepad.Dpad.Right.onTrue(VisionCommands.setCubeNodePipeline());
         gamepad.startButton.whileTrue(ShoulderCommands.zeroShoulderRoutine());
         gamepad.selectButton.and(noRightBumper()).whileTrue(SlideCommands.zeroSlideRoutine());

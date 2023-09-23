@@ -10,6 +10,7 @@ public class ElbowConfig extends AngleMechConfig {
     public final int elbowMaxFalcon = 63256; // 63256
 
     // Positions set as percentage of
+    // 0 is vertical
     public final int initializedPosition = 90;
 
     public final int intake = -100;
@@ -21,12 +22,12 @@ public class ElbowConfig extends AngleMechConfig {
     public final int stow = -29;
 
     public final int floor = -65;
-    public final int coneTop = -80;
+    public final int coneTop = -75;
     public final double coneMid = coneTop;
     public final int prescore = -60;
     public final int cubeUp = -112; // -108
 
-    public final int scorePos = coneTop - 26;
+    public final int scorePos = -106;
 
     public final int throwBack = 0;
     public final int throwFwd = -50;

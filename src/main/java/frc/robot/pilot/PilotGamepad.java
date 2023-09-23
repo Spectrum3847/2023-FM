@@ -91,8 +91,7 @@ public class PilotGamepad extends Gamepad {
         // Align to Cube Node
         gamepad.bButton
                 .and(noBumpers())
-                .whileTrue(
-                        new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.2));
+                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1));
 
         // Align to Cube Node
         gamepad.bButton
@@ -103,7 +102,7 @@ public class PilotGamepad extends Gamepad {
         // Align to Cone Node (Change back using to test cone floor align)
         gamepad.xButton
                 .and(noBumpers())
-                .whileTrue(new AlignToConeNode(() -> Robot.pilotGamepad.getDriveFwdPositive(), 2));
+                .whileTrue(new AlignToConeNode(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1));
 
         // Align to floor cone
         gamepad.xButton
