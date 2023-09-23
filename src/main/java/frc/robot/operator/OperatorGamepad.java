@@ -33,7 +33,7 @@ public class OperatorGamepad extends Gamepad {
         gamepad.leftTriggerButton
                 .and(rightBumper())
                 .and(noRightTrigger())
-                .whileTrue(OperatorCommands.intake()); // Daniel only
+                .whileTrue(OperatorCommands.intake());
         gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
         gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
 
@@ -52,7 +52,6 @@ public class OperatorGamepad extends Gamepad {
                         OperatorCommands.cubeMid().alongWith(VisionCommands.setCubeNodePipeline()));
         gamepad.bButton.whileTrue(
                 OperatorCommands.cubeTop().alongWith(VisionCommands.setCubeNodePipeline()));
-        // ground score is below, but different buttons for Daniel and training
 
         /* Misc */
         gamepad.Dpad.Up.whileTrue(IntakeCommands.intake()); // manual intake
@@ -77,10 +76,7 @@ public class OperatorGamepad extends Gamepad {
 
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
                 .and(rightBumper())
-                .whileTrue(OperatorCommands.manualElbow()); // Daniel only
-
-        /* Operation Training Wheels */
-        // gamepad.rightBumper.whileTrue(OperatorCommands.floorScore());
+                .whileTrue(OperatorCommands.manualElbow());
 
         /* Manual Control */
         AxisButton.create(gamepad, XboxAxis.RIGHT_Y, 0.1)
