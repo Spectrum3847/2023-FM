@@ -73,6 +73,16 @@ public class AutonCommands {
         return aimPilotDrive(() -> goalAngleRadians);
     }
 
+    public static Command alignWheelsStraight() {
+        return new SwerveDrive(
+                () -> 0.04,
+                () -> 0,
+                () -> Robot.swerve.calculateRotationController(() -> 0),
+                () -> 1.0,
+                () -> false,
+                false);
+    }
+
     /** Reset the Theata Controller and then run the SwerveDrive command and pass a goal Supplier */
     public static Command aimPilotDrive(DoubleSupplier goalAngleSupplierRadians) {
         return SwerveCommands.resetTurnController()
@@ -97,7 +107,7 @@ public class AutonCommands {
     public static Command finishIntakeDrive() {
         return new SwerveDrive(() -> 1, () -> 0, () -> 0, () -> 1.0, () -> false, false)
                 .alongWith(IntakeCommands.intake())
-                .withTimeout(0.4);
+                .withTimeout(0.3);
     }
 
     public static Command floorPreSchool() {
@@ -153,7 +163,7 @@ public class AutonCommands {
     }
 
     public static Command coneTopScore() {
-        return coneTopPreScore().withTimeout(1.4).andThen(scoreGP());
+        return coneTopPreScore().withTimeout(1.2).andThen(scoreGP());
     }
 
     /*

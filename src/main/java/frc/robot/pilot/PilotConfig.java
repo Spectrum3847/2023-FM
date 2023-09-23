@@ -24,5 +24,10 @@ public class PilotConfig {
 
     public static final double alignmentOffset = 8;
 
+    public static final double coneNodeAlignOffset = -0.75;
+    public static final double cubeNodeAlignOffset = -0.75;
+    public static final double coneFloorAlignOffset = 1.5;
+    public static final double cubeFloorAlignOffset = 1.5;
+
     public static final Translation2d intakeCoRmeters = new Translation2d(0, 0);
 }

@@ -91,24 +91,34 @@ public class PilotGamepad extends Gamepad {
         // Align to Cube Node
         gamepad.bButton
                 .and(noBumpers())
-                .whileTrue(new AlignToAprilTag(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1));
+                .whileTrue(
+                        new AlignToAprilTag(
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                PilotConfig.cubeNodeAlignOffset));
 
         // Align to Cube Node
         gamepad.bButton
                 .and(leftBumperOnly())
                 .whileTrue(
-                        new AlignToCubeFloor(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.5));
+                        new AlignToCubeFloor(
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                PilotConfig.cubeFloorAlignOffset));
 
         // Align to Cone Node (Change back using to test cone floor align)
         gamepad.xButton
                 .and(noBumpers())
-                .whileTrue(new AlignToConeNode(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1));
+                .whileTrue(
+                        new AlignToConeNode(
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                PilotConfig.coneNodeAlignOffset));
 
         // Align to floor cone
         gamepad.xButton
                 .and(leftBumperOnly())
                 .whileTrue(
-                        new AlignToConeFloor(() -> Robot.pilotGamepad.getDriveFwdPositive(), 1.5));
+                        new AlignToConeFloor(
+                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
+                                PilotConfig.coneFloorAlignOffset));
 
         gamepad.yButton.and(leftBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
 

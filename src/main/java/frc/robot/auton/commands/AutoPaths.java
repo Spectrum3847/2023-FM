@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
+import frc.robot.pilot.PilotConfig;
 import frc.robot.swerve.commands.DriveToConeFloor;
 import frc.robot.swerve.commands.DriveToConeNode;
 import frc.robot.swerve.commands.LockSwerve;
@@ -14,12 +15,9 @@ import frc.robot.vision.VisionCommands;
 
 public class AutoPaths {
 
-    public static Command ConePoleTest() {
-        return new DriveToConeNode(2);
-    }
-
     public static Command CleanSide() {
         return AutonCommands.coneTopScore()
+                .deadlineWith(AutonCommands.alignWheelsStraight())
                 .andThen(
                         CleanSide1(),
                         AlignAndIntakeCone(),
@@ -35,22 +33,22 @@ public class AutoPaths {
     }
 
     public static Command AlignAndIntakeCone() {
-        return new DriveToConeFloor(0)
+        return new DriveToConeFloor(PilotConfig.coneFloorAlignOffset)
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
-                .withTimeout(0.4)
+                .withTimeout(0.3)
                 .andThen(AutonCommands.finishIntakeDrive());
     }
 
     public static Command AlignPreScoreTopCone() {
-        return new DriveToConeNode(2)
+        return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .deadlineWith(AutonCommands.coneTopPreScore(), VisionCommands.setConeNodePipeline())
-                .withTimeout(0.75);
+                .withTimeout(1);
     }
 
     public static Command AlignPreScoreMidCone() {
-        return new DriveToConeNode(2)
+        return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .deadlineWith(AutonCommands.coneMidPreScore(), VisionCommands.setConeNodePipeline())
-                .withTimeout(0.75);
+                .withTimeout(1);
     }
 
     // 1st use full auto
@@ -58,7 +56,7 @@ public class AutoPaths {
     // Commands - homesystems, setConeFloor pipeline, deploy intake midway
     public static Command CleanSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 2.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 3.5)));
     }
 
     // Drive to outside cone pre node spot to prepare for align
@@ -68,7 +66,7 @@ public class AutoPaths {
     public static Command CleanSide2() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 2.5)));
+                        PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 3.0)));
     }
 
     // Drive to pre-cone 2 spot
@@ -76,7 +74,7 @@ public class AutoPaths {
     public static Command CleanSide3() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 2.5)));
+                        PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 3.5)));
     }
 
     // Drive to pre-outside cone node spot
@@ -86,7 +84,7 @@ public class AutoPaths {
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 2.5)));
+                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.0)));
     }
 
     public static Command CleanSide5() {
@@ -166,6 +164,10 @@ public class AutoPaths {
     // .andThen(AutonCommands.coneMidFull());
     // }
 
+    //     public static Command ConePoleTest() {
+    //         return new DriveToConeNode(2);
+    //     }
+
     public static Command OverCharge() {
         return AutonCommands.coneTopFull()
                 .andThen(
@@ -175,7 +177,7 @@ public class AutoPaths {
                                                 "Balance1", new PathConstraints(4, 2.5))))
                 .andThen(
                         Auton.getAutoBuilder()
-                                .fullAuto(
+                                .followPathGroupWithEvents(
                                         PathPlanner.loadPathGroup(
                                                 "Balance2", new PathConstraints(4, 3))))
                 .andThen(new WaitCommand(0.5).withTimeout(0.5))
