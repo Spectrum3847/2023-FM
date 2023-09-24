@@ -39,6 +39,7 @@ public class AutoPaths {
                 .andThen(AutonCommands.finishIntakeDrive());
     }
 
+    //top score is changed
     public static Command AlignPreScoreTopCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .alongWith(
@@ -47,6 +48,7 @@ public class AutoPaths {
                 .withTimeout(3);
     }
 
+    //top score is old way
     public static Command AlignPreScoreMidCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .alongWith(
