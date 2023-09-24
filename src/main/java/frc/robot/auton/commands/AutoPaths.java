@@ -41,9 +41,9 @@ public class AutoPaths {
 
     public static Command AlignPreScoreTopCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
-                .alongWith(
-                        VisionCommands.setConeNodePipeline().withTimeout(0.1))
-                .withTimeout(3).andThen(AutonCommands.coneTopPreScore().withTimeout(1.2));
+                .alongWith(VisionCommands.setConeNodePipeline().withTimeout(0.1))
+                .withTimeout(3)
+                .andThen(AutonCommands.coneTopPreScore().withTimeout(1.2), new WaitCommand(0.3));
     }
 
     public static Command AlignPreScoreMidCone() {
