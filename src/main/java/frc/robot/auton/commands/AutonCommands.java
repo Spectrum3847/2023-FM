@@ -107,7 +107,7 @@ public class AutonCommands {
     public static Command finishIntakeDrive() {
         return new SwerveDrive(() -> 1, () -> 0, () -> 0, () -> 1.0, () -> false, false)
                 .alongWith(IntakeCommands.intake())
-                .withTimeout(0.3);
+                .withTimeout(0.4);
     }
 
     public static Command floorPreSchool() {

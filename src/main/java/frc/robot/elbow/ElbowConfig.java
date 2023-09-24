@@ -13,7 +13,7 @@ public class ElbowConfig extends AngleMechConfig {
     // 0 is vertical
     public final int initializedPosition = 90;
 
-    public final int intake = -100;
+    public final int intake = -96;
     public final int airIntake = -43;
     public final int shelfIntake = -98;
 
