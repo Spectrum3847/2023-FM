@@ -41,13 +41,17 @@ public class AutoPaths {
 
     public static Command AlignPreScoreTopCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
-                .deadlineWith(AutonCommands.coneTopPreScore(), VisionCommands.setConeNodePipeline())
+                .alongWith(
+                        AutonCommands.coneTopPreScore().withTimeout(1.2),
+                        VisionCommands.setConeNodePipeline().withTimeout(0.1))
                 .withTimeout(3);
     }
 
     public static Command AlignPreScoreMidCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
-                .deadlineWith(AutonCommands.coneMidPreScore(), VisionCommands.setConeNodePipeline())
+                .alongWith(
+                        AutonCommands.coneMidPreScore().withTimeout(1.2),
+                        VisionCommands.setConeNodePipeline().withTimeout(0.1))
                 .withTimeout(3);
     }
 
