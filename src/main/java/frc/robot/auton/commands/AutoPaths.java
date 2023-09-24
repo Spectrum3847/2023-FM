@@ -35,20 +35,20 @@ public class AutoPaths {
     public static Command AlignAndIntakeCone() {
         return new DriveToConeFloor(PilotConfig.coneFloorAlignOffset)
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
-                .withTimeout(0.3)
+                .withTimeout(2)
                 .andThen(AutonCommands.finishIntakeDrive());
     }
 
     public static Command AlignPreScoreTopCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .deadlineWith(AutonCommands.coneTopPreScore(), VisionCommands.setConeNodePipeline())
-                .withTimeout(1.5);
+                .withTimeout(3);
     }
 
     public static Command AlignPreScoreMidCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .deadlineWith(AutonCommands.coneMidPreScore(), VisionCommands.setConeNodePipeline())
-                .withTimeout(1);
+                .withTimeout(3);
     }
 
     // 1st use full auto
