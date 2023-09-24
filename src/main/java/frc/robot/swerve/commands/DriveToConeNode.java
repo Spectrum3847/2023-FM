@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
+import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
 
 public class DriveToConeNode extends PIDCommand {
@@ -76,7 +77,9 @@ public class DriveToConeNode extends PIDCommand {
     @Override
     public boolean isFinished() {
         // return Math.abs(out) <= 0.05;
-        if (getVerticalOffset() <= verticalSetpoint && Robot.vision.isAimTarget()) {
+        double vertoffset = getVerticalOffset();
+        if (vertoffset <= verticalSetpoint && Robot.vision.isAimTarget()) {
+            RobotTelemetry.print("Vertical setpoint at end: " + vertoffset);
             return true; // true;
         }
 

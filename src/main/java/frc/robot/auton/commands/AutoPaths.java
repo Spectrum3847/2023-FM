@@ -42,7 +42,7 @@ public class AutoPaths {
     public static Command AlignPreScoreTopCone() {
         return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
                 .deadlineWith(AutonCommands.coneTopPreScore(), VisionCommands.setConeNodePipeline())
-                .withTimeout(1);
+                .withTimeout(1.5);
     }
 
     public static Command AlignPreScoreMidCone() {
