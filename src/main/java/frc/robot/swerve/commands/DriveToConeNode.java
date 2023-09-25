@@ -4,16 +4,17 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
+import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
 
 public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -5.75; // These are different for each of our cone nodes. Get negative as we get closer
+            -3.88; // These are different for each of our cone nodes. Get negative as we get closer
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
-    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.4;
+    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
     private double horizontalOffset = 0; // positive is right (driver POV)
 
     private static double tolerance = 0.0;
@@ -76,7 +77,9 @@ public class DriveToConeNode extends PIDCommand {
     @Override
     public boolean isFinished() {
         // return Math.abs(out) <= 0.05;
-        if (getVerticalOffset() <= verticalSetpoint && Robot.vision.isAimTarget()) {
+        double vertoffset = getVerticalOffset();
+        if (vertoffset <= verticalSetpoint && Robot.vision.isAimTarget()) {
+            RobotTelemetry.print("Vertical setpoint at end: " + vertoffset);
             return true; // true;
         }
 
