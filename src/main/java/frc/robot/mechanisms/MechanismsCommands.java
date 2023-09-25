@@ -62,7 +62,7 @@ public class MechanismsCommands {
         return ElbowCommands.score()
                 .withTimeout(0.1)
                 .andThen(IntakeCommands.drop())
-                .withTimeout(0.3)
+                .withTimeout(0.4)
                 .andThen(homeSystems().withTimeout(2.5));
     }
 

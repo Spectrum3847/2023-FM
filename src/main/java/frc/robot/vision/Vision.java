@@ -90,6 +90,8 @@ public class Vision extends SubsystemBase {
             aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
             aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
             aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
+            Robot.log.logger.recordOutput("aimLL-VertOffset", aimVerticalOffset);
+            // RobotTelemetry.print("aimLL-VertOffset: " + aimVerticalOffset);
         }
 
         if (detectLimelightConnected) {
