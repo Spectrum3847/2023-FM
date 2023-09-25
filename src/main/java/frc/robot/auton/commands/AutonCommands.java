@@ -240,6 +240,7 @@ public class AutonCommands {
      * }
      */
 
+     //Test Auton commands should not be used in match
     public static Command AlignToAprilTagTest() {
         return PoseCommands.resetHeading(180)
                 .andThen(
