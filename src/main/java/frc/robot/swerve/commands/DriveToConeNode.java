@@ -24,7 +24,7 @@ public class DriveToConeNode extends PIDCommand {
     private static double minimumPercentOfBatch = 0.5; // 50%
 
 /** List to store a batch of {@link #batchSize} verticalOffset values. Command will end if more than {@link #minimumPercentOfBatch} of batch are below setpoint */
-    private List<Double> batchedOffsets = new LinkedList<>(); 
+    private LinkedList<Double> batchedOffsets = new LinkedList<>(); 
 
     private static double out = 0;
     private Command alignToConeNode;
@@ -89,7 +89,7 @@ public class DriveToConeNode extends PIDCommand {
 
         // If the batch size is more than 10, remove the oldest offset
         if (batchedOffsets.size() > batchSize) {
-            batchedOffsets.remove(0);
+            batchedOffsets.removeFirst();
         }
 
         // Only proceed if there are at least 10 items in the batch
@@ -110,7 +110,7 @@ public class DriveToConeNode extends PIDCommand {
 
         // If the proportion is greater than the configured percentage, finish the command
         if (percentBelowSetpoint > minimumPercentOfBatch && Robot.vision.isAimTarget()) {
-            String values = batchedOffsets.toString(); // Converts the list to a string in the format [x, x, x, ..., x]
+            String values = batchedOffsets.toString();
             RobotTelemetry.print(String.format("Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s", vertOffset, (percentBelowSetpoint * 100), values));            
             return true;
         }
