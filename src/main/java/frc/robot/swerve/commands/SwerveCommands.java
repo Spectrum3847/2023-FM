@@ -44,6 +44,10 @@ public class SwerveCommands {
         return new SwerveDrive(() -> 0.0, () -> 0.0, () -> 0.0).withName("SwerveStop");
     }
 
+    public static Command fullTurn() {
+        return new SwerveDrive(() -> 0, () -> 0, () -> 100).withName("SwerveFullTurn");
+    }
+
     /** Reset the Theata Controller and then run the SwerveDrive command and pass a goal Supplier */
     public static Command aimDrive(
             DoubleSupplier fwdPositive,

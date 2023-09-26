@@ -14,4 +14,13 @@ public class PoseCommands {
         return new InstantCommand(
                 () -> Robot.pose.resetHeading(Rotation2d.fromDegrees(headingDeg)));
     }
+
+    // find closest cardinal direction and orient to that
+    public static Command smartResetHeading() {
+        return new InstantCommand(
+                () ->
+                        Robot.pose.resetHeading(
+                                Rotation2d.fromDegrees(Robot.pose.getClosestCardinal())),
+                Robot.swerve);
+    }
 }

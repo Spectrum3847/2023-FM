@@ -74,13 +74,7 @@ public class AutonCommands {
     }
 
     public static Command alignWheelsStraight() {
-        return new SwerveDrive(
-                () -> 0.04,
-                () -> 0,
-                () -> Robot.swerve.calculateRotationController(() -> 0),
-                () -> 1.0,
-                () -> false,
-                false);
+        return new SwerveDrive(() -> 0.04, () -> 0, () -> 0, () -> 1.0, () -> false, false);
     }
 
     /** Reset the Theata Controller and then run the SwerveDrive command and pass a goal Supplier */
@@ -240,7 +234,7 @@ public class AutonCommands {
      * }
      */
 
-     //Test Auton commands should not be used in match
+    // Test Auton commands should not be used in match
     public static Command AlignToAprilTagTest() {
         return PoseCommands.resetHeading(180)
                 .andThen(

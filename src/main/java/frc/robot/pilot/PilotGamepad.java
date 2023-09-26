@@ -13,6 +13,7 @@ import frc.robot.leds.commands.OneColorLEDCommand;
 import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.pose.commands.PoseCommands;
 import frc.robot.swerve.commands.AlignToAprilTag;
 import frc.robot.swerve.commands.AlignToConeFloor;
 import frc.robot.swerve.commands.AlignToConeNode;
@@ -120,16 +121,17 @@ public class PilotGamepad extends Gamepad {
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
                                 PilotConfig.coneFloorAlignOffset));
 
-        gamepad.yButton.and(leftBumperOnly()).whileTrue(MechanismsCommands.stowIntake());
+        // gamepad.yButton.and(leftBumperOnly()).whileTrue(new FullTurn());
 
         /* Reorient */
         gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));
         gamepad.Dpad.Left.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(90));
         gamepad.Dpad.Down.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(180));
         gamepad.Dpad.Right.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(270));
+        gamepad.startButton.and(noBumpers()).onTrue(PoseCommands.smartResetHeading());
 
         /* Start and Select */
-        gamepad.startButton.whileTrue(PilotCommands.resetSteering());
+        gamepad.startButton.and(leftBumperOnly()).whileTrue(PilotCommands.resetSteering());
         gamepad.selectButton.whileTrue(PilotCommands.lockSwerve());
 
         /* Misc */

@@ -117,6 +117,20 @@ public class Pose extends SubsystemBase {
         resetPoseEstimate(new Pose2d(estimatePose.getTranslation(), angle));
     }
 
+    /** Cardinal Reorient */
+    public double getClosestCardinal() {
+        double heading = Robot.swerve.getRotation().getRadians();
+        if (heading > -Math.PI / 4 && heading <= Math.PI / 4) {
+            return 0;
+        } else if (heading > Math.PI / 4 && heading <= 3 * Math.PI / 4) {
+            return 90;
+        } else if (heading > 3 * Math.PI / 4 || heading <= -3 * Math.PI / 4) {
+            return 180;
+        } else {
+            return 270;
+        }
+    }
+
     public void resetLocationEstimate(Translation2d translation) {
         resetPoseEstimate(new Pose2d(translation, estimatePose.getRotation()));
     }
