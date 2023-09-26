@@ -26,8 +26,6 @@ public class DriveToConeNode extends PIDCommand {
 /** List to store a batch of {@link #batchSize} verticalOffset values. Command will end if more than {@link #minimumPercentOfBatch} of batch are below setpoint */
     private List<Double> batchedOffsets = new LinkedList<>(); 
 
-
-
     private static double out = 0;
     private Command alignToConeNode;
     private static final String m_limelight = VisionConfig.DEFAULT_LL;
