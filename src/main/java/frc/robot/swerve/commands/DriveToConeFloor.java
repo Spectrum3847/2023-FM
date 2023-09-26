@@ -56,7 +56,6 @@ public class DriveToConeFloor extends PIDCommand {
         out = 0;
         alignToConeFloor.initialize();
         Robot.vision.setLimelightPipeline(m_limelight, VisionConfig.coneDetectorPipeline);
-        Auton.updateLog("Command Started", this.getName());
     }
 
     @Override

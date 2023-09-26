@@ -56,7 +56,6 @@ public class DriveToConeNode extends PIDCommand {
         super.initialize();
         out = 0;
         alignToConeNode.initialize();
-        Auton.updateLog("Command Started", this.getName());
     }
 
     @Override

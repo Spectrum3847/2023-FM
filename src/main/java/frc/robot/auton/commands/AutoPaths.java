@@ -33,7 +33,7 @@ public class AutoPaths {
     }
 
     public static Command AlignAndIntakeCone() {
-        return new DriveToConeFloor(PilotConfig.coneFloorAlignOffset)
+        return logCommand(new DriveToConeFloor(PilotConfig.coneFloorAlignOffset))
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
                 .withTimeout(1.2)
                 .andThen(AutonCommands.finishIntakeDrive())
@@ -41,7 +41,7 @@ public class AutoPaths {
     }
 
     public static Command AlignPreScoreTopCone() {
-        return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
+        return logCommand(new DriveToConeNode(PilotConfig.coneNodeAlignOffset))
                 .alongWith(VisionCommands.setConeNodePipeline().withTimeout(0.1))
                 .withTimeout(3)
                 .andThen(AutonCommands.coneTopPreScore().withTimeout(1.2), new WaitCommand(0.3))
@@ -49,7 +49,7 @@ public class AutoPaths {
     }
 
     public static Command AlignPreScoreMidCone() {
-        return new DriveToConeNode(PilotConfig.coneNodeAlignOffset)
+        return logCommand(new DriveToConeNode(PilotConfig.coneNodeAlignOffset))
                 .alongWith(
                         AutonCommands.coneMidPreScore().withTimeout(1.2),
                         VisionCommands.setConeNodePipeline().withTimeout(0.1))

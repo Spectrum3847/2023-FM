@@ -4,6 +4,7 @@
 
 package frc.robot.auton.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -14,6 +15,7 @@ public class LoggingDecorator extends CommandBase {
 
     private final Command command;
     private String commandType;
+    private double startTime;
 
     /**
      * Creates a new LoggingDecorator. Add start/end logging to any command/sequence using {@link
@@ -31,6 +33,7 @@ public class LoggingDecorator extends CommandBase {
     @Override
     public void initialize() {
         Auton.updateLog(commandType + " Started", command.getName());
+        startTime = Timer.getFPGATimestamp();
         command.initialize();
     }
 
@@ -44,7 +47,9 @@ public class LoggingDecorator extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         command.end(interrupted);
-        Auton.updateLog(commandType + " Ended", command.getName());
+        String timeElapsed = String.format("%.2f", (Timer.getFPGATimestamp() - startTime));
+        Auton.updateLog(
+                commandType + " Ended" + " with duration: " + timeElapsed, command.getName());
     }
 
     // Returns true when the command should end.
