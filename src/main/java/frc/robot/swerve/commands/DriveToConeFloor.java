@@ -87,8 +87,9 @@ public class DriveToConeFloor extends PIDCommand {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Math.floor(getVerticalOffset()) < verticalSetpoint) {
-            return true; // true;
+        //wait for robot to horizontally and vertically aligned before ending
+        if (Math.floor(getVerticalOffset()) < verticalSetpoint && alignToConeFloor.isFinished()) {
+            return true;
         }
         if (getVerticalOffset() > maxConeInView) {
             return true;
