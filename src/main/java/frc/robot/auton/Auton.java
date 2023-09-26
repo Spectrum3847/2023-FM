@@ -18,6 +18,7 @@ import frc.robot.vision.VisionCommands;
 import java.util.HashMap;
 
 public class Auton {
+    public static String AUTON_LOG = "";
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
     public static final SendableChooser<Boolean> score3rd = new SendableChooser<>();
     private static boolean autoMessagePrinted = true;
@@ -67,8 +68,8 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        autonChooser.addOption("Clean3", AutoPaths.CleanSide());
+        autonChooser.setDefaultOption("Clean3", AutoPaths.CleanSide());
+        autonChooser.addOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
         // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
         // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
         // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
@@ -173,11 +174,13 @@ public class Auton {
         if (autoCommand != null) {
             if (!autoCommand.isScheduled() && !autoMessagePrinted) {
                 if (DriverStation.isAutonomousEnabled()) {
+                    printLog();
                     RobotTelemetry.print(
                             String.format(
                                     "*** Auton finished in %.2f secs ***",
                                     Timer.getFPGATimestamp() - autonStart));
                 } else {
+                    printLog();
                     RobotTelemetry.print(
                             String.format(
                                     "*** Auton CANCELLED in %.2f secs ***",
@@ -186,5 +189,34 @@ public class Auton {
                 autoMessagePrinted = true;
             }
         }
+    }
+
+    public static void updateLog(String log) {
+        AUTON_LOG +=
+                String.format("** AUTO@%.2fs ** ", Timer.getFPGATimestamp() - autonStart)
+                        + log
+                        + "\n";
+    }
+
+    public static void updateLog(String log, String name) {
+        updateLog(name.toUpperCase() + ": " + log);
+    }
+
+    public static void updateLog(String log, Command command) {
+        updateLog(log, command.getName());
+    }
+
+    public static void resetLog() {
+        AUTON_LOG = "";
+    }
+
+    public static void printLog() {
+        if (AUTON_LOG.isBlank()) {
+            AUTON_LOG = "*** AUTON LOG IS EMPTY ***";
+        } else {
+            updateLog("--------------------------END OF AUTO LOG--------------------------");
+        }
+        RobotTelemetry.print(AUTON_LOG);
+        resetLog();
     }
 }
