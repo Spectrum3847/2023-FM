@@ -12,6 +12,7 @@ import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import frc.robot.vision.VisionCommands;
@@ -77,6 +78,9 @@ public class Auton {
         // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
         autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
 
+        autonChooser.addOption("CleanBump3", AutoPaths.CleanBumpSide());
+
+        autonChooser.addOption("OperatorLaunch", OperatorCommands.launch());
         // autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // Simple comp autos
         // autonChooser.addOption(

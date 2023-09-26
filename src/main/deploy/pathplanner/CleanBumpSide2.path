@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.891880450427568,
+        "x": 6.6,
         "y": 0.925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.125640391132671,
-        "y": 0.8529013607078071
+        "x": 5.8333040427425615,
+        "y": 0.8579227953688174
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
@@ -73,5 +73,19 @@
   "maxVelocity": 4.0,
   "maxAcceleration": 3.5,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.0,
+      "names": [
+        "RetractIntake",
+        "ConeNodePipeline"
+      ]
+    },
+    {
+      "position": 0.4,
+      "names": [
+        "HoldIntake"
+      ]
+    }
+  ]
 }

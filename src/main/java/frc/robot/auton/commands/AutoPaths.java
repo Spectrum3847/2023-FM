@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.PilotConfig;
 import frc.robot.swerve.commands.DriveToConeFloor;
 import frc.robot.swerve.commands.DriveToConeNode;
@@ -32,10 +33,15 @@ public class AutoPaths {
                         AutonCommands.homeSystems());
     }
 
+    public static Command CleanBumpSide() {
+        return CleanBumpSide3()
+                .andThen(AlignAndIntakeCone(), CleanBumpSide4(), OperatorCommands.launch());
+    }
+
     public static Command AlignAndIntakeCone() {
         return new DriveToConeFloor(PilotConfig.coneFloorAlignOffset)
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
-                .withTimeout(1.2)
+                .withTimeout(0.5)
                 .andThen(AutonCommands.finishIntakeDrive());
     }
 
@@ -172,7 +178,8 @@ public class AutoPaths {
     //     }
 
     public static Command OverCharge() {
-        return AutonCommands.coneTopFull().deadlineWith(AutonCommands.alignWheelsStraight())
+        return AutonCommands.coneTopFull()
+                .deadlineWith(AutonCommands.alignWheelsStraight())
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(
