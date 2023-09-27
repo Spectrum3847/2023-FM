@@ -7,7 +7,7 @@ from networktables import NetworkTables, NetworkTablesInstance
 # pip install pynetworktables
 
 # Define a list of IP addresses to check
-ip_addresses = ["10.85.15.2", "10.38.47.2", "127.0.0.1"]  # Replace with your IP addresses
+ip_addresses = ["10.38.47.2", "10.85.15.2", "127.0.0.1"]  # Replace with your IP addresses
 
 # Initialize pygame and networkTables instance
 pygame.mixer.init()
@@ -47,8 +47,7 @@ audio_files = {
     4: "audio/4.mp3",
     3: "audio/3.mp3",
     2: "audio/2.mp3",
-    1: "audio/1.mp3",
-    0: "audio/0.mp3"
+    1: "audio/1.mp3"
 }
 
 # Function to play the countdown audio for a given number of seconds
