@@ -4,7 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
-import frc.robot.RobotTelemetry;
+import frc.robot.auton.Auton;
 import frc.robot.vision.VisionConfig;
 
 public class DriveToConeNode extends PIDCommand {
@@ -48,6 +48,7 @@ public class DriveToConeNode extends PIDCommand {
         this.horizontalOffset = horizontalOffset;
         alignToConeNode = getVisionTargetCommand();
         this.getController().setTolerance(tolerance);
+        this.setName("DriveToConeNode");
     }
 
     @Override
@@ -65,11 +66,20 @@ public class DriveToConeNode extends PIDCommand {
             out = 0;
         }
         alignToConeNode.execute();
+        Auton.updateLog("Node Vert offset at execution: " + getVerticalOffset(), this.getName());
     }
 
     @Override
     public void end(boolean interrupted) {
         alignToConeNode.end(interrupted);
+        Auton.updateLog(
+                "Node Vert offset at end: "
+                        + getVerticalOffset()
+                        + " with goal of: "
+                        + verticalSetpoint
+                        + " || interrrupted: "
+                        + interrupted,
+                this.getName());
         Robot.swerve.stop();
     }
 
@@ -79,10 +89,8 @@ public class DriveToConeNode extends PIDCommand {
         // return Math.abs(out) <= 0.05;
         double vertoffset = getVerticalOffset();
         if (vertoffset <= verticalSetpoint && Robot.vision.isAimTarget()) {
-            RobotTelemetry.print("Vertical setpoint at end: " + vertoffset);
             return true; // true;
         }
-
         return false;
     }
 
