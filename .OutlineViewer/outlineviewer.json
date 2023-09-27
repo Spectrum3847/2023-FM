@@ -5,12 +5,12 @@
   "Connections": {
     "open": true
   },
-  "NetworkTables Settings": {
-    "mode": "Client (NT3)",
-    "serverTeam": "10.38.47.2"
+  "NT3@127.0.0.1:57004": {
+    "open": true
   },
-  "Persistent Values": {
-    "open": false
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "127.0.0.1"
   },
   "Server": {
     "Publishers": {
@@ -20,5 +20,32 @@
       "open": true
     },
     "open": true
+  },
+  "outlineviewer@2": {
+    "Publishers": {
+      "open": true
+    },
+    "Subscribers": {
+      "open": true
+    },
+    "open": true
+  },
+  "transitory": {
+    "Shuffleboard": {
+      "Intake": {
+        "open": true
+      },
+      "Main": {
+        "open": true
+      },
+      "Swerve": {
+        "open": true
+      }
+    },
+    "SmartDashboard": {
+      "Field": {
+        "open": true
+      }
+    }
   }
 }

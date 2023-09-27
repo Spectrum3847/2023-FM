@@ -129,7 +129,8 @@
       "Shuffleboard": {
         "Main": {
           "open": true
-        }
+        },
+        "open": true
       },
       "SmartDashboard": {
         "Alerts": {

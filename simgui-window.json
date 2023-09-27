@@ -1,13 +1,11 @@
 {
   "Docking": {
-    "Data": [
-      "DockNode  ID=0x00000001 Pos=461,52 Size=400,200"
-    ]
+    "Data": []
   },
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1017",
+      "height": "1512",
       "maximized": "0",
       "style": "0",
       "userScale": "2",
@@ -42,24 +40,23 @@
     },
     "###/SmartDashboard/Scheduler": {
       "Collapsed": "0",
-      "DockId": "0x00000001,0",
-      "Pos": "461,52",
+      "Pos": "534,122",
       "Size": "400,200"
     },
     "###Addressable LEDs": {
       "Collapsed": "0",
       "Pos": "1372,168",
-      "Size": "163,54"
+      "Size": "227,1097"
     },
     "###FMS": {
       "Collapsed": "0",
       "Pos": "-2,587",
-      "Size": "336,164"
+      "Size": "442,200"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "343,667",
-      "Size": "976,239"
+      "Size": "1336,304"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "1",
@@ -74,7 +71,7 @@
     "###NetworkTables": {
       "Collapsed": "0",
       "Pos": "614,422",
-      "Size": "400,383"
+      "Size": "400,885"
     },
     "###NetworkTables Info": {
       "Collapsed": "0",
@@ -88,18 +85,18 @@
     },
     "###RoboRIO": {
       "Collapsed": "0",
-      "Pos": "201,58",
-      "Size": "233,216"
+      "Pos": "274,78",
+      "Size": "313,264"
     },
     "###System Joysticks": {
       "Collapsed": "0",
-      "Pos": "32,310",
-      "Size": "232,254"
+      "Pos": "339,333",
+      "Size": "313,326"
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "5,150",
-      "Size": "169,142"
+      "Pos": "16,246",
+      "Size": "225,172"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -109,7 +106,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "109,114"
+      "Size": "144,144"
     }
   }
 }
