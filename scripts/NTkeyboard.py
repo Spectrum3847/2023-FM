@@ -5,12 +5,30 @@ import keyboard
 import winsound
 
 # Set the IP address of the networktables server and the keys to monitor
+ip_addresses = ["10.85.15.2", "10.38.47.2", "127.0.0.1"]  # Replace with your IP addresses
+
 server_ip = "10.38.47.2"
 keys_to_monitor = {
     "RecordMatch": "F9",
     "StopRecording": "F10"
 }
 sound_to_play = "Beep"
+
+# Function to connect to NetworkTables using an IP address
+def connect_to_networktables(ip):
+    # Connect to NetworkTables using the specified IP address
+    NetworkTables.initialize(server=ip)
+    time.sleep(1) # Wait for NetworkTables to connect
+    
+    # Get a reference to the SmartDashboard table (or replace with the desired table)
+    table = NetworkTables.getTable("/Shuffleboard/Main/")
+    stationNumber = table.getNumber("Match Time", -20)
+    if not NetworkTables.isConnected():
+        # Failed to connect, return False
+        return False
+
+    # Successful connection, return True
+    return True
 
 # Connect to the networktables server
 nt = NetworkTables.getTable("SmartDashboard")
