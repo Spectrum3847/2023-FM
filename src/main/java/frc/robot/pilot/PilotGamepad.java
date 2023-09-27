@@ -18,6 +18,7 @@ import frc.robot.swerve.commands.AlignToAprilTag;
 import frc.robot.swerve.commands.AlignToConeFloor;
 import frc.robot.swerve.commands.AlignToConeNode;
 import frc.robot.swerve.commands.AlignToCubeFloor;
+import frc.robot.swerve.commands.FullTurn;
 import frc.robot.trajectories.commands.DistanceDrive;
 
 /** Used to add buttons to the pilot gamepad and configure the joysticks */
@@ -121,7 +122,7 @@ public class PilotGamepad extends Gamepad {
                                 () -> Robot.pilotGamepad.getDriveFwdPositive(),
                                 PilotConfig.coneFloorAlignOffset));
 
-        // gamepad.yButton.and(leftBumperOnly()).whileTrue(new FullTurn());
+        gamepad.yButton.and(leftBumperOnly()).whileTrue(new FullTurn());
 
         /* Reorient */
         gamepad.Dpad.Up.and(leftBumperOnly()).whileTrue(PilotCommands.reorient(0));
