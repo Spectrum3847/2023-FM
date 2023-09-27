@@ -102,27 +102,32 @@ public class AutoPaths {
                         .followPathGroupWithEvents(
                                 PathPlanner.loadPathGroup("CleanSide5", new PathConstraints(4, 4))))
                 .withTimeout(0.2)
-                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
+                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve))
+                .withName("CleanSide5");
     }
 
     public static Command CleanBumpSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3.5)))
+                .withName("CleanBumpSide1");
     }
 
     public static Command CleanBumpSide2() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)))
+                .withName("CleanBumpSide2");
     }
 
     public static Command CleanBumpSide3() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)))
+                .withName("CleanBumpSide3");
     }
 
     public static Command CleanBumpSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)));
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)))
+                .withName("CleanBumpSide4");
     }
 
     public static Command CleanBumpSide5() {
@@ -131,7 +136,8 @@ public class AutoPaths {
                                 PathPlanner.loadPathGroup(
                                         "CleanBumpSide5", new PathConstraints(4, 4))))
                 .withTimeout(0.8)
-                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve));
+                .andThen(new InstantCommand(() -> Robot.swerve.brakeMode(false), Robot.swerve))
+                .withName("CleanBumpSide5");
     }
 
     public static Command logCommand(Command command) {

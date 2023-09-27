@@ -168,6 +168,11 @@ public class Auton {
         autoMessagePrinted = false;
     }
 
+    // Get the time since Auton started
+    public static double getAutonElapasedTime() {
+        return Timer.getFPGATimestamp() - autonStart;
+    }
+
     /** Called in RobotPeriodic and displays the duration of the auton command Based on 6328 code */
     public static void printAutoDuration() {
         Command autoCommand = Auton.getAutonomousCommand();
@@ -177,14 +182,13 @@ public class Auton {
                     printLog();
                     RobotTelemetry.print(
                             String.format(
-                                    "*** Auton finished in %.2f secs ***",
-                                    Timer.getFPGATimestamp() - autonStart));
+                                    "*** Auton finished in %.2f secs ***", getAutonElapasedTime()));
                 } else {
                     printLog();
                     RobotTelemetry.print(
                             String.format(
                                     "*** Auton CANCELLED in %.2f secs ***",
-                                    Timer.getFPGATimestamp() - autonStart));
+                                    getAutonElapasedTime()));
                 }
                 autoMessagePrinted = true;
             }
@@ -192,10 +196,7 @@ public class Auton {
     }
 
     public static void updateLog(String log) {
-        AUTON_LOG +=
-                String.format("** AUTO@%.2fs ** ", Timer.getFPGATimestamp() - autonStart)
-                        + log
-                        + "\n";
+        AUTON_LOG += String.format("** AUTO@%.2fs ** ", getAutonElapasedTime()) + log + "\n";
     }
 
     public static void updateLog(String log, String name) {
