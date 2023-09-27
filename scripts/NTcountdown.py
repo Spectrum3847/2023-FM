@@ -5,6 +5,7 @@ from networktables import NetworkTables, NetworkTablesInstance
 #Need to 
 # pip install pygame 
 # pip install pynetworktables
+# Use https://elevenlabs.io/speech-synthesis to generate audio files
 
 # Define a list of IP addresses to check
 ip_addresses = ["10.38.47.2", "10.85.15.2", "127.0.0.1"]  # Replace with your IP addresses
