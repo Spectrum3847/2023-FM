@@ -88,11 +88,9 @@ def aunnounce_audio(seconds):
 
 if __name__ == "__main__":
     connected = False
-
-
     try:
         while True:
-            while not connected:
+            while not connected: #Get network tables connection
                 for ip in ip_addresses:
                     connected = connect_to_networktables(ip)
                     if connected:
@@ -109,7 +107,8 @@ if __name__ == "__main__":
             table = NetworkTables.getTable("/Shuffleboard/Main/")
             startCount = 15
             count = 0
-            while connected:  
+            
+            while connected:  # main loop
                 
                 # Read the countdown value from the network table
                 countdown_seconds = int(table.getNumber("Match Time", -1))
