@@ -4,7 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
-import frc.robot.RobotTelemetry;
+import frc.robot.auton.Auton;
 import frc.robot.vision.VisionConfig;
 
 public class DriveToConeFloor extends PIDCommand {
@@ -47,6 +47,7 @@ public class DriveToConeFloor extends PIDCommand {
         this.horizontalOffset = horizontalOffset;
         alignToConeFloor = getVisionTargetCommand();
         this.getController().setTolerance(tolerance);
+        this.setName("DriveToConeFloor");
     }
 
     @Override
@@ -70,17 +71,20 @@ public class DriveToConeFloor extends PIDCommand {
         }
         // RobotTelemetry.print("Drive to Cone Out: " + out);
         alignToConeFloor.execute();
-        RobotTelemetry.print("Floor Vertical setpoint at execution: " + getVerticalOffset());
+        Auton.updateLog("Floor Vert offset at execution: " + getVerticalOffset(), this.getName());
     }
 
     @Override
     public void end(boolean interrupted) {
         alignToConeFloor.end(interrupted);
-        RobotTelemetry.print(
-                "Floor Vertical setpoint at end: "
+        Auton.updateLog(
+                "Floor Vert offset at end: "
                         + getVerticalOffset()
-                        + " interrrupted: "
-                        + interrupted);
+                        + " with goal of: "
+                        + verticalSetpoint
+                        + " || interrrupted: "
+                        + interrupted,
+                this.getName());
         Robot.swerve.stop();
     }
 
