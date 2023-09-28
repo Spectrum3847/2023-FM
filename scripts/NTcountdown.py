@@ -19,7 +19,7 @@ pygame.mixer.init()
 def connect_to_networktables(ip):
     # Connect to NetworkTables using the specified IP address
     NetworkTables.initialize(server=ip)
-    time.sleep(1) # Wait for NetworkTables to connect
+    time.sleep(2) # Wait for NetworkTables to connect
     
     if not NetworkTables.isConnected():
         # Failed to connect, return False
