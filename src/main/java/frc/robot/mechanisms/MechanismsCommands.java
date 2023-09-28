@@ -2,6 +2,7 @@ package frc.robot.mechanisms;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
@@ -50,25 +51,36 @@ public class MechanismsCommands {
 
     public static Command scoreButton() {
         return new ConditionalCommand(
-                scoreRoutine(), floorScore(), () -> Robot.shoulder.isScoreAngle());
+                smartScoreRoutine(), floorScore(), () -> Robot.shoulder.isScoreAngle());
     }
 
     public static Command floorScore() {
         return new ConditionalCommand(pilotDrop(), lowScore(), () -> Robot.shoulder.isFloorAngle());
     }
 
-    // Score cone or cube in grid
-    public static Command scoreRoutine() {
+    public static Command smartScoreRoutine() {
+        return new ConditionalCommand(coneScoreRoutine(), cubeScoreRoutine(), () -> Robot.shoulder.isConeScoreAngle());
+    }
+
+    // Score cone in grid
+    public static Command coneScoreRoutine() {
         return ElbowCommands.score()
                 .withTimeout(0.1)
-                .andThen(IntakeCommands.drop())
+                .andThen(IntakeCommands.coneEject())
                 .withTimeout(0.4)
+                .andThen(homeSystems().withTimeout(2.5));
+    }
+
+    //Score cube in grid
+    public static Command cubeScoreRoutine() {
+        return IntakeCommands.cubeEject()
+                .withTimeout(0.3)
                 .andThen(homeSystems().withTimeout(2.5));
     }
 
     // Drop a gamepiece and return to home
     public static Command pilotDrop() {
-        return IntakeCommands.drop().withTimeout(0.5).andThen(homeSystems().withTimeout(2.5));
+        return IntakeCommands.coneEject().withTimeout(0.5).andThen(homeSystems().withTimeout(2.5));
     }
 
     // Full low score routine for the pilot
@@ -79,7 +91,7 @@ public class MechanismsCommands {
                         ShoulderCommands.floor(),
                         IntakeCommands.holdPercentOutput()
                                 .withTimeout(.5)
-                                .andThen(IntakeCommands.FloorDrop()))
+                                .andThen(IntakeCommands.floorDrop()))
                 .withTimeout(1)
                 .andThen(homeSystems().withTimeout(2.5));
     }

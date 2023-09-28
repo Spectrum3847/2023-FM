@@ -58,7 +58,7 @@ public class AutonCommands {
     public static Command scoreGP() {
         return ElbowCommands.score()
                 .withTimeout(0.05)
-                .andThen(IntakeCommands.drop().alongWith(ElbowCommands.score()))
+                .andThen(IntakeCommands.coneEject().alongWith(ElbowCommands.score()))
                 .withTimeout(0.2)
                 .withName("ScoreGP");
     }

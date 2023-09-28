@@ -19,7 +19,8 @@ public class IntakeConfig {
     public double holdIntakePercentage =
             0.1; // This is used instead of a velocity to lower hold current
     public double eject = -3000;
-    public double drop = -300;
+    public double coneEject = -300;
+    public double cubeEject = -600;
     public double floorDrop = -500;
 
     public double intakeCone = 3000;

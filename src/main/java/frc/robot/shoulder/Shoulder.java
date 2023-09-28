@@ -61,6 +61,13 @@ public class Shoulder extends AngleMechSubsystem {
         return false;
     }
 
+    public boolean isConeScoreAngle() {
+        if(getPercentAngle() > config.cubeUp) {
+            return true;
+        }
+        return false;
+    }
+
     public void setMMPercent(double percent) {
         setMMPosition(percentToFalcon(percent));
     }

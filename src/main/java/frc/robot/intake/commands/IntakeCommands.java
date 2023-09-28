@@ -28,11 +28,15 @@ public class IntakeCommands {
         return setVelocities(Intake.config.eject).withName("Eject");
     }
 
-    public static Command drop() {
-        return setVelocities(Intake.config.drop).withName("Drop");
+    public static Command coneEject() {
+        return setVelocities(Intake.config.coneEject).withName("Cone Eject");
     }
 
-    public static Command FloorDrop() {
+    public static Command cubeEject() {
+        return setVelocities(Intake.config.coneEject).withName("Cone Eject");
+    }
+
+    public static Command floorDrop() {
         return setVelocities(Intake.config.floorDrop).withName("Floor Drop");
     }
 
