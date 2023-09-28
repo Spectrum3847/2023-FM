@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
-import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.PilotConfig;
 import frc.robot.swerve.commands.DriveToConeFloor;
 import frc.robot.swerve.commands.DriveToConeNode;
@@ -34,17 +33,25 @@ public class AutoPaths {
     }
 
     public static Command CleanBumpSide() {
-        return CleanBumpSide3()
-                .andThen(AlignAndIntakeCone(), CleanBumpSide4(), OperatorCommands.launch());
+        return AutonCommands.coneTopScore()
+                .deadlineWith(AutonCommands.alignWheelsStraight())
+                .andThen(
+                        CleanBumpSide1(),
+                        AlignAndIntakeCone(),
+                        CleanBumpSide2(),
+                        AlignPreScoreMidCone(),
+                        AutonCommands.scoreGP(),
+                        CleanBumpSide3(),
+                        AlignAndIntakeCone(),
+                        CleanBumpSide4());
     }
 
     public static Command AlignAndIntakeCone() {
         return logCommand(new DriveToConeFloor(PilotConfig.coneFloorAlignOffset))
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
-                .withTimeout(0.5)
+                .withTimeout(0.7)
                 .andThen(AutonCommands.finishIntakeDrive())
                 .withName("AlignAndIntakeCone");
-
     }
 
     public static Command AlignPreScoreTopCone() {
@@ -115,25 +122,28 @@ public class AutoPaths {
 
     public static Command CleanBumpSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3.5)))
+                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide1", new PathConstraints(4, 3)))
                 .withName("CleanBumpSide1");
     }
 
     public static Command CleanBumpSide2() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)))
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanBumpSide2", new PathConstraints(4, 3.5)))
                 .withName("CleanBumpSide2");
     }
 
     public static Command CleanBumpSide3() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)))
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanBumpSide3", new PathConstraints(4, 3.5)))
                 .withName("CleanBumpSide3");
     }
 
     public static Command CleanBumpSide4() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)))
+                .followPathGroupWithEvents(
+                        PathPlanner.loadPathGroup("CleanBumpSide4", new PathConstraints(4, 3.5)))
                 .withName("CleanBumpSide4");
     }
 

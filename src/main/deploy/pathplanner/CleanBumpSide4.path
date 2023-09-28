@@ -60,6 +60,12 @@
       "names": [
         "HoldIntake"
       ]
+    },
+    {
+      "position": 0.8,
+      "names": [
+        "Throw"
+      ]
     }
   ]
 }

@@ -12,7 +12,7 @@ public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -6.5; // These are different for each of our cone nodes. Get negative as we get closer
+            -6; // These are different for each of our cone nodes. Get negative as we get closer
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.4;
@@ -127,7 +127,7 @@ public class DriveToConeNode extends PIDCommand {
                     String.format(
                             "Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s",
                             vertOffset, (percentBelowSetpoint * 100), values),
-                            this.getName());
+                    this.getName());
             return true;
         }
         return false;
