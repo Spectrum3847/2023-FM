@@ -6,7 +6,6 @@ import winsound
 # Define a list of IP addresses to check
 ip_addresses = ["10.38.47.2", "10.85.15.2", "127.0.0.1", "172.22.11.2"]  # Replace with your IP addresses
 
-server_ip = "10.38.47.2"
 keys_to_monitor = {
     "RecordMatch": "F9",
     "StopRecording": "F10"
