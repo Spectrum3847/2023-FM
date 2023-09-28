@@ -1,20 +1,18 @@
 package frc.robot.swerve.commands;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
+import java.util.LinkedList;
 
 public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -3.88; // These are different for each of our cone nodes. Get negative as we get closer
+            -6.5; // These are different for each of our cone nodes. Get negative as we get closer
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
     private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.4;
@@ -23,8 +21,11 @@ public class DriveToConeNode extends PIDCommand {
     private static final int batchSize = 10;
     private static double minimumPercentOfBatch = 0.5; // 50%
 
-/** List to store a batch of {@link #batchSize} verticalOffset values. Command will end if more than {@link #minimumPercentOfBatch} of batch are below setpoint */
-    private LinkedList<Double> batchedOffsets = new LinkedList<>(); 
+    /**
+     * List to store a batch of {@link #batchSize} verticalOffset values. Command will end if more
+     * than {@link #minimumPercentOfBatch} of batch are below setpoint
+     */
+    private LinkedList<Double> batchedOffsets = new LinkedList<>();
 
     private static double out = 0;
     private Command alignToConeNode;
@@ -61,6 +62,7 @@ public class DriveToConeNode extends PIDCommand {
     public void initialize() {
         super.initialize();
         out = 0;
+        batchedOffsets = new LinkedList<>();
         alignToConeNode.initialize();
     }
 
@@ -111,7 +113,10 @@ public class DriveToConeNode extends PIDCommand {
         // If the proportion is greater than the configured percentage, finish the command
         if (percentBelowSetpoint > minimumPercentOfBatch && Robot.vision.isAimTarget()) {
             String values = batchedOffsets.toString();
-            RobotTelemetry.print(String.format("Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s", vertOffset, (percentBelowSetpoint * 100), values));            
+            RobotTelemetry.print(
+                    String.format(
+                            "Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s",
+                            vertOffset, (percentBelowSetpoint * 100), values));
             return true;
         }
 

@@ -172,7 +172,8 @@ public class AutoPaths {
     //     }
 
     public static Command OverCharge() {
-        return AutonCommands.coneTopFull().deadlineWith(AutonCommands.alignWheelsStraight())
+        return AutonCommands.coneTopFull()
+                .deadlineWith(AutonCommands.alignWheelsStraight())
                 .andThen(
                         Auton.getAutoBuilder()
                                 .fullAuto(

@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
-import frc.robot.RobotTelemetry;
 import frc.robot.vision.VisionConfig;
 import java.util.function.DoubleSupplier;
 
@@ -20,14 +19,14 @@ public class AlignToConeFloor extends PIDCommand {
     private static final double kp = 0.06;
     private static final double tolerance = 0.01;
     private static final double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.7;
-    private static final double error = 0.3; 
+    private static final double error = 0.3;
     SwerveDrive driveCommand;
     DoubleSupplier fwdPositiveSupplier;
     private static double out = 0;
     private int pipelineIndex = VisionConfig.coneDetectorPipeline;
     private double heading = Integer.MIN_VALUE;
     private static final String m_limelight = VisionConfig.DETECT_LL;
-    private double horizontalSetpoint; 
+    private double horizontalSetpoint;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,
@@ -126,12 +125,13 @@ public class AlignToConeFloor extends PIDCommand {
     }
 
     /**
-     * Returns true when the command should end. If in auto, automatically end when crosshair gets close to setpoint {@link #error}
+     * Returns true when the command should end. If in auto, automatically end when crosshair gets
+     * close to setpoint {@link #error}
      */
     @Override
     public boolean isFinished() {
-        if(DriverStation.isAutonomousEnabled()) {
-            if(Math.abs(getHorizontalOffset() - horizontalSetpoint) <= error) {
+        if (DriverStation.isAutonomousEnabled()) {
+            if (Math.abs(getHorizontalOffset() - horizontalSetpoint) <= error) {
                 return true;
             } else {
                 return false;
