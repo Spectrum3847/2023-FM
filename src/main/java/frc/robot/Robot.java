@@ -14,7 +14,6 @@ import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.Intake;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.LEDs;
-import frc.robot.leds.commands.CountdownLEDCommand;
 import frc.robot.leds.commands.LEDCommands;
 import frc.robot.operator.OperatorGamepad;
 import frc.robot.operator.commands.OperatorCommands;
@@ -203,11 +202,11 @@ public class Robot extends LoggedRobot {
             SmartDashboard.putBoolean("RecordMatch", true);
         }
 
-        if (DriverStation.getMatchTime() != -1) {
-            new CountdownLEDCommand(
-                            "Auton Countdown", 120, (int) DriverStation.getMatchTime(), false)
-                    .schedule();
-        }
+        // if (DriverStation.getMatchTime() != -1) {
+        //     new CountdownLEDCommand(
+        //                     "Auton Countdown", 120, (int) DriverStation.getMatchTime(), false)
+        //             .schedule();
+        // }
 
         RobotTelemetry.print("@@ Auton Init Complete");
     }

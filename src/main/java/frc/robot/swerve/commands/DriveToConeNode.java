@@ -97,42 +97,50 @@ public class DriveToConeNode extends PIDCommand {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double vertOffset = getVerticalOffset();
 
-        batchedOffsets.add(vertOffset);
-
-        // If the batch size is more than 10, remove the oldest offset
-        if (batchedOffsets.size() > batchSize) {
-            batchedOffsets.removeFirst();
-        }
-
-        // Only proceed if there are at least 10 items in the batch
-        if (batchedOffsets.size() < batchSize) {
-            return false;
-        }
-
-        // Count the offsets that are below the setpoint
-        int countBelowSetpoint = 0;
-        for (double offset : batchedOffsets) {
-            if (offset <= verticalSetpoint) {
-                countBelowSetpoint++;
-            }
-        }
-
-        // Calculate the proportion of offsets that are below the setpoint
-        double percentBelowSetpoint = (double) countBelowSetpoint / batchedOffsets.size();
-
-        // If the proportion is greater than the configured percentage, finish the command
-        if (percentBelowSetpoint > minimumPercentOfBatch && Robot.vision.isAimTarget()) {
-            String values = batchedOffsets.toString();
-            Auton.updateLog(
-                    String.format(
-                            "Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s",
-                            vertOffset, (percentBelowSetpoint * 100), values),
-                    this.getName());
-            return true;
+        // return Math.abs(out) <= 0.05;
+        double vertoffset = getVerticalOffset();
+        if (vertoffset <= verticalSetpoint && Robot.vision.isAimTarget()) {
+            return true; // true;
         }
         return false;
+        // double vertOffset = getVerticalOffset();
+
+        // batchedOffsets.add(vertOffset);
+
+        // // If the batch size is more than 10, remove the oldest offset
+        // if (batchedOffsets.size() > batchSize) {
+        //     batchedOffsets.removeFirst();
+        // }
+
+        // // Only proceed if there are at least 10 items in the batch
+        // if (batchedOffsets.size() < batchSize) {
+        //     return false;
+        // }
+
+        // // Count the offsets that are below the setpoint
+        // int countBelowSetpoint = 0;
+        // for (double offset : batchedOffsets) {
+        //     if (offset <= verticalSetpoint) {
+        //         countBelowSetpoint++;
+        //     }
+        // }
+
+        // // Calculate the proportion of offsets that are below the setpoint
+        // double percentBelowSetpoint = (double) countBelowSetpoint / batchedOffsets.size();
+
+        // // If the proportion is greater than the configured percentage, finish the command
+        // if (percentBelowSetpoint > minimumPercentOfBatch && Robot.vision.isAimTarget()) {
+        //     String values = batchedOffsets.toString();
+        //     Auton.updateLog(
+        //             String.format(
+        //                     "Instant vertical setpoint at end: %.2f. %.2f%% of batch were below
+        // the setpoint. Values: %s",
+        //                     vertOffset, (percentBelowSetpoint * 100), values),
+        //             this.getName());
+        //     return true;
+        // }
+        // return false;
     }
 
     // If out is > 1 then cap at one, make the robot drive slow and still have bigger kP
