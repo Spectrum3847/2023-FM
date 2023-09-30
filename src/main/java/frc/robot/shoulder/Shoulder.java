@@ -62,7 +62,7 @@ public class Shoulder extends AngleMechSubsystem {
     }
 
     public boolean isConeScoreAngle() {
-        if(getPercentAngle() > config.cubeUp) {
+        if (getPercentAngle() > config.cubeUp) {
             return true;
         }
         return false;
