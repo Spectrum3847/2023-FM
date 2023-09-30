@@ -10,7 +10,7 @@ import frc.SpectrumLib.gamepads.XboxGamepad.XboxAxis;
 import frc.robot.Robot;
 import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.leds.commands.OneColorLEDCommand;
-import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.mechanisms.commands.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.pose.commands.PoseCommands;

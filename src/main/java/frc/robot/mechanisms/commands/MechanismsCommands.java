@@ -1,4 +1,4 @@
-package frc.robot.mechanisms;
+package frc.robot.mechanisms.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import frc.robot.Robot;
 import frc.robot.elbow.commands.ElbowCommands;
 import frc.robot.intake.commands.IntakeCommands;
+import frc.robot.mechanisms.commands.ScoreRoutineDelay.ScoreType;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.commands.SwerveDrive;
@@ -62,20 +63,20 @@ public class MechanismsCommands {
         return new ConditionalCommand(coneScoreRoutine(), cubeScoreRoutine(), () -> Robot.shoulder.isConeScoreAngle());
     }
 
-    // Score cone in grid
+    /** Score cone in grid with smart delay {@link ScoreRoutineDelay} */
     public static Command coneScoreRoutine() {
-        return ElbowCommands.score()
+        return new ScoreRoutineDelay(ScoreType.CONE).andThen(ElbowCommands.score()
                 .withTimeout(0.1)
                 .andThen(IntakeCommands.coneEject())
                 .withTimeout(0.4)
-                .andThen(homeSystems().withTimeout(2.5));
+                .andThen(homeSystems().withTimeout(2.5)));
     }
 
-    //Score cube in grid
+    /** Score cube in grid with smart delay {@link ScoreRoutineDelay} */
     public static Command cubeScoreRoutine() {
-        return IntakeCommands.cubeEject()
+        return new ScoreRoutineDelay(ScoreType.CUBE).andThen(IntakeCommands.cubeEject()
                 .withTimeout(0.3)
-                .andThen(homeSystems().withTimeout(2.5));
+                .andThen(homeSystems().withTimeout(2.5)));
     }
 
     // Drop a gamepiece and return to home

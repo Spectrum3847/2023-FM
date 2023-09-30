@@ -11,7 +11,7 @@ import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
-import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.mechanisms.commands.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
