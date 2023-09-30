@@ -33,7 +33,11 @@ public class LoggingDecorator extends CommandBase {
     @Override
     public void initialize() {
         Auton.updateLog(
-                commandType + " Started at:" + Auton.getAutonElapasedTime(), command.getName());
+                commandType
+                        + " Started at: "
+                        + String.format("%.2f", Auton.getAutonElapsedTime())
+                        + "s",
+                command.getName());
         startTime = Timer.getFPGATimestamp();
         command.initialize();
     }
@@ -49,7 +53,8 @@ public class LoggingDecorator extends CommandBase {
     public void end(boolean interrupted) {
         command.end(interrupted);
         String timeElapsed = String.format("%.2f", (Timer.getFPGATimestamp() - startTime));
-        Auton.updateLog(commandType + " Ended with duration: " + timeElapsed, command.getName());
+        Auton.updateLog(
+                commandType + " Ended with duration: " + timeElapsed + "s", command.getName());
     }
 
     // Returns true when the command should end.

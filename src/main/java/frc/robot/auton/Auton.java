@@ -174,7 +174,7 @@ public class Auton {
     }
 
     // Get the time since Auton started
-    public static double getAutonElapasedTime() {
+    public static double getAutonElapsedTime() {
         return Timer.getFPGATimestamp() - autonStart;
     }
 
@@ -183,17 +183,17 @@ public class Auton {
         Command autoCommand = Auton.getAutonomousCommand();
         if (autoCommand != null) {
             if (!autoCommand.isScheduled() && !autoMessagePrinted) {
+
                 if (DriverStation.isAutonomousEnabled()) {
                     printLog();
                     RobotTelemetry.print(
                             String.format(
-                                    "*** Auton finished in %.2f secs ***", getAutonElapasedTime()));
+                                    "*** Auton finished in %.2f secs ***", getAutonElapsedTime()));
                 } else {
                     printLog();
                     RobotTelemetry.print(
                             String.format(
-                                    "*** Auton CANCELLED in %.2f secs ***",
-                                    getAutonElapasedTime()));
+                                    "*** Auton CANCELLED in %.2f secs ***", getAutonElapsedTime()));
                 }
                 autoMessagePrinted = true;
             }
@@ -201,7 +201,7 @@ public class Auton {
     }
 
     public static void updateLog(String log) {
-        AUTON_LOG += String.format("** AUTO@%.2fs ** ", getAutonElapasedTime()) + log + "\n";
+        AUTON_LOG += String.format("** AUTO@%.2fs ** ", getAutonElapsedTime()) + log + "\n";
     }
 
     public static void updateLog(String log, String name) {

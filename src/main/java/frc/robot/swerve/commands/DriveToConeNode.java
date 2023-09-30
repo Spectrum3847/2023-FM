@@ -77,7 +77,9 @@ public class DriveToConeNode extends PIDCommand {
             out = 0;
         }
         alignToConeNode.execute();
-        Auton.updateLog("Node Vert offset at execution: " + getVerticalOffset(), this.getName());
+        Auton.updateLog(
+                "Node Vert offset at execution: " + String.format("%.2f", getVerticalOffset()),
+                this.getName());
     }
 
     @Override
@@ -85,7 +87,7 @@ public class DriveToConeNode extends PIDCommand {
         alignToConeNode.end(interrupted);
         Auton.updateLog(
                 "Node Vert offset at end: "
-                        + getVerticalOffset()
+                        + String.format("%.2f", getVerticalOffset())
                         + " with goal of: "
                         + verticalSetpoint
                         + " || interrrupted: "
@@ -178,5 +180,9 @@ public class DriveToConeNode extends PIDCommand {
     private static double getVerticalOffset() {
         double offset = Robot.vision.getVerticalOffset(m_limelight);
         return offset; // Why was this here? (offset == 0) ? verticalSetpoint : offset;
+    }
+
+    private double reduceDecimal(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 }
