@@ -77,6 +77,6 @@ public class VisionCommands {
     }
 
     public static Command setAutoConeNodePipeline() {
-        return setLimelightPipeline(VisionConfig.reflectivePipeline);
+        return setLimelightPipeline(VisionConfig.autoReflectivePipeline);
     }
 }
