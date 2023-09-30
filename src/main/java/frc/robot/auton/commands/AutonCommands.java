@@ -154,8 +154,8 @@ public class AutonCommands {
 
     public static Command coneTopFull() {
         return coneTopPreScore()
-                .withTimeout(2)
-                .andThen(scoreGP().andThen(OperatorCommands.homeSystems().withTimeout(2.5)));
+                .withTimeout(1.3)
+                .andThen(scoreGP().andThen(OperatorCommands.homeSystems().withTimeout(1.5)));
     }
 
     public static Command coneTopScore() {
