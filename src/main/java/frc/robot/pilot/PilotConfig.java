@@ -24,7 +24,12 @@ public class PilotConfig {
 
     public static final double alignmentOffset = 8;
 
-    public static final double coneNodeAlignOffset = -0.75;
+    public static final double coneNodeAlignOffset =
+            1; // ROUND ONE: +2.5 = RED BUMP SIDE //+.8 = RED CLEAN SIDE //-.23 = BLUE CLEAN SIDE
+    // // 1 = BLUE BUMP SIDE
+    // ROUND TWO: +0.5 = RED CLEAN SIDE // +2.3/1.9 = RED BUMP SIDE //THESE DIFFERENCES ARE NOT VERY
+    // DIFFERENT IN DISTANCE IRL
+    // ORIGINAL: -0.75
     public static final double cubeNodeAlignOffset = -0.75;
     public static final double coneFloorAlignOffset = 1.5;
     public static final double cubeFloorAlignOffset = 1.5;
