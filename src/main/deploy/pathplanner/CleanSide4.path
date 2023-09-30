@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.670813531650817,
-        "y": 3.8177181342486204
+        "x": 6.75,
+        "y": 3.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.319096358614232,
-        "y": 4.784053125201053
+        "x": 5.917936491134905,
+        "y": 4.725681421621785
       },
       "holonomicAngle": -45.0,
       "isReversal": false,
@@ -17,47 +17,22 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 3.6813783841344416,
-        "y": 4.712644579683459
+        "x": 3.0,
+        "y": 4.75
       },
       "prevControl": {
-        "x": 4.2290821968269245,
-        "y": 4.6647267051029395
-      },
-      "nextControl": {
-        "x": 3.2916137946688067,
-        "y": 4.746744562705538
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 2.5389190920899667,
-        "y": 4.85
-      },
-      "prevControl": {
-        "x": 3.1636256478906626,
-        "y": 4.767755821669618
+        "x": 4.473072346463681,
+        "y": 4.807104696402829
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -160.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -71,20 +46,25 @@
     }
   ],
   "maxVelocity": null,
-  "maxAcceleration": 3.25,
+  "maxAcceleration": 3.5,
   "isReversed": null,
   "markers": [
     {
-      "position": 0.3018181818181719,
+      "position": 0.0,
+      "names": [
+        "RetractIntake"
+      ]
+    },
+    {
+      "position": 0.3,
       "names": [
         "HoldIntake"
       ]
     },
     {
-      "position": 0.0,
+      "position": 0.8,
       "names": [
-        "RetractIntake",
-        "ConeNodePipeline"
+        "Throw"
       ]
     }
   ]

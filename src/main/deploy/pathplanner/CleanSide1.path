@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8153615404617995,
-        "y": 3.884361592951215
+        "x": 1.81,
+        "y": 4.97
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0819939393406326,
-        "y": 4.322674049225252
+        "x": 2.288988726919917,
+        "y": 4.140367188721969
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -24,37 +24,12 @@
     },
     {
       "anchorPoint": {
-        "x": 2.80209349892384,
-        "y": 4.75
+        "x": 5.8,
+        "y": 4.65
       },
       "prevControl": {
-        "x": 2.29789803439256,
-        "y": 4.739118083499325
-      },
-      "nextControl": {
-        "x": 3.3327251516177734,
-        "y": 4.761452481712818
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 5.699723133413014,
-        "y": 4.684083097382348
-      },
-      "prevControl": {
-        "x": 5.059731347178832,
-        "y": 4.712025742223035
+        "x": 5.32866163159006,
+        "y": 5.323140951345738
       },
       "nextControl": null,
       "holonomicAngle": 0.0,
@@ -71,20 +46,20 @@
     }
   ],
   "maxVelocity": 4.0,
-  "maxAcceleration": 3.25,
+  "maxAcceleration": 3.5,
   "isReversed": null,
   "markers": [
-    {
-      "position": 1.3781818181818335,
-      "names": [
-        "Intake"
-      ]
-    },
     {
       "position": 0.0,
       "names": [
         "HomeSystems",
         "ConeFloorPipeline"
+      ]
+    },
+    {
+      "position": 0.5,
+      "names": [
+        "Intake"
       ]
     }
   ]

@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.670813531650817,
-        "y": 4.160455921861963
+        "x": 6.6,
+        "y": 4.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.943314933475741,
-        "y": 4.160455921861963
+        "x": 5.8333040427425615,
+        "y": 4.667077204631182
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 3.5290504785285113,
-        "y": 4.674562603281976
+        "x": 3.9084216764924777,
+        "y": 4.75
       },
       "prevControl": {
-        "x": 4.031444297370587,
-        "y": 4.630608839507798
+        "x": 4.473978305349531,
+        "y": 4.7745938400185
       },
       "nextControl": {
-        "x": 2.977325323948509,
-        "y": 4.722832299689815
+        "x": 3.3551119395104,
+        "y": 4.725938729284251
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -49,12 +49,12 @@
     },
     {
       "anchorPoint": {
-        "x": 2.415152668785149,
-        "y": 4.84
+        "x": 2.5028407951552762,
+        "y": 4.85
       },
       "prevControl": {
-        "x": 3.0136580763222796,
-        "y": 4.794658681247187
+        "x": 3.064606070483921,
+        "y": 4.735911758427102
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -71,20 +71,20 @@
     }
   ],
   "maxVelocity": 4.0,
-  "maxAcceleration": 3.25,
+  "maxAcceleration": 3.5,
   "isReversed": null,
   "markers": [
-    {
-      "position": 0.4036363636363478,
-      "names": [
-        "HoldIntake"
-      ]
-    },
     {
       "position": 0.0,
       "names": [
         "RetractIntake",
         "ConeNodePipeline"
+      ]
+    },
+    {
+      "position": 0.4,
+      "names": [
+        "HoldIntake"
       ]
     }
   ]

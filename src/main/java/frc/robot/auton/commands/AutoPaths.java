@@ -22,28 +22,25 @@ public class AutoPaths {
                         logCommand(CleanSide1()),
                         logCommand(AlignAndIntakeCone()),
                         logCommand(CleanSide2()),
-                        logCommand(AlignPreScoreTopCone()),
+                        logCommand(AlignPreScoreMidCone()),
                         logCommand(AutonCommands.scoreGP()),
                         logCommand(CleanSide3()),
                         logCommand(AlignAndIntakeCone()),
-                        logCommand(CleanSide4()),
-                        logCommand(AlignPreScoreMidCone()),
-                        logCommand(AutonCommands.scoreGP()),
-                        logCommand(AutonCommands.homeSystems()));
+                        logCommand(CleanSide4()));
     }
 
     public static Command CleanBumpSide() {
-        return AutonCommands.coneTopScore()
+        return logCommand(AutonCommands.coneTopScore())
                 .deadlineWith(AutonCommands.alignWheelsStraight())
                 .andThen(
-                        CleanBumpSide1(),
-                        AlignAndIntakeCone(),
-                        CleanBumpSide2(),
-                        AlignPreScoreMidCone(),
-                        AutonCommands.scoreGP(),
-                        CleanBumpSide3(),
-                        AlignAndIntakeCone(),
-                        CleanBumpSide4());
+                        logCommand(CleanBumpSide1()),
+                        logCommand(AlignAndIntakeCone()),
+                        logCommand(CleanBumpSide2()),
+                        logCommand(AlignPreScoreMidCone()),
+                        logCommand(AutonCommands.scoreGP()),
+                        logCommand(CleanBumpSide3()),
+                        logCommand(AlignAndIntakeCone()),
+                        logCommand(CleanBumpSide4()));
     }
 
     public static Command AlignAndIntakeCone() {
@@ -76,7 +73,7 @@ public class AutoPaths {
     // Commands - homesystems, setConeFloor pipeline, deploy intake midway
     public static Command CleanSide1() {
         return Auton.getAutoBuilder()
-                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 2.5)))
+                .fullAuto(PathPlanner.loadPathGroup("CleanSide1", new PathConstraints(4, 3)))
                 .withName("CleanSide1");
     }
 
@@ -87,7 +84,7 @@ public class AutoPaths {
     public static Command CleanSide2() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 2.0)))
+                        PathPlanner.loadPathGroup("CleanSide2", new PathConstraints(4, 3.5)))
                 .withName("CleanSide2");
     }
 
@@ -96,7 +93,7 @@ public class AutoPaths {
     public static Command CleanSide3() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 2.5)))
+                        PathPlanner.loadPathGroup("CleanSide3", new PathConstraints(4, 3.5)))
                 .withName("CleanSide3");
     }
 
@@ -107,7 +104,7 @@ public class AutoPaths {
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 2.0)))
+                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.5)))
                 .withName("CleanSide4");
     }
 
