@@ -5,6 +5,7 @@
 package frc.robot.swerve.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
 import frc.robot.vision.VisionConfig;
@@ -100,7 +101,11 @@ public class AlignToConeNode extends PIDCommand {
         // getLedCommand(tagID).initialize();
         Robot.swerve.resetRotationController();
         driveCommand.initialize();
-        Robot.vision.setLimelightPipeline(pipelineIndex);
+        if (DriverStation.isAutonomousEnabled()) {
+            Robot.vision.setLimelightPipeline(VisionConfig.autoReflectivePipeline);
+        } else {
+            Robot.vision.setLimelightPipeline(pipelineIndex);
+        }
     }
 
     @Override

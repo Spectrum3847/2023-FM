@@ -66,7 +66,7 @@ public class AutoPaths {
         return logCommand(new DriveToConeNode(PilotConfig.coneNodeAlignOffset))
                 .alongWith(
                         AutonCommands.coneMidPreScore().withTimeout(1.2),
-                        VisionCommands.setConeNodePipeline().withTimeout(0.1))
+                        VisionCommands.setAutoConeNodePipeline().withTimeout(0.1))
                 .withTimeout(3)
                 .withName("AlignPreScoreMidCone");
     }
