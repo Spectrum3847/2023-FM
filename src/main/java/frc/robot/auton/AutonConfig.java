@@ -28,7 +28,7 @@ public class AutonConfig {
     // Balance values
     public static final double stopDrivingRate = 7.1; // 6 too low 8 works
     public static final double stopDrivingAngle = 3.5;
-    public static final double balanceDriveSpeed = 0.6; // .3 works on 8
+    public static final double balanceDriveSpeed = 0.5; // .3 works on 8
     public static final double gryoOffset = 1.0107421875;
 
     // Node Alignment Time
