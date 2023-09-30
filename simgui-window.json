@@ -5,13 +5,13 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1017",
-      "maximized": "1",
+      "height": "1512",
+      "maximized": "0",
       "style": "0",
       "userScale": "2",
       "width": "1920",
-      "xpos": "1920",
-      "ypos": "23"
+      "xpos": "1603",
+      "ypos": "113"
     }
   },
   "Table": {
@@ -40,23 +40,24 @@
     },
     "###/SmartDashboard/Scheduler": {
       "Collapsed": "0",
-      "Pos": "461,52",
+      "Pos": "534,122",
       "Size": "400,200"
     },
     "###Addressable LEDs": {
       "Collapsed": "0",
       "Pos": "1372,168",
-      "Size": "142,682"
+      "Size": "227,1097"
     },
     "###FMS": {
       "Collapsed": "0",
       "Pos": "-2,587",
-      "Size": "283,146"
+      "Size": "442,200"
+
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "343,667",
-      "Size": "796,206"
+      "Size": "1336,304"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "1",
@@ -71,7 +72,7 @@
     "###NetworkTables": {
       "Collapsed": "0",
       "Pos": "614,422",
-      "Size": "400,383"
+      "Size": "934,1012"
     },
     "###NetworkTables Info": {
       "Collapsed": "0",
@@ -85,18 +86,18 @@
     },
     "###RoboRIO": {
       "Collapsed": "0",
-      "Pos": "201,58",
-      "Size": "193,192"
+      "Pos": "274,78",
+      "Size": "313,264"
     },
     "###System Joysticks": {
       "Collapsed": "0",
-      "Pos": "32,310",
-      "Size": "192,218"
+      "Pos": "339,333",
+      "Size": "313,326"
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "5,150",
-      "Size": "141,127"
+      "Pos": "16,246",
+      "Size": "225,172"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -106,7 +107,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "92,99"
+      "Size": "144,144"
     }
   }
 }
