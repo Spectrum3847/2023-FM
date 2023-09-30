@@ -1,13 +1,14 @@
 {
   "MainWindow": {
     "GLOBAL": {
+      "fps": "120",
       "height": "600",
       "maximized": "0",
       "style": "0",
       "userScale": "2",
       "width": "900",
-      "xpos": "-1",
-      "ypos": "-1"
+      "xpos": "1682",
+      "ypos": "885"
     }
   },
   "Table": {
@@ -21,6 +22,11 @@
       "Column 0  Width": "190",
       "Column 1  Weight": "1.0000",
       "RefScale": "19"
+    },
+    "0x3BB6252A,2": {
+      "Column 0  Width": "220",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "22"
     }
   },
   "Window": {
@@ -37,7 +43,7 @@
     "Settings": {
       "Collapsed": "0",
       "Pos": "269,252",
-      "Size": "471,182"
+      "Size": "542,232"
     }
   }
 }
