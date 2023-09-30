@@ -4,20 +4,28 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
-import frc.robot.RobotTelemetry;
+import frc.robot.auton.Auton;
 import frc.robot.vision.VisionConfig;
+import java.util.LinkedList;
 
 public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -3.88; // These are different for each of our cone nodes. Get negative as we get closer
+            -6; // These are different for each of our cone nodes. Get negative as we get closer
     // private static double minOutput =
     //      Robot.swerve.config.tuning.maxVelocity * 0.2; // Minimum value to output to motor
-    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.3;
+    private static double maxOutput = Robot.swerve.config.tuning.maxVelocity * 0.4;
     private double horizontalOffset = 0; // positive is right (driver POV)
-
     private static double tolerance = 0.0;
+    private static final int batchSize = 10;
+    private static double minimumPercentOfBatch = 0.5; // 50%
+
+    /**
+     * List to store a batch of {@link #batchSize} verticalOffset values. Command will end if more
+     * than {@link #minimumPercentOfBatch} of batch are below setpoint
+     */
+    private LinkedList<Double> batchedOffsets = new LinkedList<>();
 
     private static double out = 0;
     private Command alignToConeNode;
@@ -48,12 +56,14 @@ public class DriveToConeNode extends PIDCommand {
         this.horizontalOffset = horizontalOffset;
         alignToConeNode = getVisionTargetCommand();
         this.getController().setTolerance(tolerance);
+        this.setName("DriveToConeNode");
     }
 
     @Override
     public void initialize() {
         super.initialize();
         out = 0;
+        batchedOffsets = new LinkedList<>();
         alignToConeNode.initialize();
     }
 
@@ -65,24 +75,61 @@ public class DriveToConeNode extends PIDCommand {
             out = 0;
         }
         alignToConeNode.execute();
+        Auton.updateLog("Node Vert offset at execution: " + getVerticalOffset(), this.getName());
     }
 
     @Override
     public void end(boolean interrupted) {
         alignToConeNode.end(interrupted);
+        Auton.updateLog(
+                "Node Vert offset at end: "
+                        + getVerticalOffset()
+                        + " with goal of: "
+                        + verticalSetpoint
+                        + " || interrrupted: "
+                        + interrupted,
+                this.getName());
         Robot.swerve.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // return Math.abs(out) <= 0.05;
-        double vertoffset = getVerticalOffset();
-        if (vertoffset <= verticalSetpoint && Robot.vision.isAimTarget()) {
-            RobotTelemetry.print("Vertical setpoint at end: " + vertoffset);
-            return true; // true;
+        double vertOffset = getVerticalOffset();
+
+        batchedOffsets.add(vertOffset);
+
+        // If the batch size is more than 10, remove the oldest offset
+        if (batchedOffsets.size() > batchSize) {
+            batchedOffsets.removeFirst();
         }
 
+        // Only proceed if there are at least 10 items in the batch
+        if (batchedOffsets.size() < batchSize) {
+            return false;
+        }
+
+        // Count the offsets that are below the setpoint
+        int countBelowSetpoint = 0;
+        for (double offset : batchedOffsets) {
+            if (offset <= verticalSetpoint) {
+                countBelowSetpoint++;
+            }
+        }
+
+        // Calculate the proportion of offsets that are below the setpoint
+        double percentBelowSetpoint = (double) countBelowSetpoint / batchedOffsets.size();
+
+        // If the proportion is greater than the configured percentage, finish the command
+        if (percentBelowSetpoint > minimumPercentOfBatch && Robot.vision.isAimTarget()) {
+            String values = batchedOffsets.toString();
+            Auton.updateLog(
+                    String.format(
+                            "Instant vertical setpoint at end: %.2f. %.2f%% of batch were below the setpoint. Values: %s",
+                            vertOffset, (percentBelowSetpoint * 100), values),
+                    this.getName());
+            return true;
+        }
         return false;
     }
 

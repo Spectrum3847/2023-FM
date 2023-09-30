@@ -10,13 +10,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class FullTurn extends CommandBase {
-    /** Creates a new FullTurn. */
-    private double timeout = 2;
+    private double timeout = 2; // seconds
 
     private double startTime;
     private Command driveCommand;
     private boolean hasDriveEnded = false;
 
+    /**
+     * Turn the robot as fast as possible to attempt to remove any stuck gamepieces. This command
+     * will automatically time out at {@link #timeout} seconds if not stopped sooner.
+     */
     public FullTurn() {
         // Use addRequirements() here to declare subsystem dependencies.
         driveCommand = new SwerveDrive(() -> 0, () -> 0, () -> 100).withName("SwerveFullTurn");

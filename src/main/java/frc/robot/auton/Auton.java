@@ -12,12 +12,14 @@ import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.mechanisms.MechanismsCommands;
+import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.LockSwerve;
 import frc.robot.trajectories.TrajectoriesConfig;
 import frc.robot.vision.VisionCommands;
 import java.util.HashMap;
 
 public class Auton {
+    public static String AUTON_LOG = "";
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
     public static final SendableChooser<Boolean> score3rd = new SendableChooser<>();
     private static boolean autoMessagePrinted = true;
@@ -67,8 +69,8 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        autonChooser.addOption("Clean3", AutoPaths.CleanSide());
+        autonChooser.setDefaultOption("Clean3", AutoPaths.CleanSide());
+        autonChooser.addOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
         // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
         // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
         // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
@@ -77,6 +79,9 @@ public class Auton {
         // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
         autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
 
+        autonChooser.addOption("CleanBump3", AutoPaths.CleanBumpSide());
+
+        autonChooser.addOption("OperatorLaunch", OperatorCommands.launch());
         // autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // Simple comp autos
         // autonChooser.addOption(
@@ -128,6 +133,7 @@ public class Auton {
         eventMap.put("FloorPrescore", AutonCommands.floorPreSchool());
         eventMap.put("ConeHybrid", MechanismsCommands.lowScore().withTimeout(1));
         eventMap.put("HomeSystems", AutonCommands.homeSystems());
+        eventMap.put("Throw", OperatorCommands.launch());
 
         // Intake Commands
         eventMap.put("Intake", AutonCommands.floorIntake());
@@ -167,24 +173,56 @@ public class Auton {
         autoMessagePrinted = false;
     }
 
+    // Get the time since Auton started
+    public static double getAutonElapasedTime() {
+        return Timer.getFPGATimestamp() - autonStart;
+    }
+
     /** Called in RobotPeriodic and displays the duration of the auton command Based on 6328 code */
     public static void printAutoDuration() {
         Command autoCommand = Auton.getAutonomousCommand();
         if (autoCommand != null) {
             if (!autoCommand.isScheduled() && !autoMessagePrinted) {
                 if (DriverStation.isAutonomousEnabled()) {
+                    printLog();
                     RobotTelemetry.print(
                             String.format(
-                                    "*** Auton finished in %.2f secs ***",
-                                    Timer.getFPGATimestamp() - autonStart));
+                                    "*** Auton finished in %.2f secs ***", getAutonElapasedTime()));
                 } else {
+                    printLog();
                     RobotTelemetry.print(
                             String.format(
                                     "*** Auton CANCELLED in %.2f secs ***",
-                                    Timer.getFPGATimestamp() - autonStart));
+                                    getAutonElapasedTime()));
                 }
                 autoMessagePrinted = true;
             }
         }
+    }
+
+    public static void updateLog(String log) {
+        AUTON_LOG += String.format("** AUTO@%.2fs ** ", getAutonElapasedTime()) + log + "\n";
+    }
+
+    public static void updateLog(String log, String name) {
+        updateLog(name.toUpperCase() + ": " + log);
+    }
+
+    public static void updateLog(String log, Command command) {
+        updateLog(log, command.getName());
+    }
+
+    public static void resetLog() {
+        AUTON_LOG = "";
+    }
+
+    public static void printLog() {
+        if (AUTON_LOG.isBlank()) {
+            AUTON_LOG = "*** AUTON LOG IS EMPTY ***";
+        } else {
+            updateLog("--------------------------END OF AUTO LOG--------------------------");
+        }
+        RobotTelemetry.print(AUTON_LOG);
+        resetLog();
     }
 }

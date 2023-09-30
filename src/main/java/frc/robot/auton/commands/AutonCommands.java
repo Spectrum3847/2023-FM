@@ -27,7 +27,8 @@ public class AutonCommands {
     public static Command homeSystems() {
         return ShoulderCommands.home()
                 .alongWith(SlideCommands.home(), ElbowCommands.home())
-                .withTimeout(1.5);
+                .withTimeout(1.5)
+                .withName("HomeSystems");
     }
 
     public static Command stopMotors() {
@@ -58,7 +59,8 @@ public class AutonCommands {
         return ElbowCommands.score()
                 .withTimeout(0.05)
                 .andThen(IntakeCommands.drop().alongWith(ElbowCommands.score()))
-                .withTimeout(0.2);
+                .withTimeout(0.2)
+                .withName("ScoreGP");
     }
 
     public static Command stopElevator() {
@@ -157,7 +159,7 @@ public class AutonCommands {
     }
 
     public static Command coneTopScore() {
-        return coneTopPreScore().withTimeout(1.2).andThen(scoreGP());
+        return coneTopPreScore().withTimeout(1.2).andThen(scoreGP()).withName("ConeTopScore");
     }
 
     /*
