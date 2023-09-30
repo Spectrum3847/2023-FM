@@ -19,6 +19,7 @@ public class AutoPaths {
         return logCommand(AutonCommands.coneTopScore())
                 .deadlineWith(AutonCommands.alignWheelsStraight())
                 .andThen(
+                        logCommand(VisionCommands.setAutoConeNodePipeline()),
                         logCommand(CleanSide1()),
                         logCommand(AlignAndIntakeCone()),
                         logCommand(CleanSide2()),
@@ -26,7 +27,8 @@ public class AutoPaths {
                         logCommand(AutonCommands.scoreGP()),
                         logCommand(CleanSide3()),
                         logCommand(AlignAndIntakeCone()),
-                        logCommand(CleanSide4()));
+                        logCommand(CleanSide4()),
+                        logCommand(VisionCommands.setConeDetectPipeline()));
     }
 
     public static Command CleanBumpSide() {

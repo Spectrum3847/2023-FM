@@ -56,8 +56,7 @@ public class Vision extends SubsystemBase {
 
         // configure both limelights
         LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
-        setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline);
-        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.reflectivePipeline);
+        setLimelightPipeline(VisionConfig.coneDetectorPipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -383,11 +382,8 @@ public class Vision extends SubsystemBase {
         return LimelightHelpers.getFiducialID("");
     }
 
-    /**
-     * @param limelight name of limelight to control in {@link VisionConfig}
-     * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
-     */
-    public void setLimelightPipeline(String limelight, int pipelineIndex) {
+    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
+    public void setLimelightPipeline(int pipelineIndex) {
         LimelightHelpers.setPipelineIndex(VisionConfig.DEFAULT_LL, pipelineIndex);
         LimelightHelpers.setPipelineIndex(VisionConfig.DETECT_LL, pipelineIndex);
     }

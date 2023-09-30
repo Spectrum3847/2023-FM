@@ -28,6 +28,7 @@ import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.trajectories.Trajectories;
 import frc.robot.vision.Vision;
+import frc.robot.vision.VisionCommands;
 import org.littletonrobotics.junction.LoggedRobot;
 
 public class Robot extends LoggedRobot {
@@ -217,6 +218,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void autonomousExit() {
+        VisionCommands.setConeDetectPipeline(); // set vision pipeline for teleop
         RobotTelemetry.print("@@ Auton Exit");
     }
 

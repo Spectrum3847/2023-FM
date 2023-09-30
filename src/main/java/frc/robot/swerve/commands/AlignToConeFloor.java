@@ -106,7 +106,7 @@ public class AlignToConeFloor extends PIDCommand {
         // getLedCommand(tagID).initialize();
         Robot.swerve.resetRotationController();
         driveCommand.initialize();
-        Robot.vision.setLimelightPipeline(m_limelight, pipelineIndex);
+        Robot.vision.setLimelightPipeline(pipelineIndex);
     }
 
     @Override

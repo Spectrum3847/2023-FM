@@ -53,30 +53,30 @@ public class VisionCommands {
     }
     */
 
-    /**
-     * @param limelight name of limelight to control in {@link VisionConfig}
-     * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
-     */
-    public static Command setLimelightPipeline(String limelight, int pipelineIndex) {
+    /** @param pipelineIndex use pipeline indexes in {@link VisionConfig} */
+    public static Command setLimelightPipeline(int pipelineIndex) {
         return new InstantCommand(
-                        () -> Robot.vision.setLimelightPipeline(limelight, pipelineIndex),
-                        Robot.vision)
+                        () -> Robot.vision.setLimelightPipeline(pipelineIndex), Robot.vision)
                 .ignoringDisable(true);
     }
 
     public static Command setCubeNodePipeline() {
-        return setLimelightPipeline("", VisionConfig.aprilTagPipeline);
+        return setLimelightPipeline(VisionConfig.aprilTagPipeline);
     }
 
     public static Command setConeNodePipeline() {
-        return setLimelightPipeline("", VisionConfig.reflectivePipeline);
+        return setLimelightPipeline(VisionConfig.reflectivePipeline);
     }
 
     public static Command setConeDetectPipeline() {
-        return setLimelightPipeline("", VisionConfig.coneDetectorPipeline);
+        return setLimelightPipeline(VisionConfig.coneDetectorPipeline);
     }
 
     public static Command setCubeDetectPipeline() {
-        return setLimelightPipeline("", VisionConfig.cubeDetectorPipeline);
+        return setLimelightPipeline(VisionConfig.cubeDetectorPipeline);
+    }
+
+    public static Command setAutoConeNodePipeline() {
+        return setLimelightPipeline(VisionConfig.reflectivePipeline);
     }
 }
