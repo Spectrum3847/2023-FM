@@ -47,7 +47,7 @@ public class AutoPaths {
     public static Command AlignAndIntakeCone() {
         return logCommand(new DriveToConeFloor(PilotConfig.coneFloorAlignOffset))
                 .deadlineWith(AutonCommands.floorIntake(), VisionCommands.setConeDetectPipeline())
-                .withTimeout(0.7)
+                .withTimeout(0.8)
                 .andThen(AutonCommands.finishIntakeDrive())
                 .withName("AlignAndIntakeCone");
     }
