@@ -107,7 +107,7 @@ public class AutoPaths {
     public static Command CleanSide4() {
         return Auton.getAutoBuilder()
                 .followPathGroupWithEvents(
-                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.7)))
+                        PathPlanner.loadPathGroup("CleanSide4", new PathConstraints(4, 3.5)))
                 .withName("CleanSide4");
     }
 

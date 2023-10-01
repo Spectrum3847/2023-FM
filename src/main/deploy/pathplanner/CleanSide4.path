@@ -24,15 +24,15 @@
     },
     {
       "anchorPoint": {
-        "x": 3.0,
-        "y": 4.65
+        "x": 2.5,
+        "y": 4.75
       },
       "prevControl": {
-        "x": 4.473072346463681,
-        "y": 4.707104696402829
+        "x": 4.052677654048895,
+        "y": 5.131546320099766
       },
       "nextControl": null,
-      "holonomicAngle": -150.0,
+      "holonomicAngle": -180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -46,7 +46,7 @@
     }
   ],
   "maxVelocity": null,
-  "maxAcceleration": 3.7,
+  "maxAcceleration": 3.5,
   "isReversed": null,
   "markers": [
     {
@@ -59,12 +59,6 @@
       "position": 0.3,
       "names": [
         "HoldIntake"
-      ]
-    },
-    {
-      "position": 0.8,
-      "names": [
-        "Throw"
       ]
     }
   ]
