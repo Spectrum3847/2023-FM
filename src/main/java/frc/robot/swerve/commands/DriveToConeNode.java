@@ -12,7 +12,7 @@ public class DriveToConeNode extends PIDCommand {
     /* Config settings */
     private static double kP = 0.5; // 0.8;
     private static double verticalSetpoint =
-            -3.9; // These are different for each of our cone nodes. Get negative as we get closer
+            -3.8; // These are different for each of our cone nodes. Get negative as we get closer
     // ROUND ONE: //red bump = -3.7 //red clean = -4.1 //blue clean = -2.7 //BLUE BUMP = -4
     // ROUND TWO: //RED CLEAN = -4.2 //RED BUMP = -4.1 //BLUE BUMP = -4
     // private static double minOutput =
@@ -32,7 +32,6 @@ public class DriveToConeNode extends PIDCommand {
     private static double out = 0;
     private Command alignToConeNode;
     private static final String m_limelight = VisionConfig.DEFAULT_LL;
-
     /**
      * Creates a new DriveToVisionTarget. Aligns to a vision target in both X and Y axes
      * (field-oriented). If used for automation purposes, it is best to give it a timeout as a
