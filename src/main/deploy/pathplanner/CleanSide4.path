@@ -24,15 +24,40 @@
     },
     {
       "anchorPoint": {
-        "x": 2.5,
-        "y": 4.75
+        "x": 3.5,
+        "y": 4.7
       },
       "prevControl": {
-        "x": 4.052677654048895,
-        "y": 5.131546320099766
+        "x": 4.6474608063837906,
+        "y": 4.9023282994709545
+      },
+      "nextControl": {
+        "x": 3.1896039225823296,
+        "y": 4.645268796845191
+      },
+      "holonomicAngle": -180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.0,
+        "y": 4.42
+      },
+      "prevControl": {
+        "x": 2.2818657513799603,
+        "y": 4.465111733073823
       },
       "nextControl": null,
-      "holonomicAngle": -180.0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -59,6 +84,12 @@
       "position": 0.3,
       "names": [
         "HoldIntake"
+      ]
+    },
+    {
+      "position": 1.0,
+      "names": [
+        "LowPreScore"
       ]
     }
   ]

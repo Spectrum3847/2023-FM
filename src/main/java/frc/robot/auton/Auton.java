@@ -133,6 +133,7 @@ public class Auton {
         eventMap.put("ConeHybrid", MechanismsCommands.lowScore().withTimeout(1));
         eventMap.put("HomeSystems", AutonCommands.homeSystems());
         eventMap.put("Throw", OperatorCommands.launch());
+        eventMap.put("LowPreScore", OperatorCommands.floorScore());
 
         // Intake Commands
         eventMap.put("Intake", AutonCommands.floorIntake());

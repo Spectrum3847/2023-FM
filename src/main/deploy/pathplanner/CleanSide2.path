@@ -49,12 +49,12 @@
     },
     {
       "anchorPoint": {
-        "x": 2.4,
-        "y": 4.9
+        "x": 2.0,
+        "y": 5.0
       },
       "prevControl": {
-        "x": 2.9617652753286445,
-        "y": 4.785911758427103
+        "x": 2.5617652753286446,
+        "y": 4.885911758427103
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -84,6 +84,12 @@
       "position": 0.4,
       "names": [
         "HoldIntake"
+      ]
+    },
+    {
+      "position": 1.0,
+      "names": [
+        "LowPreScore"
       ]
     }
   ]

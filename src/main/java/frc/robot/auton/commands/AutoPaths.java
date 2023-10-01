@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
+import frc.robot.intake.commands.IntakeCommands;
 import frc.robot.pilot.PilotConfig;
 import frc.robot.swerve.commands.DriveToConeFloor;
 import frc.robot.swerve.commands.DriveToConeNode;
@@ -21,14 +22,12 @@ public class AutoPaths {
                 .andThen(
                         logCommand(CleanSide1()),
                         logCommand(AlignAndIntakeCone()),
-                        logCommand(VisionCommands.setAutoConeNodePipeline()),
                         logCommand(CleanSide2()),
-                        logCommand(AlignPreScoreMidCone()),
-                        logCommand(AutonCommands.scoreGP()),
+                        logCommand(IntakeCommands.eject().withTimeout(0.2)),
                         logCommand(CleanSide3()),
                         logCommand(AlignAndIntakeCone()),
                         logCommand(CleanSide4()),
-                        logCommand(VisionCommands.setConeDetectPipeline()));
+                        logCommand(IntakeCommands.eject().withTimeout(0.2)));
     }
 
     public static Command CleanBumpSide() {
@@ -37,13 +36,12 @@ public class AutoPaths {
                 .andThen(
                         logCommand(CleanBumpSide1()),
                         logCommand(AlignAndIntakeCone()),
-                        logCommand(VisionCommands.setAutoConeNodePipeline()),
                         logCommand(CleanBumpSide2()),
-                        logCommand(AlignPreScoreMidCone()),
-                        logCommand(AutonCommands.scoreGP()),
+                        logCommand(IntakeCommands.eject().withTimeout(0.2)),
                         logCommand(CleanBumpSide3()),
                         logCommand(AlignAndIntakeCone()),
-                        logCommand(CleanBumpSide4()));
+                        logCommand(CleanBumpSide4()),
+                        logCommand(IntakeCommands.eject().withTimeout(0.2)));
     }
 
     public static Command AlignAndIntakeCone() {
