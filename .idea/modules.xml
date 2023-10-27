@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2023-FM.iml" filepath="$PROJECT_DIR$/.idea/modules/2023-FM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2023-FM.main.iml" filepath="$PROJECT_DIR$/.idea/modules/2023-FM.main.iml" />
+      <module
+        fileurl="file://$PROJECT_DIR$/.idea/modules/2023-FM.iml"
+        filepath="$PROJECT_DIR$/.idea/modules/2023-FM.iml" />
+      <module
+        fileurl="file://$PROJECT_DIR$/.idea/modules/2023-FM.main.iml"
+        filepath="$PROJECT_DIR$/.idea/modules/2023-FM.main.iml" />
     </modules>
   </component>
 </project>

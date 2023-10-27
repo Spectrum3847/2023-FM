@@ -1,12 +1,7 @@
 package frc.robot.vision;
 
 import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,35 +11,37 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.vision.LimelightHelpers.LimelightTarget_Fiducial;
+
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class Vision extends SubsystemBase {
+    // testing
+    private final DecimalFormat df = new DecimalFormat();
+    private final boolean initialized = false;
     public PhotonVision photonVision;
     public Pose2d botPose;
     public boolean visionIntegrated = false;
     public boolean aimLimelightConnected = false;
     public boolean detectLimelightConnected = false;
-
-    /** For LEDs */
+    /**
+     * For LEDs
+     */
     public boolean poseOverriden = false;
-    /** For Pilot Gamepad */
+    /**
+     * For Pilot Gamepad
+     */
     public boolean canUseAutoPilot = false;
-
     public double aimHorizontalOffset = 0;
     public double aimVerticalOffset = 0;
     public double detectHorizontalOffset = 0;
     public double detectVerticalOffset = 0;
-
     private Pose3d botPose3d; // Uses the limelight rotation instead of the gyro rotation
-    private Pair<Pose3d, Double> photonVisionPose;
     private int targetSeenCount = 0;
-    private boolean targetSeen, visionStarted, initialized = false;
+    private boolean visionStarted;
     private boolean aimTarget = false;
     private boolean detectTarget = false;
-    private LimelightHelpers.LimelightResults jsonResults, detectJsonResults;
-
-    // testing
-    private final DecimalFormat df = new DecimalFormat();
+    private LimelightHelpers.LimelightResults jsonResults;
 
     public Vision() {
         setName("Vision");
@@ -73,15 +70,13 @@ public class Vision extends SubsystemBase {
                 !NetworkTableInstance.getDefault()
                         .getTable(VisionConfig.DEFAULT_LL)
                         .getEntry("json")
-                        .getString("")
-                        .equals("");
+                        .getString("").isEmpty();
 
         detectLimelightConnected =
                 !NetworkTableInstance.getDefault()
                         .getTable(VisionConfig.DETECT_LL)
                         .getEntry("json")
-                        .getString("")
-                        .equals("");
+                        .getString("").isEmpty();
 
         // checkTargetHistory();
 
@@ -95,7 +90,7 @@ public class Vision extends SubsystemBase {
         }
 
         if (detectLimelightConnected) {
-            detectJsonResults = LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
+            LimelightHelpers.getLatestResults(VisionConfig.DETECT_LL);
             detectHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DETECT_LL);
             detectVerticalOffset = LimelightHelpers.getTY(VisionConfig.DETECT_LL);
             detectTarget = LimelightHelpers.getTV(VisionConfig.DETECT_LL);
@@ -108,13 +103,13 @@ public class Vision extends SubsystemBase {
         return aimTarget;
     }
 
-    public boolean isDetetTarget() {
+    public boolean isDetectTarget() {
         return detectTarget;
     }
 
     public boolean isTarget(String limelight) {
-        if (limelight == VisionConfig.DETECT_LL) {
-            return isDetetTarget();
+        if (Objects.equals(limelight, VisionConfig.DETECT_LL)) {
+            return isDetectTarget();
         }
         return isAimTarget();
     }
@@ -125,10 +120,10 @@ public class Vision extends SubsystemBase {
      * <p>Limelight pose logic:
      *
      * <p>Sets odometry pose to be vision estimate at the start of {@link Robot#teleopInit} and
-     * {@link Robot#disabledInit} so odometry has correct starting pose. Will not override odometry
+     * {@link Robot#disabledInit} so odometry has correct starting pose. It Will not override odometry
      * with vision if limelight does not see targets. Adds vision estimate to pose estimator using
-     * standard deviation values if 1) odometry has been overridden by vision at least once and 2)
-     * vision estimate is within 1 meter of odometry
+     * standard deviation values if 1.) Vision has overridden Odometry at least once, and 2.)
+     * Vision estimate is within 1 meter of odometry
      */
     public void update() {
         /* Limelight Pose Estimation Retrieval */
@@ -140,7 +135,7 @@ public class Vision extends SubsystemBase {
                     (DriverStation.getAlliance() == Alliance.Blue)
                             ? LimelightHelpers.getBotPose_wpiBlue(null)[6]
                             : LimelightHelpers.getBotPose_wpiRed(null)[
-                                    6]; // may need to add LimelightHelpers json parsing delay?
+                            6]; // may need to add LimelightHelpers json parsing delay?
             botPose3d = chooseAlliance();
             botPose = toPose2d(botPose3d);
             /* Adding Limelight estimate if in teleop enabled */
@@ -167,13 +162,13 @@ public class Vision extends SubsystemBase {
         /* PhotonVision Pose Estimation Retrieval */
         if (photonVision != null) {
             photonVision.update();
-            photonVisionPose = photonVision.currentPose;
+            Pair<Pose3d, Double> photonVisionPose = photonVision.currentPose;
             Pose2d photonVisionPose2d = photonVisionPose.getFirst().toPose2d();
             /* Adding PhotonVision estimate to pose */
             if (isValidPose(photonVisionPose2d)) {
                 Robot.pose.addVisionMeasurement(
                         photonVisionPose2d,
-                        getTimestampSeconds(photonVisionPose.getSecond().doubleValue()));
+                        getTimestampSeconds(photonVisionPose.getSecond()));
             }
         }
         printDebug(poseArray);
@@ -184,8 +179,8 @@ public class Vision extends SubsystemBase {
      * between the robot heading and the angle required to face the hybrid spot. Will return 0 if
      * the robot cannot see an apriltag.
      *
-     * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to hybrid
-     *     nodes
+     * @param hybridSpot 0-8 representing the nine different hybrid spots for launching cubes to hybrid
+     *                   nodes
      * @return angle between robot heading and hybrid spot in degrees
      */
     public double getThetaToHybrid(int hybridSpot) {
@@ -199,7 +194,7 @@ public class Vision extends SubsystemBase {
         // double headingInScope; -- may have to get rotation in scope of -180 to 180 if using gryo
         double omega = Robot.pose.getEstimatedPose().getRotation().getDegrees() + 90;
         double theta = 360 - (omega + beta);
-        /* if theta is greater than 360 subtract 360 so you dont turn over a full rotation */
+        /* if theta is greater than 360 subtract 360, so you don't turn over a full rotation */
         if (theta > 360) {
             theta -= 360;
             System.out.println("needed new theta: " + theta);
@@ -213,12 +208,16 @@ public class Vision extends SubsystemBase {
         // be predictable probably meaning the trig is wrong
     }
 
-    /** Resets estimated pose to vision pose */
+    /**
+     * Resets estimated pose to vision pose
+     */
     public void resetEstimatedPose() {
         Robot.pose.resetPoseEstimate(botPose);
     }
 
-    /** @return if vision should be trusted more than estimated pose */
+    /**
+     * @return if vision should be trusted more than estimated pose
+     */
     public boolean visionAccurate() {
         return isValidPose(botPose) && (isInMap() || multipleTargetsInView());
     }
@@ -232,25 +231,24 @@ public class Vision extends SubsystemBase {
      * Helper function for {@link Vision#getThetaToHybrid}
      *
      * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to hybrid
-     *     nodes
+     *                   nodes
      * @return Transform2d representing the x and y distance components between the robot and the
-     *     hybrid spot
+     * hybrid spot
      */
     private Transform2d getTransformToHybrid(int hybridSpot) {
         Pose2d hybridPose = VisionConfig.hybridSpots[hybridSpot];
         return Robot.pose.getEstimatedPose().minus(hybridPose);
     }
 
-    /** @return whether the camera sees multiple tags or not */
+    /**
+     * @return whether the camera sees multiple tags or not
+     */
     public boolean multipleTargetsInView() {
         if (jsonResults == null) {
             return false;
         }
         LimelightTarget_Fiducial[] tags = jsonResults.targetingResults.targets_Fiducials;
-        if (tags.length > 1) {
-            return true;
-        }
-        return false;
+        return tags.length > 1;
     }
 
     public double getDistanceToTarget() {
@@ -274,14 +272,12 @@ public class Vision extends SubsystemBase {
         return null;
     }
 
-    /** @return whether or not vision sees a tag */
+    /**
+     * @return whether vision sees a tag
+     */
     public boolean isValidPose(Pose2d pose) {
         /* Disregard Vision if there are no targets in view */
-        if (!LimelightHelpers.getTV(null)) {
-            return false;
-        } else {
-            return true;
-        }
+        return LimelightHelpers.getTV(null);
     }
 
     /**
@@ -289,7 +285,7 @@ public class Vision extends SubsystemBase {
      * Will return false vision if it sees no targets or if the vision estimated pose is too far
      * from the odometry estimate
      *
-     * @return whether or not pose should be added to estimate or not
+     * @return whether pose should be added to estimate or not
      */
     public boolean isEstimateReady(Pose2d pose) {
         /* Disregard Vision if there are no targets in view */
@@ -306,7 +302,7 @@ public class Vision extends SubsystemBase {
         }
         return (Math.abs(pose.getX() - odometryPose.getX()) <= 1)
                 && (Math.abs(pose.getY() - odometryPose.getY())
-                        <= 1); // this can be tuned to find a threshold that helps us remove
+                <= 1); // this can be tuned to find a threshold that helps us remove
         // jumping
         // vision poses
     }
@@ -314,7 +310,7 @@ public class Vision extends SubsystemBase {
     /**
      * Converts a vision pose3d object to a pose2d object Also replaces the rotational component to
      * be the gyro rotation as this stays consistent throughout the match and does not need to be
-     * overriden by vision
+     * overridden by vision
      *
      * @param pose3d vision pose3d
      * @return modified pose2d
@@ -335,9 +331,9 @@ public class Vision extends SubsystemBase {
     }
 
     /**
-     * Creates Pose3d object from raw limelight values sent through NetworkTables
+     * Creates a Pose3d object from raw limelight values sent through NetworkTables
      *
-     * @param cameraConfig the camera config
+     * @param values the array of limelight raw values
      * @return the camera pair
      */
     public Pose3d createBotPose3d(double[] values) {
@@ -355,14 +351,15 @@ public class Vision extends SubsystemBase {
      *
      * @return true if limelight has seen a valid target at least once
      */
-    public void checkTargetHistory() {
+    public boolean checkTargetHistory() {
         // may need to use a sepearate count to avoid a consecutive loop check
         if (LimelightHelpers.getTV(null)) {
             targetSeenCount++;
         } else {
             targetSeenCount = 0;
         }
-        targetSeen = targetSeenCount > 2; // has been seen for 3 loops
+
+        return targetSeenCount > 2;
     }
 
     public double getHorizontalOffset(String limelight) {
@@ -384,7 +381,7 @@ public class Vision extends SubsystemBase {
     }
 
     /**
-     * @param limelight name of limelight to control in {@link VisionConfig}
+     * @param limelight     name of limelight to control in {@link VisionConfig}
      * @param pipelineIndex use pipeline indexes in {@link VisionConfig}
      */
     public void setLimelightPipeline(String limelight, int pipelineIndex) {
@@ -410,7 +407,7 @@ public class Vision extends SubsystemBase {
     /**
      * Prints the vision, estimated, and odometry pose to SmartDashboard
      *
-     * @param values the array of limelight raw values
+     * @param poseArray the array of limelight raw values
      */
     public void printDebug(double[] poseArray) {
         if (poseArray.length > 0) {
@@ -436,11 +433,11 @@ public class Vision extends SubsystemBase {
     /**
      * Prints useful debug information for theta aiming calculations
      *
-     * @param transform
-     * @param hyp
-     * @param beta
-     * @param omega
-     * @param theta
+     * @param transform the transform between the robot and the hybrid spot
+     * @param hyp       the hypotenuse of the triangle between the robot and the hybrid spot
+     * @param beta      the angle between the hypotenuse and the x-axis
+     * @param omega     the robot heading
+     * @param theta     the angle between the robot heading and the angle required to face the hybrid
      */
     private void aimingPrintDebug(
             Transform2d transform, double hyp, double beta, double omega, double theta) {
