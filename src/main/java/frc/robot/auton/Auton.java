@@ -27,7 +27,7 @@ public class Auton {
     public static HashMap<String, Command> eventMap =
             new HashMap<>(); // Stores all the values of the event map
 
-    public Auton() {
+    public static void init() {
         setupEventMap(); // sets the eventmap to run during auto
         setupSelectors(); // runs the command to start the chooser for auto on shuffleboard
     }
