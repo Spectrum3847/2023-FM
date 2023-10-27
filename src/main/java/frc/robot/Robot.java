@@ -28,7 +28,7 @@ import frc.robot.slide.commands.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.trajectories.Trajectories;
-import frc.robot.vision.Vision;
+import frc.robot.vision.VisionHandler;
 import org.littletonrobotics.junction.LoggedRobot;
 
 public class Robot extends LoggedRobot {
@@ -41,7 +41,7 @@ public class Robot extends LoggedRobot {
     public static Intake intake;
     public static Shoulder shoulder;
     public static Elbow elbow;
-    public static Vision vision;
+    public static VisionHandler vision;
     public static LEDs leds;
     public static PilotGamepad pilotGamepad;
     public static OperatorGamepad operatorGamepad;
@@ -53,10 +53,28 @@ public class Robot extends LoggedRobot {
         super(period);
     }
 
+    /**
+     * Used in all robot mode intialize methods to cancel previous commands and reset button
+     * bindings
+     */
+    public static void resetCommandsAndButtons() {
+        CommandScheduler.getInstance().cancelAll(); // Disable any currently running commands
+        CommandScheduler.getInstance().getActiveButtonLoop().clear();
+
+        // Reset Config for all gamepads and other button bindings
+        pilotGamepad.resetConfig();
+        operatorGamepad.resetConfig();
+        LEDCommands.setupLEDTriggers();
+        // this breaks the shoulder
+        // SlideCommands.setupSlideTriggers();
+        // ShoulderCommands.setupShoulderTriggers();
+        // ElbowCommands.setupElbowTriggers();
+    }
+
     // Intialize subsystems and run their setupDefaultCommand methods here
     private void intializeSystems() {
         System.out.println("Started InitSubsystems");
-        vision = new Vision();
+        vision = new VisionHandler();
         System.out.println("Started Vision");
         swerve = new Swerve();
         System.out.println("Started Swerve");
@@ -96,24 +114,6 @@ public class Robot extends LoggedRobot {
         LEDCommands.setupDefaultCommand();
 
         System.out.println("Finished Setting Up Default Commands");
-    }
-
-    /**
-     * Used in all robot mode intialize methods to cancel previous commands and reset button
-     * bindings
-     */
-    public static void resetCommandsAndButtons() {
-        CommandScheduler.getInstance().cancelAll(); // Disable any currently running commands
-        CommandScheduler.getInstance().getActiveButtonLoop().clear();
-
-        // Reset Config for all gamepads and other button bindings
-        pilotGamepad.resetConfig();
-        operatorGamepad.resetConfig();
-        LEDCommands.setupLEDTriggers();
-        // this breaks the shoulder
-        // SlideCommands.setupSlideTriggers();
-        // ShoulderCommands.setupShoulderTriggers();
-        // ElbowCommands.setupElbowTriggers();
     }
 
     /**
@@ -167,7 +167,9 @@ public class Robot extends LoggedRobot {
         Threads.setCurrentThreadPriority(true, 10); // Set the main thread back to normal priority
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     */
     @Override
     public void disabledInit() {
         RobotTelemetry.print("## Disabled Init Starting");
@@ -178,7 +180,8 @@ public class Robot extends LoggedRobot {
     }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+    }
 
     @Override
     public void disabledExit() {
@@ -204,16 +207,19 @@ public class Robot extends LoggedRobot {
 
         if (DriverStation.getMatchTime() != -1) {
             new CountdownLEDCommand(
-                            "Auton Countdown", 120, (int) DriverStation.getMatchTime(), false)
+                    "Auton Countdown", 120, (int) DriverStation.getMatchTime(), false)
                     .schedule();
         }
 
         RobotTelemetry.print("@@ Auton Init Complete");
     }
 
-    /** This function is called periodically during autonomous. */
+    /**
+     * This function is called periodically during autonomous.
+     */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+    }
 
     @Override
     public void autonomousExit() {
@@ -238,9 +244,12 @@ public class Robot extends LoggedRobot {
         RobotTelemetry.print("$$ Teleop Init Complete");
     }
 
-    /** This function is called periodically during operator control. */
+    /**
+     * This function is called periodically during operator control.
+     */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+    }
 
     @Override
     public void teleopExit() {
@@ -263,23 +272,30 @@ public class Robot extends LoggedRobot {
         RobotTelemetry.print("~~ Test Init Complete");
     }
 
-    /** This function is called periodically during test mode. */
+    /**
+     * This function is called periodically during test mode.
+     */
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic() {
+    }
 
     @Override
     public void testExit() {
         RobotTelemetry.print("~~ Test Exit");
     }
 
-    /** This function is called once when a simulation starts */
+    /**
+     * This function is called once when a simulation starts
+     */
     public void simulationInit() {
         RobotTelemetry.print("--- Simulation Init Starting ---");
 
         RobotTelemetry.print("--- Simulation Init Complete ---");
     }
 
-    /** This function is called periodically during a simulation */
+    /**
+     * This function is called periodically during a simulation
+     */
     public void simulationPeriodic() {
         PhysicsSim.getInstance().run();
     }

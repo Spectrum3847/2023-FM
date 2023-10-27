@@ -15,7 +15,7 @@ import frc.robot.vision.LimelightHelpers.LimelightTarget_Fiducial;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class Vision extends SubsystemBase {
+public class VisionHandler extends SubsystemBase {
     // testing
     private final DecimalFormat df = new DecimalFormat();
     private final boolean initialized = false;
@@ -43,7 +43,7 @@ public class Vision extends SubsystemBase {
     private boolean detectTarget = false;
     private LimelightHelpers.LimelightResults jsonResults;
 
-    public Vision() {
+    public VisionHandler() {
         setName("Vision");
         botPose = new Pose2d(0, 0, new Rotation2d(Units.degreesToRadians(0)));
         botPose3d = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
@@ -228,7 +228,7 @@ public class Vision extends SubsystemBase {
     }
 
     /**
-     * Helper function for {@link Vision#getThetaToHybrid}
+     * Helper function for {@link VisionHandler#getThetaToHybrid}
      *
      * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to hybrid
      *                   nodes
