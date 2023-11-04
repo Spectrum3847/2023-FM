@@ -5,11 +5,11 @@
 package frc.robot.slide.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.slide.Slide;
 
-public class SlideHoldPosition extends CommandBase {
+public class SlideHoldPosition extends Command {
     private double holdPosition = 0;
     /** Creates a new slideHoldPosition. */
     public SlideHoldPosition() {

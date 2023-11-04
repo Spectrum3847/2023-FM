@@ -3,13 +3,13 @@ package frc.robot.pilot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.configTemplates.PhysicalConfig;
 import java.util.function.DoubleSupplier;
 
-public class SpinMove extends CommandBase {
+public class SpinMove extends Command {
     private Translation2d translation;
     private boolean centerHasBeenSet = false;
 

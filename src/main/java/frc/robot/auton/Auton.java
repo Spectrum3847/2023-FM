@@ -1,7 +1,5 @@
 package frc.robot.auton;
 
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -9,12 +7,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.auton.commands.AutoPaths;
 import frc.robot.auton.commands.AutonCommands;
 import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.swerve.commands.LockSwerve;
-import frc.robot.trajectories.TrajectoriesConfig;
 import frc.robot.vision.VisionCommands;
 import java.util.HashMap;
 
@@ -33,6 +29,8 @@ public class Auton {
     }
 
     // Autobuilder only using odometry
+    /*
+     Commented out during 2024 import due to breaking changes
     public static SwerveAutoBuilder getAutoBuilder() {
         return new SwerveAutoBuilder(
                 Robot.swerve.odometry::getPoseMeters, // Pose2d supplier
@@ -66,22 +64,31 @@ public class Auton {
                 );
     }
 
+    */
+
     // A chooser for autonomous commands
     public static void setupSelectors() {
-        // // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("Clean3", AutoPaths.CleanSide());
-        autonChooser.addOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
-        // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
-        // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
-        // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
-        autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
-        // autonChooser.addOption("Align to CubeNode", AutonCommands.AlignToAprilTagTest());
-        // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
-        autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
+        // Advanced comp autos with odometry (Ordered by likelyhood of running)
+        autonChooser.setDefaultOption("AUTON IS DISABLED", new PrintCommand("AUTON IS DISABLED FOR 2024 IMPORT"));
 
-        autonChooser.addOption("CleanBump3", AutoPaths.CleanBumpSide());
+        /* Commented out during 2024 import due to breaking changes
 
-        autonChooser.addOption("OperatorLaunch", OperatorCommands.launch());
+                autonChooser.setDefaultOption("Clean3", AutoPaths.CleanSide());
+                autonChooser.setDefaultOption("Clean3", AutoPaths.CleanSide());
+                autonChooser.addOption("Balance w/ Mobility (1 Piece)", AutoPaths.OverCharge());
+                // autonChooser.addOption("Align to AprilTag", AutonCommands.AlignToAprilTagTest());
+                // autonChooser.addOption("Drive to AprilTag", AutonCommands.DriveToAprilTagTest());
+                // autonChooser.addOption("Align to ConeNode", AutonCommands.AlignToConeNodeTest());
+                autonChooser.addOption("Drive to ConeNode", AutonCommands.DriveToConeNodeTest());
+                // autonChooser.addOption("Align to CubeNode", AutonCommands.AlignToAprilTagTest());
+                // autonChooser.addOption("Drive to CubeNode", AutonCommands.DriveToCubeNode());
+                autonChooser.addOption("Drive to Cone Floor", AutonCommands.DriveToConeFloorTest());
+
+                autonChooser.addOption("CleanBump3", AutoPaths.CleanBumpSide());
+
+                autonChooser.addOption("OperatorLaunch", OperatorCommands.launch());
+        */
+
         // autonChooser.addOption("ConeMidPlacement", OperatorCommands.coneMid());
         // // Simple comp autos
         // autonChooser.addOption(

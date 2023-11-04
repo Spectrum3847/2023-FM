@@ -5,11 +5,11 @@
 package frc.robot.test.commands;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.SpectrumLib.util.Util;
 import frc.robot.RobotTelemetry;
 
-public class ConfirmCurrent extends CommandBase {
+public class ConfirmCurrent extends Command {
     private WPI_TalonFX motor;
     private double current;
     private double targetCurrent;

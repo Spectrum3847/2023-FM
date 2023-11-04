@@ -1,10 +1,10 @@
 package frc.robot.elbow.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.elbow.Elbow;
 
-public class ZeroElbowRoutine extends CommandBase {
+public class ZeroElbowRoutine extends Command {
     /** Creates a new ZeroElbow. */
     public ZeroElbowRoutine() {
         // Use addRequirements() here to declare subsystem dependencies.

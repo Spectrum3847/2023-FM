@@ -1,9 +1,9 @@
 package frc.robot.elbow.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 
-public class ElbowHoldPosition extends CommandBase {
+public class ElbowHoldPosition extends Command {
     double position = 0;
 
     /** Creates a new ElbowHoldPosition. */

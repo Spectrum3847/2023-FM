@@ -1,11 +1,11 @@
 package frc.robot.test.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 
 // Uses the Pilot start/menu button to move on to the next method
-public class ConfirmCommand extends CommandBase {
+public class ConfirmCommand extends Command {
     private String text;
 
     /** Creates a new ConfirmCommand. */

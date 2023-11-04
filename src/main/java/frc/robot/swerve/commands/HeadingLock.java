@@ -4,12 +4,12 @@
 
 package frc.robot.swerve.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class HeadingLock extends CommandBase {
+public class HeadingLock extends Command {
     /** Creates a new HeadingLock. */
     double currentHeading = 0;
 

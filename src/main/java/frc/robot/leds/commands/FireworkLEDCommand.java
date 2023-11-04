@@ -3,7 +3,7 @@ package frc.robot.leds.commands;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class FireworkLEDCommand extends LEDCommandBase {
+public class FireworkLEDCommand extends LEDCommand {
     private final LEDs ledSubsystem;
 
     double waitTime;

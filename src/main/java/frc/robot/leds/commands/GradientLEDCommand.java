@@ -5,7 +5,7 @@ import frc.SpectrumLib.util.Util;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class GradientLEDCommand extends LEDCommandBase {
+public class GradientLEDCommand extends LEDCommand {
     private final LEDs ledSubsystem;
     private final double colorFrequency, stripFrequency; // ms
     private int r = 255;

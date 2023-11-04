@@ -6,12 +6,11 @@ package frc.robot.auton.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.auton.Auton;
 import java.util.Set;
 
-public class LoggingDecorator extends CommandBase {
+public class LoggingDecorator extends Command {
 
     private final Command command;
     private String commandType;

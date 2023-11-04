@@ -1,20 +1,7 @@
 package frc.robot.auton.commands;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Robot;
-import frc.robot.auton.Auton;
-import frc.robot.pilot.PilotConfig;
-import frc.robot.swerve.commands.DriveToConeFloor;
-import frc.robot.swerve.commands.DriveToConeNode;
-import frc.robot.swerve.commands.LockSwerve;
-import frc.robot.vision.VisionCommands;
-
 public class AutoPaths {
-
+    /* Commented out during 2024 import due to breaking changes
     public static Command CleanSide() {
         return logCommand(AutonCommands.coneTopScore())
                 .deadlineWith(AutonCommands.alignWheelsStraight())
@@ -222,4 +209,5 @@ public class AutoPaths {
                 .andThen(new AutoBalance())
                 .andThen(new LockSwerve().withTimeout(0.1));
     }
+    */
 }

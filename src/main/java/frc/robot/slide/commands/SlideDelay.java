@@ -5,12 +5,12 @@
 package frc.robot.slide.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.slide.Slide;
 import frc.robot.slide.SlideConfig;
 
-public class SlideDelay extends CommandBase {
+public class SlideDelay extends Command {
     private double safePos;
     private double finalPos;
     private double conditionalPercent;

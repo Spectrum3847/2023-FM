@@ -5,11 +5,10 @@
 package frc.robot.trajectories.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.swerve.commands.HeadingLock;
 
-public class DistanceDrive extends CommandBase {
+public class DistanceDrive extends Command {
     double distance = 0;
     Command driveCommand;
     /** Creates a new DistanceDrive. */

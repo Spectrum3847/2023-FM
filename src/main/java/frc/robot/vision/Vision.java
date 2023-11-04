@@ -136,8 +136,9 @@ public class Vision extends SubsystemBase {
         double[] poseArray = LimelightHelpers.getLimelightNTDoubleArray(null, "botpose");
 
         if (poseArray.length > 0) {
+            // TODO: needs testing, logic changed in 2024 beta
             latency =
-                    (DriverStation.getAlliance() == Alliance.Blue)
+                    (DriverStation.getAlliance().orElse(Alliance.Red) == Alliance.Blue)
                             ? LimelightHelpers.getBotPose_wpiBlue(null)[6]
                             : LimelightHelpers.getBotPose_wpiRed(null)[
                                     6]; // may need to add LimelightHelpers json parsing delay?
@@ -265,13 +266,14 @@ public class Vision extends SubsystemBase {
      * @return Pose3d corresponding to blue or red alliance
      */
     public Pose3d chooseAlliance() {
-        if (DriverStation.getAlliance() == Alliance.Blue) {
+
+        if (DriverStation.getAlliance().isEmpty()) {
+            DriverStation.reportWarning("Invalid Team -- Defaulted to BLUE alliance", false);
             return LimelightHelpers.getBotPose3d_wpiBlue(null);
-        } else if (DriverStation.getAlliance() == Alliance.Red) {
-            return LimelightHelpers.getBotPose3d_wpiRed(null);
         }
-        DriverStation.reportWarning("Invalid Team", false);
-        return null;
+        return (DriverStation.getAlliance().orElse(Alliance.Red) == Alliance.Blue)
+                ? LimelightHelpers.getBotPose3d_wpiBlue(VisionConfig.DEFAULT_LL)
+                : LimelightHelpers.getBotPose3d_wpiRed(VisionConfig.DEFAULT_LL);
     }
 
     /** @return whether or not vision sees a tag */

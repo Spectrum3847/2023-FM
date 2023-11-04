@@ -4,11 +4,11 @@
 
 package frc.robot.shoulder.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.shoulder.Shoulder;
 
-public class ZeroShoulderRoutine extends CommandBase {
+public class ZeroShoulderRoutine extends Command {
     /** Creates a new ZeroShoulder. */
     public ZeroShoulderRoutine() {
         // Use addRequirements() here to declare subsystem dependencies.

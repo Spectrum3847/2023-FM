@@ -3,12 +3,11 @@ package frc.robot.auton.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.auton.AutonConfig;
 import frc.robot.swerve.commands.SwerveDrive;
 
-public class AutoBalance extends CommandBase {
+public class AutoBalance extends Command {
     public double currentAngle = 100;
     private double currentRate = 100;
     private double angleOffset;

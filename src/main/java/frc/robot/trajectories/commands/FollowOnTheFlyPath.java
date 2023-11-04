@@ -12,12 +12,12 @@
 // import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Robot;
 // import frc.robot.trajectories.TrajectoriesConfig;
 // import java.util.LinkedList;
 
-// public class FollowOnTheFlyPath extends CommandBase {
+// public class FollowOnTheFlyPath extends Command {
 //     public static boolean OTF;
 //     private LinkedList<PathPoint> endPoints = new LinkedList<>();
 //     private PathPlannerTrajectory path;

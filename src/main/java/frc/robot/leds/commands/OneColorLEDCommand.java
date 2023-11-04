@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class OneColorLEDCommand extends LEDCommandBase {
+public class OneColorLEDCommand extends LEDCommand {
     private final LEDs ledSubsystem;
     private final int r, g, b;
     private int ledStart, ledEnd;

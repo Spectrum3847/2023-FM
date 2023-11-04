@@ -9,6 +9,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 public class RobotLog {
 
+    // TODO: update logging calls
     public Logger logger = Logger.getInstance();
 
     /** Setups logging with advantageKit */

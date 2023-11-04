@@ -4,10 +4,10 @@
 
 package frc.robot.shoulder.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 
-public class ShoulderHoldPosition extends CommandBase {
+public class ShoulderHoldPosition extends Command {
     double position = 0;
 
     /** Creates a new ShoulderHoldPosition. */

@@ -4,10 +4,10 @@
 
 package frc.robot.shoulder.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 
-public class ShoulderDelay extends CommandBase {
+public class ShoulderDelay extends Command {
     private double safePercent;
     private double finalPercent;
     private double conditionalPos;

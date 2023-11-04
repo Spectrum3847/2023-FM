@@ -1,9 +1,9 @@
 package frc.robot.elbow.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 
-public class ElbowDelay extends CommandBase {
+public class ElbowDelay extends Command {
     private double safePercent;
     private double finalPercent;
     private double conditionalPos;

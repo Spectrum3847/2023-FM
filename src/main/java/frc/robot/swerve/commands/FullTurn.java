@@ -6,10 +6,9 @@ package frc.robot.swerve.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class FullTurn extends CommandBase {
+public class FullTurn extends Command {
     private double timeout = 2; // seconds
 
     private double startTime;

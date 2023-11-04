@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class ChaseLEDCommand extends LEDCommandBase {
+public class ChaseLEDCommand extends LEDCommand {
     /** Creates a new ChaseLEDCommand. */
     private final LEDs ledSubsystem;
 

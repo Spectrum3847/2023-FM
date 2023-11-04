@@ -5,11 +5,11 @@
 package frc.robot.intake.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.slide.Slide;
 
-public class HoldCone extends CommandBase {
+public class HoldCone extends Command {
     double frontPos = 0;
     double timer = 0;
     double startTime = 0;

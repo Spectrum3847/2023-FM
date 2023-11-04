@@ -4,11 +4,11 @@
 
 package frc.robot.slide.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.slide.Slide;
 
-public class ZeroSlideRoutine extends CommandBase {
+public class ZeroSlideRoutine extends Command {
     /** Creates a new Zeroslide. */
     public ZeroSlideRoutine() {
         // Use addRequirements() here to declare subsystem dependencies.

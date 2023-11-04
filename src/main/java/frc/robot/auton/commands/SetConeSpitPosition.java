@@ -2,14 +2,13 @@
 package frc.robot.auton.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.auton.Auton;
 import frc.robot.shoulder.commands.ShoulderCommands;
 import frc.robot.slide.commands.SlideCommands;
 
-public class SetConeSpitPosition extends CommandBase {
+public class SetConeSpitPosition extends Command {
     Command setConeSpitPosition;
 
     public SetConeSpitPosition() {

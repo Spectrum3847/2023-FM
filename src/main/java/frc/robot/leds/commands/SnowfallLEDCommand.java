@@ -3,7 +3,7 @@ package frc.robot.leds.commands;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class SnowfallLEDCommand extends LEDCommandBase {
+public class SnowfallLEDCommand extends LEDCommand {
     /** Creates a new SnowfallLEDCommand. */
     private final LEDs ledSubsystem;
 

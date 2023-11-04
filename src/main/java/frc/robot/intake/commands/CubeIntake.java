@@ -6,7 +6,7 @@
 
 // import edu.wpi.first.wpilibj.RobotState;
 // import edu.wpi.first.wpilibj.Timer;
-// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Robot;
 // import frc.robot.elevator.commands.ElevatorCommands;
 // import frc.robot.fourbar.commands.FourBarCommands;
@@ -14,7 +14,7 @@
 // import frc.robot.operator.commands.OperatorCommands;
 // import frc.robot.pilot.commands.PilotCommands;
 
-// public class CubeIntake extends CommandBase {
+// public class CubeIntake extends Command {
 //     boolean velocityLimitReached = false;
 //     int count = 0;
 //     int thresholdCount = 0;

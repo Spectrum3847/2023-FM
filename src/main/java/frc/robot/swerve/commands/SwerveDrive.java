@@ -5,13 +5,13 @@
 package frc.robot.swerve.commands;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.swerve.Swerve;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class SwerveDrive extends CommandBase {
+public class SwerveDrive extends Command {
     private boolean openLoop;
 
     private Swerve swerve;

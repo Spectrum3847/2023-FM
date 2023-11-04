@@ -5,12 +5,12 @@
 // package frc.robot.intake.commands;
 
 // import edu.wpi.first.wpilibj.RobotState;
-// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Robot;
 // import frc.robot.elevator.commands.ElevatorCommands;
 // import frc.robot.fourbar.commands.FourBarCommands;
 
-// public class CubeIntakeAuton extends CommandBase {
+// public class CubeIntakeAuton extends Command {
 //     boolean velocityLimitReached = false;
 //     int count = 0;
 //     int thresholdCount = 0;

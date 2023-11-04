@@ -6,13 +6,13 @@
 
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Robot;
 // import frc.robot.intake.Intake;
 // import frc.robot.operator.commands.OperatorCommands;
 // import frc.robot.pilot.commands.PilotCommands;
 
-// public class ConeIntake extends CommandBase {
+// public class ConeIntake extends Command {
 //     double velocityThreshold = 2100;
 //     boolean velocityLimitReached = false;
 //     int count = 0;

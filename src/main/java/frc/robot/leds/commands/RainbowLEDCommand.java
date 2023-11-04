@@ -3,7 +3,7 @@ package frc.robot.leds.commands;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class RainbowLEDCommand extends LEDCommandBase {
+public class RainbowLEDCommand extends LEDCommand {
     /** Creates a new RainbowCommand. */
     private final LEDs ledSubsystem;
 

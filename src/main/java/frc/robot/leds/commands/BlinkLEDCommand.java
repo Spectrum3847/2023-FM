@@ -7,7 +7,7 @@ import frc.SpectrumLib.util.Util;
 import frc.robot.Robot;
 import frc.robot.leds.LEDs;
 
-public class BlinkLEDCommand extends LEDCommandBase {
+public class BlinkLEDCommand extends LEDCommand {
     LEDs ledSubsystem;
     long startTime;
     int waitTime; // Wait time in milliseconds

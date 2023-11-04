@@ -7,7 +7,7 @@ package frc.robot.leds;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.commands.LEDCommandBase;
+import frc.robot.leds.commands.LEDCommand;
 import frc.robot.leds.commands.RainbowLEDCommand;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class LEDScheduler {
         // LEDSchedulerThread.start();
     }
 
-    public void setDefaultAnimation(String name, LEDCommandBase command) {
+    public void setDefaultAnimation(String name, LEDCommand command) {
         defaultAnimation = new Animation(name, command, 1, -101);
         if (top == null) {
             top = defaultAnimation;
@@ -84,7 +84,7 @@ public class LEDScheduler {
         top.getCommand().ledExecute();
     }
 
-    public void addAnimation(String name, LEDCommandBase command, int priority, double seconds) {
+    public void addAnimation(String name, LEDCommand command, int priority, double seconds) {
         Animation animation = new Animation(name, command, priority, seconds * 5);
         addAnimation(animation);
     }
@@ -109,11 +109,11 @@ public class LEDScheduler {
 
     class Animation {
         String name;
-        LEDCommandBase command;
+        LEDCommand command;
         int priority;
         double timeout;
 
-        public Animation(String name, LEDCommandBase command, int priority, double timeout) {
+        public Animation(String name, LEDCommand command, int priority, double timeout) {
             this.name = name;
             this.command = command;
             this.priority = priority;
@@ -134,7 +134,7 @@ public class LEDScheduler {
             return name;
         }
 
-        public LEDCommandBase getCommand() {
+        public LEDCommand getCommand() {
             return command;
         }
 
