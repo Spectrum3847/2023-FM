@@ -69,7 +69,8 @@ public class Auton {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         // Advanced comp autos with odometry (Ordered by likelyhood of running)
-        autonChooser.setDefaultOption("AUTON IS DISABLED", new PrintCommand("AUTON IS DISABLED FOR 2024 IMPORT"));
+        autonChooser.setDefaultOption(
+                "AUTON IS DISABLED", new PrintCommand("AUTON IS DISABLED FOR 2024 IMPORT"));
 
         /* Commented out during 2024 import due to breaking changes
 
