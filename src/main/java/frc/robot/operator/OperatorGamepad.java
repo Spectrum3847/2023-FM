@@ -1,5 +1,6 @@
 package frc.robot.operator;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.SpectrumLib.gamepads.AxisButton;
 import frc.SpectrumLib.gamepads.Gamepad;
@@ -30,12 +31,20 @@ public class OperatorGamepad extends Gamepad {
     public void setupTeleopButtons() {
 
         /* Intaking */
-        gamepad.leftTriggerButton
-                .and(rightBumper())
-                .and(noRightTrigger())
-                .whileTrue(OperatorCommands.intake());
-        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
-        gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
+        // gamepad.leftTriggerButton
+        //         .and(rightBumper())
+        //         .and(noRightTrigger())
+        //         .whileTrue(OperatorCommands.intake()); //disabled for demos
+        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
+        runWithEndSequence(
+                gamepad.leftTriggerButton.and(noRightBumper()),
+                OperatorCommands.airIntake(),
+                OperatorCommands.homeAfterIntake());
+        // gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
+        runWithEndSequence(
+                gamepad.rightTriggerButton.and(noBumpers()),
+                OperatorCommands.shelfIntake(),
+                OperatorCommands.homeAfterIntake());
 
         /* Scoring/Positions */
         gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
@@ -145,5 +154,18 @@ public class OperatorGamepad extends Gamepad {
 
     public double elbowManual() {
         return gamepad.rightStick.getY() * OperatorConfig.elbowModifier;
+    }
+
+    /**
+     * Run a command while a button/trigger is held down. Also runs a command for 1.5s when the
+     * button/trigger is released.
+     *
+     * @param trigger
+     * @param runCommand
+     * @param endCommand
+     */
+    public void runWithEndSequence(Trigger trigger, Command runCommand, Command endCommand) {
+        trigger.whileTrue(runCommand);
+        trigger.onFalse(endCommand.withTimeout(1.5));
     }
 }

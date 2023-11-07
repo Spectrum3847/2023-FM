@@ -37,7 +37,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.airIntake(),
                         ElbowCommands.airIntake())
-                .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
+                // .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
                 .withName("OperatorAirIntake");
     }
 
@@ -47,7 +47,7 @@ public class OperatorCommands {
                         SlideCommands.home(),
                         ShoulderCommands.shelfIntake(),
                         ElbowCommands.shelfIntake())
-                .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
+                // .finallyDo((b) -> homeAfterIntake().withTimeout(1.5).schedule())
                 .withName("OperatorShelfIntake");
     }
 
