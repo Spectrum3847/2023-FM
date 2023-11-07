@@ -27,7 +27,7 @@ public class OperatorCommands {
                                         SlideCommands.home(),
                                         ShoulderCommands.intake(),
                                         ElbowCommands.intake()))
-                .finallyDo((b) -> homeAfterFloorIntake().withTimeout(1.5).schedule())
+                // .finallyDo((b) -> homeAfterFloorIntake().withTimeout(1.5).schedule())
                 .withName("OperatorIntake");
     }
 

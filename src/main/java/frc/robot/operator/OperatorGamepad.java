@@ -34,7 +34,11 @@ public class OperatorGamepad extends Gamepad {
         // gamepad.leftTriggerButton
         //         .and(rightBumper())
         //         .and(noRightTrigger())
-        //         .whileTrue(OperatorCommands.intake()); //disabled for demos
+        //         .whileTrue(OperatorCommands.intake());
+        runWithEndSequence(
+                gamepad.leftTriggerButton.and(rightBumper()).and(noRightTrigger()),
+                OperatorCommands.intake(),
+                OperatorCommands.homeAfterFloorIntake());
         // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
         runWithEndSequence(
                 gamepad.leftTriggerButton.and(noRightBumper()),
