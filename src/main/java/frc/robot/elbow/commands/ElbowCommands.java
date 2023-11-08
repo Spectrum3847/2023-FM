@@ -51,6 +51,15 @@ public class ElbowCommands {
         return new RunCommand(() -> Robot.elbow.setMMPercent(percent), Robot.elbow);
     }
 
+    public static Command temporarySetMMPercent(double percent) {
+        return new RunCommand(
+                () -> {
+                    System.out.println("SLIDE IS ACTUALLY GOING HOME ------------------");
+                    Robot.elbow.setMMPercent(percent);
+                },
+                Robot.elbow);
+    }
+
     public static Command raiseByPercent(double percent) {
         return new RunCommand(
                 () -> {
@@ -85,7 +94,7 @@ public class ElbowCommands {
     /* Scoring Positions */
 
     public static Command home() {
-        return setMMPercent(Elbow.config.home);
+        return temporarySetMMPercent(Elbow.config.home);
     }
 
     public static Command floor() {

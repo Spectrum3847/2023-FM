@@ -35,34 +35,35 @@ public class OperatorGamepad extends Gamepad {
         //         .and(rightBumper())
         //         .and(noRightTrigger())
         //         .whileTrue(OperatorCommands.intake());
-        runWithEndSequence(
-                gamepad.leftTriggerButton.and(rightBumper()).and(noRightTrigger()),
-                OperatorCommands.intake(),
-                OperatorCommands.homeAfterFloorIntake());
-        // gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
-        runWithEndSequence(
-                gamepad.leftTriggerButton.and(noRightBumper()),
-                OperatorCommands.airIntake(),
-                OperatorCommands.homeAfterIntake());
-        // gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
-        runWithEndSequence(
-                gamepad.rightTriggerButton.and(noBumpers()),
-                OperatorCommands.shelfIntake(),
-                OperatorCommands.homeAfterIntake());
+        // runWithEndSequence(
+        //         gamepad.leftTriggerButton.and(rightBumper()).and(noRightTrigger()),
+        //         OperatorCommands.intake(),
+        //         OperatorCommands.homeAfterFloorIntake());
+        gamepad.leftTriggerButton.and(noRightBumper()).whileTrue(OperatorCommands.airIntake());
+        // runWithEndSequence(
+        //         gamepad.leftTriggerButton.and(noRightBumper()),
+        //         OperatorCommands.airIntake(),
+        //         OperatorCommands.homeAfterIntake());
+        gamepad.rightTriggerButton.and(noBumpers()).whileTrue(OperatorCommands.shelfIntake());
+        // runWithEndSequence(
+        //         gamepad.rightTriggerButton.and(noBumpers()),
+        //         OperatorCommands.shelfIntake(),
+        //         OperatorCommands.homeAfterIntake());
 
         /* Scoring/Positions */
         gamepad.leftBumper.and(noRightBumper()).whileTrue(OperatorCommands.homeAndSlowIntake());
         gamepad.leftBumper.and(rightBumper()).whileTrue(OperatorCommands.preScorePos());
-        gamepad.xButton
-                .and(noBumpers())
-                .whileTrue(
-                        OperatorCommands.coneMid().alongWith(VisionCommands.setConeNodePipeline()));
+        // gamepad.xButton
+        //         .and(noBumpers())
+        //         .whileTrue(
+        //
+        // OperatorCommands.coneMid().alongWith(VisionCommands.setConeNodePipeline()));
         gamepad.yButton.whileTrue(
                 OperatorCommands.coneTop().alongWith(VisionCommands.setConeNodePipeline()));
-        gamepad.aButton
-                .and(noRightBumper())
-                .whileTrue(
-                        OperatorCommands.cubeMid().alongWith(VisionCommands.setCubeNodePipeline()));
+        // gamepad.aButton
+        // .and(noRightBumper())
+        // .whileTrue(
+        // OperatorCommands.cubeMid().alongWith(VisionCommands.setCubeNodePipeline()));
         gamepad.bButton.whileTrue(
                 OperatorCommands.cubeTop().alongWith(VisionCommands.setCubeNodePipeline()));
 
