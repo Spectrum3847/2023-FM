@@ -6,6 +6,7 @@
 package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -227,6 +228,24 @@ public class Swerve extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
+    public void setDriveCurrentLimit(SupplyCurrentLimitConfiguration[] currentLimitConfigs) {
+        for (SwerveModule mod : mSwerveMods) {
+            mod.setDriveCurrentLimit(currentLimitConfigs[mod.moduleNumber]);
+        }
+    }
+
+    /**
+     * Get an array of the 4 Individual SwerveModule Speeds as an absolute value
+     *
+     * @return
+     */
+    public double[] getWheelSpeeds() {
+        double[] wheelSpeeds = new double[4];
+        for (SwerveModule mod : mSwerveMods) {
+            wheelSpeeds[mod.moduleNumber] = mod.getSpeed();
+        }
+        return wheelSpeeds;
+    }
     /**
      * Used by SwerveFollowCommand in Auto, assumes closed loop control
      *

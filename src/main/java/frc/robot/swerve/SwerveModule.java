@@ -6,6 +6,7 @@ package frc.robot.swerve;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -171,6 +172,10 @@ public class SwerveModule extends SubsystemBase {
         mDriveMotor.setSelectedSensorPosition(0);
     }
 
+    public void setDriveCurrentLimit(SupplyCurrentLimitConfiguration driveSupplyLimit) {
+        mDriveMotor.configSupplyCurrentLimit(driveSupplyLimit);
+    }
+
     private Rotation2d checkAbsoluteAngle() {
         return angleEncoder.get();
     }
@@ -218,6 +223,19 @@ public class SwerveModule extends SubsystemBase {
 
     public SwerveModulePosition getPosition() {
         return mSwerveModPosition;
+    }
+
+    /**
+     * Get the speed of the drive motor in meters per second
+     *
+     * @return absolute value of wheel velocity in meters per second
+     */
+    public double getSpeed() {
+        return Math.abs(
+                Conversions.falconToMPS(
+                        mDriveMotor.getSelectedSensorVelocity(),
+                        config.physical.wheelCircumference,
+                        config.physical.driveGearRatio));
     }
 
     public void setBrakeMode(Boolean enabled) {
