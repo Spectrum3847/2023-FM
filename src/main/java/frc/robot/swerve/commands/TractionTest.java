@@ -51,6 +51,7 @@ public class TractionTest extends CommandBase {
             Robot.swerve.stop();
             startingCurrentLimit += 5;
             startingtime = Timer.getFPGATimestamp();
+            log();
         }
         // set current limit to 10 amps
         SupplyCurrentLimitConfiguration currentLimit =
@@ -60,6 +61,14 @@ public class TractionTest extends CommandBase {
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         driveCommand.execute();
+    }
+
+    private void log() {
+
+        System.out.println("Current Limit: " + startingCurrentLimit);
+        System.out.println(
+                "Current: " + Robot.swerve.mSwerveMods[0].mDriveMotor.getSupplyCurrent());
+        System.out.println("Speed: " + Robot.swerve.mSwerveMods[0].getSpeed());
     }
 
     // Called once the command ends or is interrupted.
@@ -83,6 +92,7 @@ public class TractionTest extends CommandBase {
         double[] wheelSpeeds = Robot.swerve.getWheelSpeeds();
         for (double speed : wheelSpeeds) {
             if (speed > 5) {
+                log();
                 return true;
             }
         }
