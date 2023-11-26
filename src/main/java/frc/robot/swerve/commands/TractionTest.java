@@ -6,6 +6,7 @@ package frc.robot.swerve.commands;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -14,10 +15,12 @@ public class TractionTest extends CommandBase {
     /** Creates a new TractionTest. */
     Command driveCommand;
 
-    double startingCurrentLimit = 10;
+    int swerveModule = 2;
+    double startingCurrentLimit = 1;
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
-    SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 5, 5, 0.1);
+    SupplyCurrentLimitConfiguration lowLimit =
+            new SupplyCurrentLimitConfiguration(true, 0.1, 0.1, 0.0);
     SupplyCurrentLimitConfiguration[] currentLimits = {lowLimit, lowLimit, lowLimit, lowLimit};
 
     public TractionTest() {
@@ -28,47 +31,47 @@ public class TractionTest extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        SmartDashboard.putNumber("current limit", startingCurrentLimit);
+        SmartDashboard.putNumber(
+                "WheelSpeed",
+                Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "Current", Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
 
         // set current limit to 10 amps
         currentLimit =
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
-        currentLimits[0] = currentLimit;
+        currentLimits[swerveModule] = currentLimit;
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
-        driveCommand =
-                new SwerveDrive(() -> Robot.swerve.config.tuning.maxVelocity, () -> 0.0, () -> 0.0)
-                        .withTimeout(2);
+        driveCommand = new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0).withTimeout(2);
         startingtime = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
+        SmartDashboard.putNumber("current limit", startingCurrentLimit);
+        SmartDashboard.putNumber(
+                "WheelSpeed",
+                Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "Current", Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
         /*run every 2 seconds */
         if (Timer.getFPGATimestamp() - startingtime > 2) {
             Robot.swerve.stop();
-            startingCurrentLimit += 5;
+            startingCurrentLimit += 1;
             startingtime = Timer.getFPGATimestamp();
-            log();
         }
         // set current limit to 10 amps
         SupplyCurrentLimitConfiguration currentLimit =
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
-        currentLimits[0] = currentLimit;
+        currentLimits[swerveModule] = currentLimit;
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         driveCommand.execute();
-    }
-
-    private void log() {
-
-        System.out.println("Current Limit: " + startingCurrentLimit);
-        System.out.println(
-                "Current: " + Robot.swerve.mSwerveMods[0].mDriveMotor.getSupplyCurrent());
-        System.out.println("Speed: " + Robot.swerve.mSwerveMods[0].getSpeed());
     }
 
     // Called once the command ends or is interrupted.
@@ -89,13 +92,6 @@ public class TractionTest extends CommandBase {
     public boolean isFinished() {
 
         /*return true if any of the 4 module wheel velocities are greater than 5 m/s */
-        double[] wheelSpeeds = Robot.swerve.getWheelSpeeds();
-        for (double speed : wheelSpeeds) {
-            if (speed > 5) {
-                log();
-                return true;
-            }
-        }
         return false;
     }
 }
