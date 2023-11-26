@@ -281,10 +281,8 @@ public class Swerve extends SubsystemBase {
             }
         }
     }
-    
-    /**
-     * Stop all the motors
-     */
+
+    /** Stop all the motors */
     public void stop() {
         for (SwerveModule mod : mSwerveMods) {
             mod.mDriveMotor.stopMotor();

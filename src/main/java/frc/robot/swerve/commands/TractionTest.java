@@ -18,9 +18,7 @@ public class TractionTest extends CommandBase {
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
     SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 5, 5, 0.1);
-    SupplyCurrentLimitConfiguration[] currentLimits = new SupplyCurrentLimitConfiguration = {
-        lowLimit, lowLimit, lowLimit, lowLimit
-    };
+    SupplyCurrentLimitConfiguration[] currentLimits = {lowLimit, lowLimit, lowLimit, lowLimit};
 
     public TractionTest() {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -35,10 +33,12 @@ public class TractionTest extends CommandBase {
         currentLimit =
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
-         currentLimits[0] = currentLimit;
+        currentLimits[0] = currentLimit;
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
-        driveCommand = new SwerveDrive(() -> Robot.swerve.config.tuning.maxVelocity, () -> 0.0, () -> 0.0).withTimeout(2);
+        driveCommand =
+                new SwerveDrive(() -> Robot.swerve.config.tuning.maxVelocity, () -> 0.0, () -> 0.0)
+                        .withTimeout(2);
         startingtime = Timer.getFPGATimestamp();
     }
 
