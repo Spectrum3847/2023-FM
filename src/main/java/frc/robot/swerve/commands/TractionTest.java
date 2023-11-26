@@ -45,6 +45,7 @@ public class TractionTest extends CommandBase {
 
         /*run every 2 seconds */
         if (Timer.getFPGATimestamp() - startingtime > 2) {
+            Robot.swerve.stop();
             startingCurrentLimit += 5;
             startingtime = Timer.getFPGATimestamp();
         }
@@ -63,6 +64,7 @@ public class TractionTest extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        Robot.swerve.stop();
         // set current limit to config value
         SupplyCurrentLimitConfiguration currentLimit =
                 new SupplyCurrentLimitConfiguration(true, 40, 40, 0.1);
