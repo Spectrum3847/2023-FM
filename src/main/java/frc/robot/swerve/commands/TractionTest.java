@@ -45,7 +45,9 @@ public class TractionTest extends CommandBase {
         currentLimits[swerveModule] = currentLimit;
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
-        driveCommand = new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0).withTimeout(2);
+        driveCommand =
+                new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
+                        .withTimeout(2);
         startingtime = Timer.getFPGATimestamp();
     }
 
