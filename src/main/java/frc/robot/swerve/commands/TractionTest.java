@@ -15,12 +15,12 @@ public class TractionTest extends CommandBase {
     /** Creates a new TractionTest. */
     Command driveCommand;
 
-    int swerveModule = 2;
-    double startingCurrentLimit = 1;
+    int swerveModule = 3;
+    double mxCurr = 0;
+    double startingCurrentLimit = 6;
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
-    SupplyCurrentLimitConfiguration lowLimit =
-            new SupplyCurrentLimitConfiguration(true, 0.1, 0.1, 0.0);
+    SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 0, 0, 0.0);
     SupplyCurrentLimitConfiguration[] currentLimits = {lowLimit, lowLimit, lowLimit, lowLimit};
 
     public TractionTest() {
@@ -31,12 +31,7 @@ public class TractionTest extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        SmartDashboard.putNumber("current limit", startingCurrentLimit);
-        SmartDashboard.putNumber(
-                "WheelSpeed",
-                Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity());
-        SmartDashboard.putNumber(
-                "Current", Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
+        log();
 
         // set current limit to 10 amps
         currentLimit =
@@ -46,7 +41,7 @@ public class TractionTest extends CommandBase {
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         driveCommand =
-                new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
+                new SwerveDrive(() -> -0.5, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
                         .withTimeout(2);
         startingtime = Timer.getFPGATimestamp();
     }
@@ -54,14 +49,16 @@ public class TractionTest extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putNumber("current limit", startingCurrentLimit);
-        SmartDashboard.putNumber(
-                "WheelSpeed",
-                Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity());
-        SmartDashboard.putNumber(
-                "Current", Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
+        if (Math.abs(Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity())
+                < 800) {
+            mxCurr =
+                    Math.max(
+                            mxCurr,
+                            Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
+        }
+        log();
         /*run every 2 seconds */
-        if (Timer.getFPGATimestamp() - startingtime > 2) {
+        if (Timer.getFPGATimestamp() - startingtime > 5) {
             Robot.swerve.stop();
             startingCurrentLimit += 1;
             startingtime = Timer.getFPGATimestamp();
@@ -74,6 +71,33 @@ public class TractionTest extends CommandBase {
         Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         driveCommand.execute();
+    }
+
+    public void log() {
+        SmartDashboard.putNumber("current limit", startingCurrentLimit);
+        // add wheel speed and supply current for all 4 modules:
+        SmartDashboard.putNumber(
+                "WheelSpeed Mod 0",
+                Robot.swerve.mSwerveMods[0].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "supply Current 0", Robot.swerve.mSwerveMods[0].mDriveMotor.getSupplyCurrent());
+        SmartDashboard.putNumber(
+                "WheelSpeed Mod 1",
+                Robot.swerve.mSwerveMods[1].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "supply Current 1", Robot.swerve.mSwerveMods[1].mDriveMotor.getSupplyCurrent());
+        SmartDashboard.putNumber(
+                "WheelSpeed Mod 2",
+                Robot.swerve.mSwerveMods[2].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "supply Current 2", Robot.swerve.mSwerveMods[2].mDriveMotor.getSupplyCurrent());
+        SmartDashboard.putNumber(
+                "WheelSpeed Mod 3",
+                Robot.swerve.mSwerveMods[3].mDriveMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber(
+                "supply Current 3", Robot.swerve.mSwerveMods[3].mDriveMotor.getSupplyCurrent());
+
+        SmartDashboard.putNumber("Max Current", mxCurr);
     }
 
     // Called once the command ends or is interrupted.
