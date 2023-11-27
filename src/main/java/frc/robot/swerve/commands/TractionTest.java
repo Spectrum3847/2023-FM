@@ -17,7 +17,7 @@ public class TractionTest extends CommandBase {
 
     int swerveModule = 3;
     double mxCurr = 0;
-    double startingCurrentLimit = 6;
+    double startingCurrentLimit = 10;
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
     SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 0, 0, 0.0);
