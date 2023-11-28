@@ -37,11 +37,11 @@ public class TractionTest extends CommandBase {
         currentLimit =
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
-        currentLimits[swerveModule] = currentLimit;
-        Robot.swerve.setDriveCurrentLimit(currentLimits);
+
+        Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configSupplyCurrentLimit(currentLimit);
 
         driveCommand =
-                new SwerveDrive(() -> -0.5, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
+                new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
                         .withTimeout(2);
         startingtime = Timer.getFPGATimestamp();
     }
@@ -50,7 +50,7 @@ public class TractionTest extends CommandBase {
     @Override
     public void execute() {
         if (Math.abs(Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity())
-                < 800) {
+                < 400) {
             mxCurr =
                     Math.max(
                             mxCurr,
@@ -62,13 +62,16 @@ public class TractionTest extends CommandBase {
             Robot.swerve.stop();
             startingCurrentLimit += 1;
             startingtime = Timer.getFPGATimestamp();
+            currentLimit =
+                    new SupplyCurrentLimitConfiguration(
+                            true, startingCurrentLimit, startingCurrentLimit, 0.1);
+            Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configSupplyCurrentLimit(
+                    currentLimit);
         }
+        // SmartDashboard.putString("Supply Current",
+        // Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configGetSupplyCurrentLimit(currentLimit) );
+
         // set current limit to 10 amps
-        SupplyCurrentLimitConfiguration currentLimit =
-                new SupplyCurrentLimitConfiguration(
-                        true, startingCurrentLimit, startingCurrentLimit, 0.1);
-        currentLimits[swerveModule] = currentLimit;
-        Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         driveCommand.execute();
     }
@@ -104,7 +107,8 @@ public class TractionTest extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.swerve.stop();
-        // set current limit to config value
+        // set current limit to config value\
+        startingCurrentLimit = 10;
         SupplyCurrentLimitConfiguration currentLimit =
                 new SupplyCurrentLimitConfiguration(true, 40, 40, 0.1);
         SupplyCurrentLimitConfiguration[] currentLimits = {
