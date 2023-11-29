@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 
 public class TractionTest extends CommandBase {
@@ -38,11 +39,18 @@ public class TractionTest extends CommandBase {
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
 
-        Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configSupplyCurrentLimit(currentLimit);
+        SmartDashboard.putString(
+                "configSupplyCurrentLimitError",
+                Robot.swerve
+                        .mSwerveMods[swerveModule]
+                        .mDriveMotor
+                        .configSupplyCurrentLimit(currentLimit)
+                        .toString());
 
         driveCommand =
                 new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
-                        .withTimeout(2);
+                        .withTimeout(2)
+                        .andThen(new WaitCommand(1));
         startingtime = Timer.getFPGATimestamp();
     }
 
@@ -57,23 +65,30 @@ public class TractionTest extends CommandBase {
                             Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSupplyCurrent());
         }
         log();
-        /*run every 2 seconds */
-        if (Timer.getFPGATimestamp() - startingtime > 5) {
+        /*run every 3 seconds */
+        if ((driveCommand.isFinished() && Timer.getFPGATimestamp() - startingtime > 3)
+                || Timer.getFPGATimestamp() - startingtime > 5) {
             Robot.swerve.stop();
             startingCurrentLimit += 1;
             startingtime = Timer.getFPGATimestamp();
             currentLimit =
                     new SupplyCurrentLimitConfiguration(
                             true, startingCurrentLimit, startingCurrentLimit, 0.1);
-            Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configSupplyCurrentLimit(
-                    currentLimit);
+            SmartDashboard.putString(
+                    "configSupplyCurrentLimitError",
+                    Robot.swerve
+                            .mSwerveMods[swerveModule]
+                            .mDriveMotor
+                            .configSupplyCurrentLimit(currentLimit)
+                            .toString());
+
+            driveCommand.execute();
         }
         // SmartDashboard.putString("Supply Current",
         // Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.configGetSupplyCurrentLimit(currentLimit) );
 
         // set current limit to 10 amps
 
-        driveCommand.execute();
     }
 
     public void log() {
