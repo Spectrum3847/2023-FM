@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 
 public class TractionTest extends CommandBase {
@@ -38,6 +37,8 @@ public class TractionTest extends CommandBase {
         currentLimit =
                 new SupplyCurrentLimitConfiguration(
                         true, startingCurrentLimit, startingCurrentLimit, 0.1);
+        currentLimits[swerveModule] = currentLimit;
+        Robot.swerve.setDriveCurrentLimit(currentLimits);
 
         SmartDashboard.putString(
                 "configSupplyCurrentLimitError",
@@ -46,12 +47,17 @@ public class TractionTest extends CommandBase {
                         .mDriveMotor
                         .configSupplyCurrentLimit(currentLimit)
                         .toString());
-
+        startingtime = Timer.getFPGATimestamp();
         driveCommand =
                 new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
-                        .withTimeout(2)
-                        .andThen(new WaitCommand(1));
-        startingtime = Timer.getFPGATimestamp();
+                        .until(() -> (startingtime - Timer.getFPGATimestamp() > 2));
+
+        driveCommand.execute();
+    }
+
+    public boolean stopMotors() {
+        Robot.swerve.stop();
+        return true;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -66,9 +72,12 @@ public class TractionTest extends CommandBase {
         }
         log();
         /*run every 3 seconds */
-        if ((driveCommand.isFinished() && Timer.getFPGATimestamp() - startingtime > 3)
-                || Timer.getFPGATimestamp() - startingtime > 5) {
+        if (Timer.getFPGATimestamp() - startingtime > 2
+                && Timer.getFPGATimestamp() - startingtime < 3) {
+            driveCommand.cancel();
             Robot.swerve.stop();
+        }
+        if (Timer.getFPGATimestamp() - startingtime > 3) {
             startingCurrentLimit += 1;
             startingtime = Timer.getFPGATimestamp();
             currentLimit =
