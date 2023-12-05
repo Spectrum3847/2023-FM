@@ -17,7 +17,7 @@ public class TractionTest extends CommandBase {
 
     int swerveModule = 3;
     double mxCurr = 0;
-    double startingCurrentLimit = 10;
+    double startingCurrentLimit = 20;
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
     SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 0, 0, 0.0);
@@ -49,7 +49,7 @@ public class TractionTest extends CommandBase {
                         .toString());
         startingtime = Timer.getFPGATimestamp();
         driveCommand =
-                new SwerveDrive(() -> -1, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
+                new SwerveDrive(() -> -20, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
                         .until(() -> (startingtime - Timer.getFPGATimestamp() > 2));
 
         driveCommand.execute();
@@ -78,7 +78,7 @@ public class TractionTest extends CommandBase {
             Robot.swerve.stop();
         }
         if (Timer.getFPGATimestamp() - startingtime > 3) {
-            startingCurrentLimit += 1;
+            startingCurrentLimit += 2.5;
             startingtime = Timer.getFPGATimestamp();
             currentLimit =
                     new SupplyCurrentLimitConfiguration(
