@@ -64,7 +64,7 @@ public class TractionTest extends CommandBase {
     @Override
     public void execute() {
         if (Math.abs(Robot.swerve.mSwerveMods[swerveModule].mDriveMotor.getSelectedSensorVelocity())
-                < 400) {
+                < 200) {
             mxCurr =
                     Math.max(
                             mxCurr,
