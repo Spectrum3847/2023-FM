@@ -47,7 +47,7 @@ public class AM2023 {
             ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI;
     public static final double maxAutoVelocity =
             ((6380 / 60) / driveGearRatio) * wheelDiameter * Math.PI;
-    static final double maxAccel = maxVelocity * 1.5; // take 1/2 sec to get to max speed.
+    static final double maxAccel = maxVelocity * 0.1; // take 1/2 sec to get to max speed.  //1.5
     static final double maxAngularVelocity =
             maxVelocity / Math.hypot(trackWidth / 2.0, wheelBase / 2.0) * 0.8;
     static final double maxAngularAcceleration = Math.pow(maxAngularVelocity, 2) * 0.8;

@@ -17,7 +17,7 @@ public class TractionTest extends CommandBase {
 
     int swerveModule = 3;
     double mxCurr = 0;
-    double startingCurrentLimit = 20;
+    double startingCurrentLimit = 30;
     double startingtime = 0; // in seconds
     SupplyCurrentLimitConfiguration currentLimit;
     SupplyCurrentLimitConfiguration lowLimit = new SupplyCurrentLimitConfiguration(true, 0, 0, 0.0);
@@ -49,7 +49,7 @@ public class TractionTest extends CommandBase {
                         .toString());
         startingtime = Timer.getFPGATimestamp();
         driveCommand =
-                new SwerveDrive(() -> -20, () -> 0.0, () -> 0.0, () -> 1, () -> false, true)
+                new SwerveDrive(() -> -20, () -> 0.0, () -> 0.0, () -> 1, () -> false)
                         .until(() -> (startingtime - Timer.getFPGATimestamp() > 2));
 
         driveCommand.execute();
@@ -72,12 +72,11 @@ public class TractionTest extends CommandBase {
         }
         log();
         /*run every 3 seconds */
-        if (Timer.getFPGATimestamp() - startingtime > 2
-                && Timer.getFPGATimestamp() - startingtime < 3) {
+        if (Timer.getFPGATimestamp() - startingtime > 1.5) {
             driveCommand.cancel();
             Robot.swerve.stop();
         }
-        if (Timer.getFPGATimestamp() - startingtime > 3) {
+        if (Timer.getFPGATimestamp() - startingtime > 2.5) {
             startingCurrentLimit += 2.5;
             startingtime = Timer.getFPGATimestamp();
             currentLimit =
@@ -125,6 +124,8 @@ public class TractionTest extends CommandBase {
                 "supply Current 3", Robot.swerve.mSwerveMods[3].mDriveMotor.getSupplyCurrent());
 
         SmartDashboard.putNumber("Max Current", mxCurr);
+        SmartDashboard.putNumber(
+                "Temperature", Robot.swerve.mSwerveMods[3].mDriveMotor.getTemperature());
     }
 
     // Called once the command ends or is interrupted.
