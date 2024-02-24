@@ -14,7 +14,6 @@ import frc.robot.mechanisms.MechanismsCommands;
 import frc.robot.operator.commands.OperatorCommands;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.pose.commands.PoseCommands;
-import frc.robot.swerve.commands.AlignToAprilTag;
 import frc.robot.swerve.commands.AlignToConeFloor;
 import frc.robot.swerve.commands.AlignToConeNode;
 import frc.robot.swerve.commands.AlignToCubeFloor;
@@ -91,12 +90,7 @@ public class PilotGamepad extends Gamepad {
 
         /* Aligning */
         // Align to Cube Node
-        gamepad.bButton
-                .and(noBumpers())
-                .whileTrue(
-                        new AlignToAprilTag(
-                                () -> Robot.pilotGamepad.getDriveFwdPositive(),
-                                PilotConfig.cubeNodeAlignOffset));
+        gamepad.bButton.and(noBumpers()).whileTrue(IntakeCommands.intake());
 
         // Align to Cube Node
         gamepad.bButton
